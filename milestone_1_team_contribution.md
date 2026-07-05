@@ -6,13 +6,13 @@ Led and conducted detailed research and literature review; compiled and produced
 Conducted detailed research and literature review; contributed ideas that were incorporated into the report.   
 
 ### 3. Vishal S (23f2003089)
-Participated in discussions; reviewed the report. 
+Incorporated all changes mentioned by TA in the report by analysing current architectures, and participated in all discussions.
 
 ### 4. Smrutishikta Das (21f1006009)
 Participated in discussions; reviewed the report. 
 
 ### 5. Walunila Aier (21f3002564)
-Participated in discussions; reviewed the report. 
+Created The Powerpoint Presentation to show the project overview, and participated in discussions. 
 
 ### 6. Sambhav Jha (22f3003227)
 Participated in discussions; reviewed the report. 
