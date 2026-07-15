@@ -1,0 +1,4232 @@
+{
+  "overview": {
+    "dataset": "Spider (local snapshot)",
+    "task": "Text-to-SQL",
+    "dialect": "SQLite",
+    "n_schemas": 166,
+    "n_gold_sql": 1034
+  },
+  "inputs": {
+    "n_schemas": 166,
+    "n_sqlite": 166,
+    "gold_files": [
+      "dev_gold.sql"
+    ]
+  },
+  "schema_stats": {
+    "n_dbs": 166,
+    "tables": {
+      "min": 2,
+      "max": 26,
+      "mean": 5.28,
+      "median": 4.0
+    },
+    "columns": {
+      "min": 6,
+      "max": 352,
+      "mean": 27.13,
+      "median": 19.5
+    },
+    "foreign_keys": {
+      "min": 0,
+      "max": 25,
+      "mean": 4.79,
+      "median": 3.0
+    },
+    "column_types": {
+      "number": 2178,
+      "text": 2097,
+      "time": 215,
+      "others": 8,
+      "boolean": 5
+    }
+  },
+  "database_profiles": [
+    {
+      "db_id": "perpetrator",
+      "tables": 2,
+      "rows": 16,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "college_2",
+      "tables": 11,
+      "rows": 34620,
+      "columns": 46,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 20,
+      "pk_count": 11
+    },
+    {
+      "db_id": "flight_company",
+      "tables": 3,
+      "rows": 36,
+      "columns": 20,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "icfp_1",
+      "tables": 4,
+      "rows": 42,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "body_builder",
+      "tables": 2,
+      "rows": 11,
+      "columns": 11,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "storm_record",
+      "tables": 3,
+      "rows": 29,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "pilot_record",
+      "tables": 3,
+      "rows": 18,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "race_track",
+      "tables": 2,
+      "rows": 16,
+      "columns": 10,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "academic",
+      "tables": 15,
+      "rows": 0,
+      "columns": 42,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 18,
+      "pk_count": 14
+    },
+    {
+      "db_id": "department_store",
+      "tables": 14,
+      "rows": 167,
+      "columns": 56,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 13,
+      "pk_count": 14
+    },
+    {
+      "db_id": "music_4",
+      "tables": 3,
+      "rows": 26,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "insurance_fnol",
+      "tables": 7,
+      "rows": 75,
+      "columns": 22,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 7
+    },
+    {
+      "db_id": "cinema",
+      "tables": 3,
+      "rows": 22,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "decoration_competition",
+      "tables": 3,
+      "rows": 21,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "phone_market",
+      "tables": 3,
+      "rows": 17,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "store_product",
+      "tables": 5,
+      "rows": 46,
+      "columns": 22,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 5
+    },
+    {
+      "db_id": "assets_maintenance",
+      "tables": 14,
+      "rows": 191,
+      "columns": 64,
+      "null_pct": 11.21,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 18,
+      "pk_count": 10
+    },
+    {
+      "db_id": "student_assessment",
+      "tables": 9,
+      "rows": 75,
+      "columns": 38,
+      "null_pct": 1.79,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 9,
+      "pk_count": 9
+    },
+    {
+      "db_id": "dog_kennels",
+      "tables": 8,
+      "rows": 72,
+      "columns": 49,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 8
+    },
+    {
+      "db_id": "music_1",
+      "tables": 4,
+      "rows": 24,
+      "columns": 21,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 4
+    },
+    {
+      "db_id": "company_employee",
+      "tables": 3,
+      "rows": 31,
+      "columns": 16,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "farm",
+      "tables": 4,
+      "rows": 31,
+      "columns": 24,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "solvency_ii",
+      "tables": 12,
+      "rows": 157,
+      "columns": 32,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 10,
+      "pk_count": 12
+    },
+    {
+      "db_id": "city_record",
+      "tables": 4,
+      "rows": 33,
+      "columns": 27,
+      "null_pct": 0.0,
+      "domain": "geography",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "swimming",
+      "tables": 4,
+      "rows": 37,
+      "columns": 25,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "flight_2",
+      "tables": 3,
+      "rows": 1312,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "election",
+      "tables": 3,
+      "rows": 20,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "manufactory_1",
+      "tables": 2,
+      "rows": 17,
+      "columns": 9,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "debate",
+      "tables": 3,
+      "rows": 21,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 3
+    },
+    {
+      "db_id": "network_2",
+      "tables": 2,
+      "rows": 8,
+      "columns": 8,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 1
+    },
+    {
+      "db_id": "local_govt_in_alabama",
+      "tables": 4,
+      "rows": 52,
+      "columns": 10,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "climbing",
+      "tables": 2,
+      "rows": 17,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "e_learning",
+      "tables": 6,
+      "rows": 83,
+      "columns": 32,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 5
+    },
+    {
+      "db_id": "scientist_1",
+      "tables": 3,
+      "rows": 38,
+      "columns": 7,
+      "null_pct": 0.0,
+      "domain": "science",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "ship_1",
+      "tables": 2,
+      "rows": 16,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "entertainment_awards",
+      "tables": 3,
+      "rows": 20,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "allergy_1",
+      "tables": 3,
+      "rows": 107,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 2
+    },
+    {
+      "db_id": "imdb",
+      "tables": 16,
+      "rows": 0,
+      "columns": 66,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 11,
+      "pk_count": 15
+    },
+    {
+      "db_id": "products_for_hire",
+      "tables": 7,
+      "rows": 81,
+      "columns": 45,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 8,
+      "pk_count": 7
+    },
+    {
+      "db_id": "candidate_poll",
+      "tables": 2,
+      "rows": 15,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "chinook_1",
+      "tables": 11,
+      "rows": 15607,
+      "columns": 64,
+      "null_pct": 2.02,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 11,
+      "pk_count": 11
+    },
+    {
+      "db_id": "flight_4",
+      "tables": 3,
+      "rows": 80586,
+      "columns": 24,
+      "null_pct": 8.26,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 3
+    },
+    {
+      "db_id": "pets_1",
+      "tables": 3,
+      "rows": 40,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 2
+    },
+    {
+      "db_id": "dorm_1",
+      "tables": 5,
+      "rows": 124,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 1
+    },
+    {
+      "db_id": "journal_committee",
+      "tables": 3,
+      "rows": 32,
+      "columns": 10,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "flight_1",
+      "tables": 4,
+      "rows": 126,
+      "columns": 16,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "medicine_enzyme_interaction",
+      "tables": 3,
+      "rows": 48,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "local_govt_and_lot",
+      "tables": 11,
+      "rows": 148,
+      "columns": 48,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 15,
+      "pk_count": 11
+    },
+    {
+      "db_id": "station_weather",
+      "tables": 4,
+      "rows": 56,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "shop_membership",
+      "tables": 4,
+      "rows": 34,
+      "columns": 18,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 4
+    },
+    {
+      "db_id": "driving_school",
+      "tables": 6,
+      "rows": 78,
+      "columns": 40,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 6,
+      "pk_count": 6
+    },
+    {
+      "db_id": "concert_singer",
+      "tables": 4,
+      "rows": 31,
+      "columns": 21,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "music_2",
+      "tables": 7,
+      "rows": 0,
+      "columns": 22,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 8,
+      "pk_count": 7
+    },
+    {
+      "db_id": "sports_competition",
+      "tables": 5,
+      "rows": 44,
+      "columns": 26,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 5
+    },
+    {
+      "db_id": "railway",
+      "tables": 4,
+      "rows": 30,
+      "columns": 22,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "inn_1",
+      "tables": 2,
+      "rows": 610,
+      "columns": 16,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "museum_visit",
+      "tables": 3,
+      "rows": 20,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "browser_web",
+      "tables": 3,
+      "rows": 32,
+      "columns": 11,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "baseball_1",
+      "tables": 26,
+      "rows": 553693,
+      "columns": 352,
+      "null_pct": 0.0,
+      "domain": "sports",
+      "sqlite_found": 1,
+      "fk_count": 19,
+      "pk_count": 0
+    },
+    {
+      "db_id": "architecture",
+      "tables": 3,
+      "rows": 26,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "csu_1",
+      "tables": 6,
+      "rows": 1943,
+      "columns": 23,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 5
+    },
+    {
+      "db_id": "tracking_orders",
+      "tables": 7,
+      "rows": 105,
+      "columns": 27,
+      "null_pct": 14.81,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 6
+    },
+    {
+      "db_id": "insurance_policies",
+      "tables": 5,
+      "rows": 75,
+      "columns": 25,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 5
+    },
+    {
+      "db_id": "gas_company",
+      "tables": 3,
+      "rows": 27,
+      "columns": 18,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "e_government",
+      "tables": 10,
+      "rows": 129,
+      "columns": 50,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 9,
+      "pk_count": 9
+    },
+    {
+      "db_id": "school_bus",
+      "tables": 3,
+      "rows": 24,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "machine_repair",
+      "tables": 4,
+      "rows": 37,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "theme_gallery",
+      "tables": 3,
+      "rows": 26,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "film_rank",
+      "tables": 3,
+      "rows": 28,
+      "columns": 15,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "party_people",
+      "tables": 4,
+      "rows": 33,
+      "columns": 20,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 4
+    },
+    {
+      "db_id": "hospital_1",
+      "tables": 15,
+      "rows": 132,
+      "columns": 68,
+      "null_pct": 0.51,
+      "domain": "healthcare",
+      "sqlite_found": 1,
+      "fk_count": 25,
+      "pk_count": 15
+    },
+    {
+      "db_id": "customers_campaigns_ecommerce",
+      "tables": 8,
+      "rows": 125,
+      "columns": 42,
+      "null_pct": 2.29,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 5
+    },
+    {
+      "db_id": "gymnast",
+      "tables": 2,
+      "rows": 17,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "restaurants",
+      "tables": 3,
+      "rows": 0,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "food",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "mountain_photos",
+      "tables": 3,
+      "rows": 44,
+      "columns": 16,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "battle_death",
+      "tables": 3,
+      "rows": 28,
+      "columns": 18,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "cre_Doc_Control_Systems",
+      "tables": 11,
+      "rows": 87,
+      "columns": 35,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 13,
+      "pk_count": 11
+    },
+    {
+      "db_id": "tracking_share_transactions",
+      "tables": 7,
+      "rows": 97,
+      "columns": 20,
+      "null_pct": 5.28,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 5
+    },
+    {
+      "db_id": "apartment_rentals",
+      "tables": 6,
+      "rows": 87,
+      "columns": 31,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 6,
+      "pk_count": 6
+    },
+    {
+      "db_id": "student_transcripts_tracking",
+      "tables": 11,
+      "rows": 165,
+      "columns": 56,
+      "null_pct": 16.07,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 11,
+      "pk_count": 10
+    },
+    {
+      "db_id": "cre_Docs_and_Epenses",
+      "tables": 7,
+      "rows": 55,
+      "columns": 22,
+      "null_pct": 13.95,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 6,
+      "pk_count": 7
+    },
+    {
+      "db_id": "ship_mission",
+      "tables": 2,
+      "rows": 15,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "company_office",
+      "tables": 3,
+      "rows": 47,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "tracking_software_problems",
+      "tables": 6,
+      "rows": 65,
+      "columns": 28,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 6
+    },
+    {
+      "db_id": "products_gen_characteristics",
+      "tables": 6,
+      "rows": 58,
+      "columns": 23,
+      "null_pct": 11.15,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 5
+    },
+    {
+      "db_id": "coffee_shop",
+      "tables": 4,
+      "rows": 36,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 4
+    },
+    {
+      "db_id": "riding_club",
+      "tables": 5,
+      "rows": 38,
+      "columns": 27,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 5
+    },
+    {
+      "db_id": "customers_card_transactions",
+      "tables": 4,
+      "rows": 60,
+      "columns": 27,
+      "null_pct": 11.11,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "county_public_safety",
+      "tables": 2,
+      "rows": 23,
+      "columns": 18,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "performance_attendance",
+      "tables": 3,
+      "rows": 25,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "club_1",
+      "tables": 3,
+      "rows": 42,
+      "columns": 15,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 2
+    },
+    {
+      "db_id": "singer",
+      "tables": 2,
+      "rows": 16,
+      "columns": 10,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "culture_company",
+      "tables": 3,
+      "rows": 28,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "cre_Doc_Template_Mgt",
+      "tables": 4,
+      "rows": 55,
+      "columns": 17,
+      "null_pct": 11.32,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "musical",
+      "tables": 2,
+      "rows": 16,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "world_1",
+      "tables": 3,
+      "rows": 5302,
+      "columns": 24,
+      "null_pct": 0.48,
+      "domain": "geography",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "device",
+      "tables": 3,
+      "rows": 26,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "tracking_grants_for_research",
+      "tables": 12,
+      "rows": 128,
+      "columns": 42,
+      "null_pct": 8.56,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 11,
+      "pk_count": 11
+    },
+    {
+      "db_id": "employee_hire_evaluation",
+      "tables": 4,
+      "rows": 32,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "movie_1",
+      "tables": 3,
+      "rows": 30,
+      "columns": 10,
+      "null_pct": 2.88,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 2
+    },
+    {
+      "db_id": "network_1",
+      "tables": 3,
+      "rows": 46,
+      "columns": 7,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 3
+    },
+    {
+      "db_id": "poker_player",
+      "tables": 2,
+      "rows": 12,
+      "columns": 11,
+      "null_pct": 0.0,
+      "domain": "sports",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "program_share",
+      "tables": 4,
+      "rows": 35,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 4
+    },
+    {
+      "db_id": "aircraft",
+      "tables": 5,
+      "rows": 38,
+      "columns": 28,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 5
+    },
+    {
+      "db_id": "restaurant_1",
+      "tables": 5,
+      "rows": 42,
+      "columns": 21,
+      "null_pct": 0.0,
+      "domain": "food",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 3
+    },
+    {
+      "db_id": "customers_and_invoices",
+      "tables": 9,
+      "rows": 124,
+      "columns": 56,
+      "null_pct": 9.29,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 11,
+      "pk_count": 7
+    },
+    {
+      "db_id": "insurance_and_eClaims",
+      "tables": 7,
+      "rows": 91,
+      "columns": 30,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 6,
+      "pk_count": 7
+    },
+    {
+      "db_id": "college_1",
+      "tables": 7,
+      "rows": 103,
+      "columns": 43,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 9,
+      "pk_count": 5
+    },
+    {
+      "db_id": "local_govt_mdm",
+      "tables": 8,
+      "rows": 55,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 8
+    },
+    {
+      "db_id": "book_2",
+      "tables": 2,
+      "rows": 17,
+      "columns": 9,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "hr_1",
+      "tables": 7,
+      "rows": 216,
+      "columns": 35,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 7
+    },
+    {
+      "db_id": "soccer_1",
+      "tables": 6,
+      "rows": 196817,
+      "columns": 84,
+      "null_pct": 0.62,
+      "domain": "sports",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 6
+    },
+    {
+      "db_id": "sakila_1",
+      "tables": 16,
+      "rows": 46263,
+      "columns": 89,
+      "null_pct": 0.41,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 21,
+      "pk_count": 16
+    },
+    {
+      "db_id": "real_estate_properties",
+      "tables": 5,
+      "rows": 40,
+      "columns": 37,
+      "null_pct": 45.55,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 4
+    },
+    {
+      "db_id": "college_3",
+      "tables": 8,
+      "rows": 490,
+      "columns": 39,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 9,
+      "pk_count": 5
+    },
+    {
+      "db_id": "course_teach",
+      "tables": 3,
+      "rows": 23,
+      "columns": 10,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "roller_coaster",
+      "tables": 2,
+      "rows": 9,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "customer_deliveries",
+      "tables": 13,
+      "rows": 186,
+      "columns": 51,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 15,
+      "pk_count": 9
+    },
+    {
+      "db_id": "game_injury",
+      "tables": 3,
+      "rows": 48,
+      "columns": 20,
+      "null_pct": 0.0,
+      "domain": "sports",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "school_finance",
+      "tables": 3,
+      "rows": 27,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "scholar",
+      "tables": 10,
+      "rows": 0,
+      "columns": 25,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 8,
+      "pk_count": 10
+    },
+    {
+      "db_id": "voter_1",
+      "tables": 3,
+      "rows": 320,
+      "columns": 9,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "match_season",
+      "tables": 4,
+      "rows": 42,
+      "columns": 21,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "small_bank_1",
+      "tables": 3,
+      "rows": 20,
+      "columns": 6,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "wta_1",
+      "tables": 3,
+      "rows": 531377,
+      "columns": 43,
+      "null_pct": 0.0,
+      "domain": "sports",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 1
+    },
+    {
+      "db_id": "yelp",
+      "tables": 7,
+      "rows": 0,
+      "columns": 38,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 7
+    },
+    {
+      "db_id": "student_1",
+      "tables": 2,
+      "rows": 72,
+      "columns": 7,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 0,
+      "pk_count": 2
+    },
+    {
+      "db_id": "manufacturer",
+      "tables": 3,
+      "rows": 19,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "store_1",
+      "tables": 11,
+      "rows": 15607,
+      "columns": 64,
+      "null_pct": 2.02,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 11,
+      "pk_count": 11
+    },
+    {
+      "db_id": "train_station",
+      "tables": 3,
+      "rows": 34,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "document_management",
+      "tables": 9,
+      "rows": 105,
+      "columns": 31,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 8
+    },
+    {
+      "db_id": "formula_1",
+      "tables": 13,
+      "rows": 88380,
+      "columns": 94,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 17,
+      "pk_count": 13
+    },
+    {
+      "db_id": "game_1",
+      "tables": 4,
+      "rows": 64,
+      "columns": 19,
+      "null_pct": 0.0,
+      "domain": "sports",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 2
+    },
+    {
+      "db_id": "loan_1",
+      "tables": 3,
+      "rows": 10,
+      "columns": 18,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "bike_1",
+      "tables": 4,
+      "rows": 22181,
+      "columns": 46,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "entrepreneur",
+      "tables": 2,
+      "rows": 14,
+      "columns": 10,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "orchestra",
+      "tables": 4,
+      "rows": 40,
+      "columns": 23,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 3
+    },
+    {
+      "db_id": "cre_Drama_Workshop_Groups",
+      "tables": 18,
+      "rows": 237,
+      "columns": 99,
+      "null_pct": 15.69,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 25,
+      "pk_count": 18
+    },
+    {
+      "db_id": "car_1",
+      "tables": 6,
+      "rows": 890,
+      "columns": 23,
+      "null_pct": 0.0,
+      "domain": "transport",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 6
+    },
+    {
+      "db_id": "geo",
+      "tables": 7,
+      "rows": 0,
+      "columns": 29,
+      "null_pct": 0.0,
+      "domain": "geography",
+      "sqlite_found": 1,
+      "fk_count": 6,
+      "pk_count": 6
+    },
+    {
+      "db_id": "behavior_monitoring",
+      "tables": 11,
+      "rows": 138,
+      "columns": 64,
+      "null_pct": 19.46,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 13,
+      "pk_count": 8
+    },
+    {
+      "db_id": "cre_Doc_Tracking_DB",
+      "tables": 8,
+      "rows": 85,
+      "columns": 33,
+      "null_pct": 14.81,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 12,
+      "pk_count": 8
+    },
+    {
+      "db_id": "university_basketball",
+      "tables": 2,
+      "rows": 9,
+      "columns": 20,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "soccer_2",
+      "tables": 3,
+      "rows": 16,
+      "columns": 11,
+      "null_pct": 0.0,
+      "domain": "sports",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "activity_1",
+      "tables": 5,
+      "rows": 218,
+      "columns": 22,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 3
+    },
+    {
+      "db_id": "cre_Theme_park",
+      "tables": 16,
+      "rows": 172,
+      "columns": 52,
+      "null_pct": 19.3,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 14,
+      "pk_count": 16
+    },
+    {
+      "db_id": "twitter_1",
+      "tables": 3,
+      "rows": 24,
+      "columns": 11,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 3
+    },
+    {
+      "db_id": "election_representative",
+      "tables": 2,
+      "rows": 12,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "voter_2",
+      "tables": 2,
+      "rows": 44,
+      "columns": 17,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 7,
+      "pk_count": 1
+    },
+    {
+      "db_id": "wedding",
+      "tables": 3,
+      "rows": 25,
+      "columns": 14,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 3
+    },
+    {
+      "db_id": "news_report",
+      "tables": 3,
+      "rows": 23,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "wine_1",
+      "tables": 3,
+      "rows": 577,
+      "columns": 20,
+      "null_pct": 0.0,
+      "domain": "food",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 2
+    },
+    {
+      "db_id": "customers_and_addresses",
+      "tables": 7,
+      "rows": 98,
+      "columns": 32,
+      "null_pct": 7.9,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 6,
+      "pk_count": 4
+    },
+    {
+      "db_id": "protein_institute",
+      "tables": 3,
+      "rows": 24,
+      "columns": 22,
+      "null_pct": 0.0,
+      "domain": "science",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "school_player",
+      "tables": 4,
+      "rows": 57,
+      "columns": 26,
+      "null_pct": 0.0,
+      "domain": "education",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 4
+    },
+    {
+      "db_id": "phone_1",
+      "tables": 3,
+      "rows": 29,
+      "columns": 21,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "tvshow",
+      "tables": 3,
+      "rows": 39,
+      "columns": 25,
+      "null_pct": 0.0,
+      "domain": "entertainment",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "wrestler",
+      "tables": 2,
+      "rows": 16,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 1,
+      "pk_count": 2
+    },
+    {
+      "db_id": "customer_complaints",
+      "tables": 4,
+      "rows": 31,
+      "columns": 31,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 3,
+      "pk_count": 3
+    },
+    {
+      "db_id": "department_management",
+      "tables": 3,
+      "rows": 30,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "customers_and_products_contacts",
+      "tables": 7,
+      "rows": 110,
+      "columns": 35,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 5,
+      "pk_count": 5
+    },
+    {
+      "db_id": "company_1",
+      "tables": 6,
+      "rows": 45,
+      "columns": 28,
+      "null_pct": 0.96,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 0,
+      "pk_count": 6
+    },
+    {
+      "db_id": "workshop_paper",
+      "tables": 3,
+      "rows": 22,
+      "columns": 11,
+      "null_pct": 0.0,
+      "domain": "business",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "epinions_1",
+      "tables": 4,
+      "rows": 31,
+      "columns": 12,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 3
+    },
+    {
+      "db_id": "party_host",
+      "tables": 3,
+      "rows": 24,
+      "columns": 13,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 2,
+      "pk_count": 3
+    },
+    {
+      "db_id": "product_catalog",
+      "tables": 5,
+      "rows": 45,
+      "columns": 29,
+      "null_pct": 0.0,
+      "domain": "other",
+      "sqlite_found": 1,
+      "fk_count": 4,
+      "pk_count": 4
+    }
+  ],
+  "domain_distribution": {
+    "other": 95,
+    "business": 22,
+    "education": 13,
+    "entertainment": 10,
+    "transport": 10,
+    "sports": 7,
+    "geography": 3,
+    "food": 3,
+    "science": 2,
+    "healthcare": 1
+  },
+  "schema_fk_graph": [
+    {
+      "db_id": "perpetrator",
+      "n_tables": 2,
+      "n_columns": 13,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "college_2",
+      "n_tables": 11,
+      "n_columns": 46,
+      "n_foreign_keys": 20,
+      "n_primary_keys": 11,
+      "tables_in_fk_graph": 10,
+      "fk_coverage_pct": 90.9,
+      "domain": "education"
+    },
+    {
+      "db_id": "flight_company",
+      "n_tables": 3,
+      "n_columns": 20,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "icfp_1",
+      "n_tables": 4,
+      "n_columns": 12,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "body_builder",
+      "n_tables": 2,
+      "n_columns": 11,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "storm_record",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "pilot_record",
+      "n_tables": 3,
+      "n_columns": 19,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "race_track",
+      "n_tables": 2,
+      "n_columns": 10,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "academic",
+      "n_tables": 15,
+      "n_columns": 42,
+      "n_foreign_keys": 18,
+      "n_primary_keys": 14,
+      "tables_in_fk_graph": 14,
+      "fk_coverage_pct": 93.3,
+      "domain": "other"
+    },
+    {
+      "db_id": "department_store",
+      "n_tables": 14,
+      "n_columns": 56,
+      "n_foreign_keys": 13,
+      "n_primary_keys": 14,
+      "tables_in_fk_graph": 14,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "music_4",
+      "n_tables": 3,
+      "n_columns": 17,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "insurance_fnol",
+      "n_tables": 7,
+      "n_columns": 22,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "cinema",
+      "n_tables": 3,
+      "n_columns": 17,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "decoration_competition",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "phone_market",
+      "n_tables": 3,
+      "n_columns": 13,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "store_product",
+      "n_tables": 5,
+      "n_columns": 22,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 80.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "assets_maintenance",
+      "n_tables": 14,
+      "n_columns": 64,
+      "n_foreign_keys": 18,
+      "n_primary_keys": 10,
+      "tables_in_fk_graph": 14,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "student_assessment",
+      "n_tables": 9,
+      "n_columns": 38,
+      "n_foreign_keys": 9,
+      "n_primary_keys": 9,
+      "tables_in_fk_graph": 9,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "dog_kennels",
+      "n_tables": 8,
+      "n_columns": 49,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 8,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 87.5,
+      "domain": "other"
+    },
+    {
+      "db_id": "music_1",
+      "n_tables": 4,
+      "n_columns": 21,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "company_employee",
+      "n_tables": 3,
+      "n_columns": 16,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "farm",
+      "n_tables": 4,
+      "n_columns": 24,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "solvency_ii",
+      "n_tables": 12,
+      "n_columns": 32,
+      "n_foreign_keys": 10,
+      "n_primary_keys": 12,
+      "tables_in_fk_graph": 10,
+      "fk_coverage_pct": 83.3,
+      "domain": "other"
+    },
+    {
+      "db_id": "city_record",
+      "n_tables": 4,
+      "n_columns": 27,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "geography"
+    },
+    {
+      "db_id": "swimming",
+      "n_tables": 4,
+      "n_columns": 25,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "flight_2",
+      "n_tables": 3,
+      "n_columns": 13,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 66.7,
+      "domain": "transport"
+    },
+    {
+      "db_id": "election",
+      "n_tables": 3,
+      "n_columns": 19,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "manufactory_1",
+      "n_tables": 2,
+      "n_columns": 9,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "debate",
+      "n_tables": 3,
+      "n_columns": 13,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "network_2",
+      "n_tables": 2,
+      "n_columns": 8,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 1,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "local_govt_in_alabama",
+      "n_tables": 4,
+      "n_columns": 10,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "climbing",
+      "n_tables": 2,
+      "n_columns": 12,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "e_learning",
+      "n_tables": 6,
+      "n_columns": 32,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "scientist_1",
+      "n_tables": 3,
+      "n_columns": 7,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "science"
+    },
+    {
+      "db_id": "ship_1",
+      "n_tables": 2,
+      "n_columns": 12,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "entertainment_awards",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "allergy_1",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "imdb",
+      "n_tables": 16,
+      "n_columns": 66,
+      "n_foreign_keys": 11,
+      "n_primary_keys": 15,
+      "tables_in_fk_graph": 12,
+      "fk_coverage_pct": 75.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "products_for_hire",
+      "n_tables": 7,
+      "n_columns": 45,
+      "n_foreign_keys": 8,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "candidate_poll",
+      "n_tables": 2,
+      "n_columns": 14,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "chinook_1",
+      "n_tables": 11,
+      "n_columns": 64,
+      "n_foreign_keys": 11,
+      "n_primary_keys": 11,
+      "tables_in_fk_graph": 11,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "flight_4",
+      "n_tables": 3,
+      "n_columns": 24,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "pets_1",
+      "n_tables": 3,
+      "n_columns": 14,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "dorm_1",
+      "n_tables": 5,
+      "n_columns": 19,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 1,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "journal_committee",
+      "n_tables": 3,
+      "n_columns": 10,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "flight_1",
+      "n_tables": 4,
+      "n_columns": 16,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "medicine_enzyme_interaction",
+      "n_tables": 3,
+      "n_columns": 14,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "local_govt_and_lot",
+      "n_tables": 11,
+      "n_columns": 48,
+      "n_foreign_keys": 15,
+      "n_primary_keys": 11,
+      "tables_in_fk_graph": 11,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "station_weather",
+      "n_tables": 4,
+      "n_columns": 19,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "shop_membership",
+      "n_tables": 4,
+      "n_columns": 18,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "driving_school",
+      "n_tables": 6,
+      "n_columns": 40,
+      "n_foreign_keys": 6,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "concert_singer",
+      "n_tables": 4,
+      "n_columns": 21,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "music_2",
+      "n_tables": 7,
+      "n_columns": 22,
+      "n_foreign_keys": 8,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "sports_competition",
+      "n_tables": 5,
+      "n_columns": 26,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "railway",
+      "n_tables": 4,
+      "n_columns": 22,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "inn_1",
+      "n_tables": 2,
+      "n_columns": 16,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "museum_visit",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "browser_web",
+      "n_tables": 3,
+      "n_columns": 11,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "baseball_1",
+      "n_tables": 26,
+      "n_columns": 352,
+      "n_foreign_keys": 19,
+      "n_primary_keys": 0,
+      "tables_in_fk_graph": 19,
+      "fk_coverage_pct": 73.1,
+      "domain": "sports"
+    },
+    {
+      "db_id": "architecture",
+      "n_tables": 3,
+      "n_columns": 17,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "csu_1",
+      "n_tables": 6,
+      "n_columns": 23,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "tracking_orders",
+      "n_tables": 7,
+      "n_columns": 27,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "insurance_policies",
+      "n_tables": 5,
+      "n_columns": 25,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "gas_company",
+      "n_tables": 3,
+      "n_columns": 18,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "e_government",
+      "n_tables": 10,
+      "n_columns": 50,
+      "n_foreign_keys": 9,
+      "n_primary_keys": 9,
+      "tables_in_fk_graph": 10,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "school_bus",
+      "n_tables": 3,
+      "n_columns": 14,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "machine_repair",
+      "n_tables": 4,
+      "n_columns": 19,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "theme_gallery",
+      "n_tables": 3,
+      "n_columns": 13,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "film_rank",
+      "n_tables": 3,
+      "n_columns": 15,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "party_people",
+      "n_tables": 4,
+      "n_columns": 20,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "hospital_1",
+      "n_tables": 15,
+      "n_columns": 68,
+      "n_foreign_keys": 25,
+      "n_primary_keys": 15,
+      "tables_in_fk_graph": 15,
+      "fk_coverage_pct": 100.0,
+      "domain": "healthcare"
+    },
+    {
+      "db_id": "customers_campaigns_ecommerce",
+      "n_tables": 8,
+      "n_columns": 42,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 8,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "gymnast",
+      "n_tables": 2,
+      "n_columns": 13,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "restaurants",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "food"
+    },
+    {
+      "db_id": "mountain_photos",
+      "n_tables": 3,
+      "n_columns": 16,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "battle_death",
+      "n_tables": 3,
+      "n_columns": 18,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "cre_Doc_Control_Systems",
+      "n_tables": 11,
+      "n_columns": 35,
+      "n_foreign_keys": 13,
+      "n_primary_keys": 11,
+      "tables_in_fk_graph": 11,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "tracking_share_transactions",
+      "n_tables": 7,
+      "n_columns": 20,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "apartment_rentals",
+      "n_tables": 6,
+      "n_columns": 31,
+      "n_foreign_keys": 6,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "student_transcripts_tracking",
+      "n_tables": 11,
+      "n_columns": 56,
+      "n_foreign_keys": 11,
+      "n_primary_keys": 10,
+      "tables_in_fk_graph": 11,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "cre_Docs_and_Epenses",
+      "n_tables": 7,
+      "n_columns": 22,
+      "n_foreign_keys": 6,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "ship_mission",
+      "n_tables": 2,
+      "n_columns": 12,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "company_office",
+      "n_tables": 3,
+      "n_columns": 17,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "tracking_software_problems",
+      "n_tables": 6,
+      "n_columns": 28,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "products_gen_characteristics",
+      "n_tables": 6,
+      "n_columns": 23,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "coffee_shop",
+      "n_tables": 4,
+      "n_columns": 19,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "riding_club",
+      "n_tables": 5,
+      "n_columns": 27,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "customers_card_transactions",
+      "n_tables": 4,
+      "n_columns": 27,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 75.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "county_public_safety",
+      "n_tables": 2,
+      "n_columns": 18,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "performance_attendance",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "club_1",
+      "n_tables": 3,
+      "n_columns": 15,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "singer",
+      "n_tables": 2,
+      "n_columns": 10,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "culture_company",
+      "n_tables": 3,
+      "n_columns": 19,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "cre_Doc_Template_Mgt",
+      "n_tables": 4,
+      "n_columns": 17,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "musical",
+      "n_tables": 2,
+      "n_columns": 13,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 1,
+      "fk_coverage_pct": 50.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "world_1",
+      "n_tables": 4,
+      "n_columns": 26,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 75.0,
+      "domain": "geography"
+    },
+    {
+      "db_id": "device",
+      "n_tables": 3,
+      "n_columns": 14,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "tracking_grants_for_research",
+      "n_tables": 12,
+      "n_columns": 42,
+      "n_foreign_keys": 11,
+      "n_primary_keys": 11,
+      "tables_in_fk_graph": 12,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "employee_hire_evaluation",
+      "n_tables": 4,
+      "n_columns": 17,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "movie_1",
+      "n_tables": 3,
+      "n_columns": 10,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "network_1",
+      "n_tables": 3,
+      "n_columns": 7,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "poker_player",
+      "n_tables": 2,
+      "n_columns": 11,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "sports"
+    },
+    {
+      "db_id": "program_share",
+      "n_tables": 4,
+      "n_columns": 17,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "aircraft",
+      "n_tables": 5,
+      "n_columns": 28,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "restaurant_1",
+      "n_tables": 5,
+      "n_columns": 21,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "food"
+    },
+    {
+      "db_id": "customers_and_invoices",
+      "n_tables": 9,
+      "n_columns": 56,
+      "n_foreign_keys": 11,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 9,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "insurance_and_eClaims",
+      "n_tables": 7,
+      "n_columns": 30,
+      "n_foreign_keys": 6,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 85.7,
+      "domain": "other"
+    },
+    {
+      "db_id": "college_1",
+      "n_tables": 7,
+      "n_columns": 43,
+      "n_foreign_keys": 9,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "local_govt_mdm",
+      "n_tables": 8,
+      "n_columns": 17,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 8,
+      "tables_in_fk_graph": 8,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "book_2",
+      "n_tables": 2,
+      "n_columns": 9,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "hr_1",
+      "n_tables": 7,
+      "n_columns": 35,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "soccer_1",
+      "n_tables": 7,
+      "n_columns": 86,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 85.7,
+      "domain": "sports"
+    },
+    {
+      "db_id": "sakila_1",
+      "n_tables": 16,
+      "n_columns": 89,
+      "n_foreign_keys": 21,
+      "n_primary_keys": 16,
+      "tables_in_fk_graph": 15,
+      "fk_coverage_pct": 93.8,
+      "domain": "other"
+    },
+    {
+      "db_id": "real_estate_properties",
+      "n_tables": 5,
+      "n_columns": 37,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "college_3",
+      "n_tables": 8,
+      "n_columns": 39,
+      "n_foreign_keys": 9,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 8,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "course_teach",
+      "n_tables": 3,
+      "n_columns": 10,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "roller_coaster",
+      "n_tables": 2,
+      "n_columns": 14,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "customer_deliveries",
+      "n_tables": 13,
+      "n_columns": 51,
+      "n_foreign_keys": 15,
+      "n_primary_keys": 9,
+      "tables_in_fk_graph": 13,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "game_injury",
+      "n_tables": 3,
+      "n_columns": 20,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "sports"
+    },
+    {
+      "db_id": "school_finance",
+      "n_tables": 3,
+      "n_columns": 19,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "scholar",
+      "n_tables": 10,
+      "n_columns": 25,
+      "n_foreign_keys": 8,
+      "n_primary_keys": 10,
+      "tables_in_fk_graph": 8,
+      "fk_coverage_pct": 80.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "voter_1",
+      "n_tables": 3,
+      "n_columns": 9,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "match_season",
+      "n_tables": 4,
+      "n_columns": 21,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "small_bank_1",
+      "n_tables": 3,
+      "n_columns": 6,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "wta_1",
+      "n_tables": 3,
+      "n_columns": 43,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 1,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "sports"
+    },
+    {
+      "db_id": "yelp",
+      "n_tables": 7,
+      "n_columns": 38,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 7,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "student_1",
+      "n_tables": 2,
+      "n_columns": 7,
+      "n_foreign_keys": 0,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 0,
+      "fk_coverage_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "manufacturer",
+      "n_tables": 3,
+      "n_columns": 12,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "store_1",
+      "n_tables": 12,
+      "n_columns": 66,
+      "n_foreign_keys": 11,
+      "n_primary_keys": 11,
+      "tables_in_fk_graph": 11,
+      "fk_coverage_pct": 91.7,
+      "domain": "business"
+    },
+    {
+      "db_id": "train_station",
+      "n_tables": 3,
+      "n_columns": 14,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "document_management",
+      "n_tables": 9,
+      "n_columns": 31,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 8,
+      "tables_in_fk_graph": 9,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "formula_1",
+      "n_tables": 13,
+      "n_columns": 94,
+      "n_foreign_keys": 17,
+      "n_primary_keys": 13,
+      "tables_in_fk_graph": 11,
+      "fk_coverage_pct": 84.6,
+      "domain": "other"
+    },
+    {
+      "db_id": "game_1",
+      "n_tables": 4,
+      "n_columns": 19,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "sports"
+    },
+    {
+      "db_id": "loan_1",
+      "n_tables": 3,
+      "n_columns": 18,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "bike_1",
+      "n_tables": 4,
+      "n_columns": 46,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 50.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "entrepreneur",
+      "n_tables": 2,
+      "n_columns": 10,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "orchestra",
+      "n_tables": 4,
+      "n_columns": 23,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "cre_Drama_Workshop_Groups",
+      "n_tables": 18,
+      "n_columns": 99,
+      "n_foreign_keys": 25,
+      "n_primary_keys": 18,
+      "tables_in_fk_graph": 18,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "car_1",
+      "n_tables": 6,
+      "n_columns": 23,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 100.0,
+      "domain": "transport"
+    },
+    {
+      "db_id": "geo",
+      "n_tables": 7,
+      "n_columns": 29,
+      "n_foreign_keys": 6,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 85.7,
+      "domain": "geography"
+    },
+    {
+      "db_id": "behavior_monitoring",
+      "n_tables": 11,
+      "n_columns": 64,
+      "n_foreign_keys": 13,
+      "n_primary_keys": 8,
+      "tables_in_fk_graph": 10,
+      "fk_coverage_pct": 90.9,
+      "domain": "other"
+    },
+    {
+      "db_id": "cre_Doc_Tracking_DB",
+      "n_tables": 8,
+      "n_columns": 33,
+      "n_foreign_keys": 12,
+      "n_primary_keys": 8,
+      "tables_in_fk_graph": 8,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "university_basketball",
+      "n_tables": 2,
+      "n_columns": 20,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "soccer_2",
+      "n_tables": 3,
+      "n_columns": 11,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "sports"
+    },
+    {
+      "db_id": "activity_1",
+      "n_tables": 5,
+      "n_columns": 22,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 5,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "cre_Theme_park",
+      "n_tables": 16,
+      "n_columns": 52,
+      "n_foreign_keys": 14,
+      "n_primary_keys": 16,
+      "tables_in_fk_graph": 16,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "twitter_1",
+      "n_tables": 3,
+      "n_columns": 11,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "election_representative",
+      "n_tables": 2,
+      "n_columns": 12,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "voter_2",
+      "n_tables": 2,
+      "n_columns": 17,
+      "n_foreign_keys": 7,
+      "n_primary_keys": 1,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "wedding",
+      "n_tables": 3,
+      "n_columns": 14,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "news_report",
+      "n_tables": 3,
+      "n_columns": 13,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "wine_1",
+      "n_tables": 3,
+      "n_columns": 20,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "food"
+    },
+    {
+      "db_id": "customers_and_addresses",
+      "n_tables": 7,
+      "n_columns": 32,
+      "n_foreign_keys": 6,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 7,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "protein_institute",
+      "n_tables": 3,
+      "n_columns": 22,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "science"
+    },
+    {
+      "db_id": "school_player",
+      "n_tables": 4,
+      "n_columns": 26,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "phone_1",
+      "n_tables": 3,
+      "n_columns": 21,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "tvshow",
+      "n_tables": 3,
+      "n_columns": 25,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "entertainment"
+    },
+    {
+      "db_id": "wrestler",
+      "n_tables": 2,
+      "n_columns": 12,
+      "n_foreign_keys": 1,
+      "n_primary_keys": 2,
+      "tables_in_fk_graph": 2,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "customer_complaints",
+      "n_tables": 4,
+      "n_columns": 31,
+      "n_foreign_keys": 3,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "department_management",
+      "n_tables": 3,
+      "n_columns": 13,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "customers_and_products_contacts",
+      "n_tables": 7,
+      "n_columns": 35,
+      "n_foreign_keys": 5,
+      "n_primary_keys": 5,
+      "tables_in_fk_graph": 6,
+      "fk_coverage_pct": 85.7,
+      "domain": "business"
+    },
+    {
+      "db_id": "company_1",
+      "n_tables": 6,
+      "n_columns": 28,
+      "n_foreign_keys": 0,
+      "n_primary_keys": 6,
+      "tables_in_fk_graph": 0,
+      "fk_coverage_pct": 0.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "workshop_paper",
+      "n_tables": 3,
+      "n_columns": 11,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "epinions_1",
+      "n_tables": 4,
+      "n_columns": 12,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "party_host",
+      "n_tables": 3,
+      "n_columns": 13,
+      "n_foreign_keys": 2,
+      "n_primary_keys": 3,
+      "tables_in_fk_graph": 3,
+      "fk_coverage_pct": 100.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "product_catalog",
+      "n_tables": 5,
+      "n_columns": 29,
+      "n_foreign_keys": 4,
+      "n_primary_keys": 4,
+      "tables_in_fk_graph": 4,
+      "fk_coverage_pct": 80.0,
+      "domain": "other"
+    }
+  ],
+  "data_quality": {
+    "dbs_profiled": 166,
+    "sqlite_found": 166,
+    "dbs_with_zero_rows": 7,
+    "mean_null_pct_per_db": 1.55,
+    "max_null_pct_per_db": 45.55,
+    "columns_with_nulls": 178,
+    "total_columns_profiled": 4497,
+    "tables_profiled": 873
+  },
+  "table_analysis_preview": [
+    {
+      "db_id": "perpetrator",
+      "table": "perpetrator",
+      "n_columns": 8,
+      "n_rows": 5,
+      "n_fk_declared": 1,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "perpetrator",
+      "table": "people",
+      "n_columns": 5,
+      "n_rows": 11,
+      "n_fk_declared": 0,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "college_2",
+      "table": "classroom",
+      "n_columns": 3,
+      "n_rows": 30,
+      "n_fk_declared": 0,
+      "n_pk_cols": 2,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "department",
+      "n_columns": 3,
+      "n_rows": 20,
+      "n_fk_declared": 0,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "course",
+      "n_columns": 4,
+      "n_rows": 200,
+      "n_fk_declared": 1,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "instructor",
+      "n_columns": 4,
+      "n_rows": 50,
+      "n_fk_declared": 1,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "section",
+      "n_columns": 7,
+      "n_rows": 100,
+      "n_fk_declared": 3,
+      "n_pk_cols": 4,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "teaches",
+      "n_columns": 5,
+      "n_rows": 100,
+      "n_fk_declared": 5,
+      "n_pk_cols": 5,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "student",
+      "n_columns": 4,
+      "n_rows": 2000,
+      "n_fk_declared": 1,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "takes",
+      "n_columns": 6,
+      "n_rows": 30000,
+      "n_fk_declared": 5,
+      "n_pk_cols": 5,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "advisor",
+      "n_columns": 2,
+      "n_rows": 2000,
+      "n_fk_declared": 2,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "time_slot",
+      "n_columns": 6,
+      "n_rows": 20,
+      "n_fk_declared": 0,
+      "n_pk_cols": 4,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "college_2",
+      "table": "prereq",
+      "n_columns": 2,
+      "n_rows": 100,
+      "n_fk_declared": 2,
+      "n_pk_cols": 2,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "education"
+    },
+    {
+      "db_id": "flight_company",
+      "table": "airport",
+      "n_columns": 6,
+      "n_rows": 9,
+      "n_fk_declared": 0,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "flight_company",
+      "table": "operate_company",
+      "n_columns": 6,
+      "n_rows": 14,
+      "n_fk_declared": 0,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "flight_company",
+      "table": "flight",
+      "n_columns": 8,
+      "n_rows": 13,
+      "n_fk_declared": 2,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "business"
+    },
+    {
+      "db_id": "icfp_1",
+      "table": "Inst",
+      "n_columns": 3,
+      "n_rows": 8,
+      "n_fk_declared": 0,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "icfp_1",
+      "table": "Authors",
+      "n_columns": 3,
+      "n_rows": 13,
+      "n_fk_declared": 0,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "icfp_1",
+      "table": "Papers",
+      "n_columns": 2,
+      "n_rows": 7,
+      "n_fk_declared": 0,
+      "n_pk_cols": 1,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "other"
+    },
+    {
+      "db_id": "icfp_1",
+      "table": "Authorship",
+      "n_columns": 4,
+      "n_rows": 14,
+      "n_fk_declared": 3,
+      "n_pk_cols": 3,
+      "null_cells": 0,
+      "null_pct": 0.0,
+      "domain": "other"
+    }
+  ],
+  "sql_summary": {
+    "splits": {
+      "dev": {
+        "split": "dev",
+        "n_examples": 1034,
+        "n_unique_dbs": 20,
+        "sql_tokens": {
+          "min": 4,
+          "max": 58,
+          "mean": 15.62,
+          "median": 13.0
+        },
+        "sql_complexity_pct": {
+          "has_join": 39.5,
+          "has_subquery": 15.4,
+          "has_group_by": 26.8,
+          "has_order_by": 22.9,
+          "has_having": 7.6,
+          "has_limit": 18.3,
+          "has_distinct": 8.4,
+          "has_union": 1.1,
+          "has_intersect": 3.9,
+          "has_except": 3.0,
+          "has_aggregation": 53.3,
+          "has_where": 47.7,
+          "has_like": 1.4,
+          "has_between": 0.8,
+          "has_in": 4.8
+        },
+        "complexity_tiers": {
+          "simple": {
+            "count": 428,
+            "pct": 41.4
+          },
+          "moderate": {
+            "count": 282,
+            "pct": 27.3
+          },
+          "complex": {
+            "count": 284,
+            "pct": 27.5
+          },
+          "extra": {
+            "count": 40,
+            "pct": 3.9
+          }
+        },
+        "join_distribution": {
+          "0": 626,
+          "1": 320,
+          "2": 72,
+          "3": 10,
+          "4": 6
+        },
+        "hardness": {
+          "medium": 582,
+          "easy": 242,
+          "hard": 117,
+          "extra hard": 93
+        },
+        "aggregation_functions": {
+          "COUNT": 428,
+          "AVG": 71,
+          "MAX": 42,
+          "SUM": 35,
+          "MIN": 27
+        }
+      },
+      "all": {
+        "split": "all",
+        "n_examples": 1034,
+        "n_unique_dbs": 20,
+        "sql_tokens": {
+          "min": 4,
+          "max": 58,
+          "mean": 15.62,
+          "median": 13.0
+        },
+        "sql_complexity_pct": {
+          "has_join": 39.5,
+          "has_subquery": 15.4,
+          "has_group_by": 26.8,
+          "has_order_by": 22.9,
+          "has_having": 7.6,
+          "has_limit": 18.3,
+          "has_distinct": 8.4,
+          "has_union": 1.1,
+          "has_intersect": 3.9,
+          "has_except": 3.0,
+          "has_aggregation": 53.3,
+          "has_where": 47.7,
+          "has_like": 1.4,
+          "has_between": 0.8,
+          "has_in": 4.8
+        },
+        "complexity_tiers": {
+          "simple": {
+            "count": 428,
+            "pct": 41.4
+          },
+          "moderate": {
+            "count": 282,
+            "pct": 27.3
+          },
+          "complex": {
+            "count": 284,
+            "pct": 27.5
+          },
+          "extra": {
+            "count": 40,
+            "pct": 3.9
+          }
+        },
+        "join_distribution": {
+          "0": 626,
+          "1": 320,
+          "2": 72,
+          "3": 10,
+          "4": 6
+        },
+        "hardness": {
+          "medium": 582,
+          "easy": 242,
+          "hard": 117,
+          "extra hard": 93
+        },
+        "aggregation_functions": {
+          "COUNT": 428,
+          "AVG": 71,
+          "MAX": 42,
+          "SUM": 35,
+          "MIN": 27
+        }
+      }
+    },
+    "n_examples_total": 1034,
+    "join_types": {
+      "INNER": 518
+    },
+    "where_operators": {
+      "=": 353,
+      ">": 63,
+      "IN": 50,
+      "<": 32,
+      "!=/<>": 22,
+      "LIKE": 14,
+      "BETWEEN": 6,
+      "<=": 2,
+      ">=": 1
+    },
+    "aggregations": {
+      "COUNT": 428,
+      "AVG": 71,
+      "MAX": 42,
+      "SUM": 35,
+      "MIN": 27
+    },
+    "hardness": {
+      "medium": 582,
+      "easy": 242,
+      "hard": 117,
+      "extra hard": 93
+    },
+    "topology": {
+      "single": 575,
+      "binary": 393,
+      "chain": 47,
+      "mesh": 10,
+      "chain_or_star": 6,
+      "partial": 3
+    },
+    "subquery_locations": {
+      "WHERE": 87,
+      "FROM": 29,
+      "ON": 27,
+      "OR": 14,
+      "AND": 6,
+      "HAVING": 2
+    },
+    "table_ref_distribution": {
+      "1": 575,
+      "2": 393,
+      "3": 60,
+      "4": 6
+    },
+    "join_count_distribution": {
+      "0": 626,
+      "1": 320,
+      "2": 72,
+      "3": 10,
+      "4": 6
+    },
+    "fk_alignment": {
+      "join_conditions": 516,
+      "fk_aligned": 484,
+      "pct": 93.8
+    },
+    "db_join_rates": [
+      {
+        "db_id": "car_1",
+        "n_queries": 92,
+        "n_with_join": 58,
+        "join_rate_pct": 63.0
+      },
+      {
+        "db_id": "flight_2",
+        "n_queries": 80,
+        "n_with_join": 46,
+        "join_rate_pct": 57.5
+      },
+      {
+        "db_id": "pets_1",
+        "n_queries": 42,
+        "n_with_join": 24,
+        "join_rate_pct": 57.1
+      },
+      {
+        "db_id": "network_1",
+        "n_queries": 56,
+        "n_with_join": 28,
+        "join_rate_pct": 50.0
+      },
+      {
+        "db_id": "real_estate_properties",
+        "n_queries": 4,
+        "n_with_join": 2,
+        "join_rate_pct": 50.0
+      },
+      {
+        "db_id": "dog_kennels",
+        "n_queries": 82,
+        "n_with_join": 38,
+        "join_rate_pct": 46.3
+      },
+      {
+        "db_id": "student_transcripts_tracking",
+        "n_queries": 78,
+        "n_with_join": 34,
+        "join_rate_pct": 43.6
+      },
+      {
+        "db_id": "museum_visit",
+        "n_queries": 18,
+        "n_with_join": 7,
+        "join_rate_pct": 38.9
+      },
+      {
+        "db_id": "battle_death",
+        "n_queries": 16,
+        "n_with_join": 6,
+        "join_rate_pct": 37.5
+      },
+      {
+        "db_id": "world_1",
+        "n_queries": 120,
+        "n_with_join": 44,
+        "join_rate_pct": 36.7
+      },
+      {
+        "db_id": "poker_player",
+        "n_queries": 40,
+        "n_with_join": 14,
+        "join_rate_pct": 35.0
+      },
+      {
+        "db_id": "cre_Doc_Template_Mgt",
+        "n_queries": 84,
+        "n_with_join": 28,
+        "join_rate_pct": 33.3
+      },
+      {
+        "db_id": "course_teach",
+        "n_queries": 30,
+        "n_with_join": 10,
+        "join_rate_pct": 33.3
+      },
+      {
+        "db_id": "voter_1",
+        "n_queries": 15,
+        "n_with_join": 5,
+        "join_rate_pct": 33.3
+      },
+      {
+        "db_id": "concert_singer",
+        "n_queries": 45,
+        "n_with_join": 14,
+        "join_rate_pct": 31.1
+      },
+      {
+        "db_id": "singer",
+        "n_queries": 30,
+        "n_with_join": 8,
+        "join_rate_pct": 26.7
+      },
+      {
+        "db_id": "orchestra",
+        "n_queries": 40,
+        "n_with_join": 10,
+        "join_rate_pct": 25.0
+      },
+      {
+        "db_id": "tvshow",
+        "n_queries": 62,
+        "n_with_join": 14,
+        "join_rate_pct": 22.6
+      },
+      {
+        "db_id": "employee_hire_evaluation",
+        "n_queries": 38,
+        "n_with_join": 8,
+        "join_rate_pct": 21.1
+      },
+      {
+        "db_id": "wta_1",
+        "n_queries": 62,
+        "n_with_join": 10,
+        "join_rate_pct": 16.1
+      }
+    ]
+  },
+  "sql_splits": {
+    "dev": {
+      "split": "dev",
+      "n_examples": 1034,
+      "n_unique_dbs": 20,
+      "sql_tokens": {
+        "min": 4,
+        "max": 58,
+        "mean": 15.62,
+        "median": 13.0
+      },
+      "sql_complexity_pct": {
+        "has_join": 39.5,
+        "has_subquery": 15.4,
+        "has_group_by": 26.8,
+        "has_order_by": 22.9,
+        "has_having": 7.6,
+        "has_limit": 18.3,
+        "has_distinct": 8.4,
+        "has_union": 1.1,
+        "has_intersect": 3.9,
+        "has_except": 3.0,
+        "has_aggregation": 53.3,
+        "has_where": 47.7,
+        "has_like": 1.4,
+        "has_between": 0.8,
+        "has_in": 4.8
+      },
+      "complexity_tiers": {
+        "simple": {
+          "count": 428,
+          "pct": 41.4
+        },
+        "moderate": {
+          "count": 282,
+          "pct": 27.3
+        },
+        "complex": {
+          "count": 284,
+          "pct": 27.5
+        },
+        "extra": {
+          "count": 40,
+          "pct": 3.9
+        }
+      },
+      "join_distribution": {
+        "0": 626,
+        "1": 320,
+        "2": 72,
+        "3": 10,
+        "4": 6
+      },
+      "hardness": {
+        "medium": 582,
+        "easy": 242,
+        "hard": 117,
+        "extra hard": 93
+      },
+      "aggregation_functions": {
+        "COUNT": 428,
+        "AVG": 71,
+        "MAX": 42,
+        "SUM": 35,
+        "MIN": 27
+      }
+    },
+    "all": {
+      "split": "all",
+      "n_examples": 1034,
+      "n_unique_dbs": 20,
+      "sql_tokens": {
+        "min": 4,
+        "max": 58,
+        "mean": 15.62,
+        "median": 13.0
+      },
+      "sql_complexity_pct": {
+        "has_join": 39.5,
+        "has_subquery": 15.4,
+        "has_group_by": 26.8,
+        "has_order_by": 22.9,
+        "has_having": 7.6,
+        "has_limit": 18.3,
+        "has_distinct": 8.4,
+        "has_union": 1.1,
+        "has_intersect": 3.9,
+        "has_except": 3.0,
+        "has_aggregation": 53.3,
+        "has_where": 47.7,
+        "has_like": 1.4,
+        "has_between": 0.8,
+        "has_in": 4.8
+      },
+      "complexity_tiers": {
+        "simple": {
+          "count": 428,
+          "pct": 41.4
+        },
+        "moderate": {
+          "count": 282,
+          "pct": 27.3
+        },
+        "complex": {
+          "count": 284,
+          "pct": 27.5
+        },
+        "extra": {
+          "count": 40,
+          "pct": 3.9
+        }
+      },
+      "join_distribution": {
+        "0": 626,
+        "1": 320,
+        "2": 72,
+        "3": 10,
+        "4": 6
+      },
+      "hardness": {
+        "medium": 582,
+        "easy": 242,
+        "hard": 117,
+        "extra hard": 93
+      },
+      "aggregation_functions": {
+        "COUNT": 428,
+        "AVG": 71,
+        "MAX": 42,
+        "SUM": 35,
+        "MIN": 27
+      }
+    }
+  }
+}

@@ -1,0 +1,1035 @@
+split,db_id,n_joins,n_tables_ref,tables,join_types,topology,hardness,tier,n_fk_join_conds,n_join_conds,has_subquery,has_group_by,has_aggregation,has_where,agg_funcs,sql_tokens,query
+dev,concert_singer,0,1,singer,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM singer
+dev,concert_singer,0,1,singer,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM singer
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT name ,  country ,  age FROM singer ORDER BY age DESC"
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT name ,  country ,  age FROM singer ORDER BY age DESC"
+dev,concert_singer,0,1,singer,,single,medium,simple,0,0,0,0,1,1,AVG|MIN|MAX,12,"SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'"
+dev,concert_singer,0,1,singer,,single,medium,simple,0,0,0,0,1,1,AVG|MIN|MAX,12,"SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'"
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,11,"SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1"
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,11,"SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1"
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,9,SELECT DISTINCT country FROM singer WHERE age  >  20
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,9,SELECT DISTINCT country FROM singer WHERE age  >  20
+dev,concert_singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT country ,  count(*) FROM singer GROUP BY country"
+dev,concert_singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT country ,  count(*) FROM singer GROUP BY country"
+dev,concert_singer,0,1,singer,,single,hard,moderate,0,0,1,0,1,1,AVG,11,SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+dev,concert_singer,0,1,singer,,single,hard,moderate,0,0,1,0,1,1,AVG,11,SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+dev,concert_singer,0,1,stadium,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000"
+dev,concert_singer,0,1,stadium,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000"
+dev,concert_singer,0,1,stadium,,single,medium,simple,0,0,0,0,1,0,MAX,5,"select max(capacity), average from stadium"
+dev,concert_singer,0,1,stadium,,single,medium,simple,0,0,0,0,1,0,AVG|MAX,6,"select avg(capacity) ,  max(capacity) from stadium"
+dev,concert_singer,0,1,stadium,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1"
+dev,concert_singer,0,1,stadium,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1"
+dev,concert_singer,0,1,concert,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+dev,concert_singer,0,1,concert,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+dev,concert_singer,1,2,concert|stadium,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id"
+dev,concert_singer,1,2,concert|stadium,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id"
+dev,concert_singer,1,2,concert|stadium,INNER,binary,hard,complex,1,1,0,1,1,1,COUNT,29,"SELECT T2.name ,  T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  >=  2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1"
+dev,concert_singer,1,2,concert|stadium,INNER,binary,hard,complex,1,1,0,1,1,1,COUNT,29,"select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >  2013 group by t2.stadium_id order by count(*) desc limit 1"
+dev,concert_singer,0,1,concert,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+dev,concert_singer,0,1,concert,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+dev,concert_singer,0,2,stadium|concert,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+dev,concert_singer,0,2,stadium|concert,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+dev,concert_singer,0,1,singer,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT country FROM singer WHERE age  >  40 INTERSECT SELECT country FROM singer WHERE age  <  30
+dev,concert_singer,1,2,stadium|concert,INNER,binary,extra hard,complex,1,1,1,0,0,1,,23,SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014
+dev,concert_singer,1,2,stadium|concert,INNER,binary,extra hard,complex,1,1,1,0,0,1,,23,SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014
+dev,concert_singer,1,2,singer_in_concert|concert,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id  =  T2.concert_id GROUP BY T2.concert_id"
+dev,concert_singer,1,2,singer_in_concert|concert,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"select t2.concert_name ,  t2.theme ,  count(*) from singer_in_concert as t1 join concert as t2 on t1.concert_id  =  t2.concert_id group by t2.concert_id"
+dev,concert_singer,1,2,singer_in_concert|singer,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id"
+dev,concert_singer,1,2,singer_in_concert|singer,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id"
+dev,concert_singer,2,3,singer_in_concert|singer|concert,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,26,SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014
+dev,concert_singer,2,3,singer_in_concert|singer|concert,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,26,SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'"
+dev,concert_singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'"
+dev,concert_singer,2,2,concert|stadium,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,41,"SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015"
+dev,concert_singer,2,2,concert|stadium,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,41,"SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015"
+dev,concert_singer,0,2,concert|stadium,,binary,hard,moderate,0,0,1,0,1,1,COUNT,17,select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+dev,concert_singer,0,2,concert|stadium,,binary,hard,moderate,0,0,1,0,1,1,COUNT,17,select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+dev,pets_1,0,1,pets,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM pets WHERE weight  >  10
+dev,pets_1,0,1,pets,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM pets WHERE weight  >  10
+dev,pets_1,0,1,pets,,single,easy,simple,0,0,0,0,0,0,,9,SELECT weight FROM pets ORDER BY pet_age LIMIT 1
+dev,pets_1,0,1,pets,,single,easy,simple,0,0,0,0,0,0,,9,SELECT weight FROM pets ORDER BY pet_age LIMIT 1
+dev,pets_1,0,1,pets,,single,medium,moderate,0,0,0,1,1,0,MAX,9,"SELECT max(weight) ,  petType FROM pets GROUP BY petType"
+dev,pets_1,0,1,pets,,single,medium,moderate,0,0,0,1,1,0,MAX,9,"SELECT max(weight) ,  petType FROM pets GROUP BY petType"
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,hard,complex,2,2,0,0,1,1,COUNT,30,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,hard,complex,2,2,0,0,1,1,COUNT,30,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'
+dev,pets_1,0,1,pets,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT pettype) FROM pets
+dev,pets_1,0,1,pets,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT pettype) FROM pets
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,31,SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,31,SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'
+dev,pets_1,4,3,student|has_pet|pets,INNER|INNER|INNER|INNER,mesh,extra hard,extra,4,4,1,0,0,1,,53,select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat' intersect select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog'
+dev,pets_1,4,3,student|has_pet|pets,INNER|INNER|INNER|INNER,mesh,extra hard,extra,4,4,1,0,0,1,,53,SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog'
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,extra hard,complex,2,2,1,0,0,1,,36,"SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,extra hard,complex,2,2,1,0,0,1,,36,"SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,extra hard,extra,2,2,1,0,0,1,,31,SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,extra hard,extra,2,2,1,0,0,1,,31,SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'
+dev,pets_1,4,3,student|has_pet|pets,INNER|INNER|INNER|INNER,mesh,extra hard,complex,4,4,1,0,0,1,,58,"SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+dev,pets_1,4,3,student|has_pet|pets,INNER|INNER|INNER|INNER,mesh,extra hard,complex,4,4,1,0,0,1,,58,"SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+dev,pets_1,0,1,pets,,single,easy,simple,0,0,0,0,0,0,,11,"SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1"
+dev,pets_1,0,1,pets,,single,easy,simple,0,0,0,0,0,0,,11,"SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1"
+dev,pets_1,0,1,pets,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT petid ,  weight FROM pets WHERE pet_age  >  1"
+dev,pets_1,0,1,pets,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT petid ,  weight FROM pets WHERE pet_age  >  1"
+dev,pets_1,0,1,pets,,single,medium,moderate,0,0,0,1,1,0,AVG|MAX,11,"SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype"
+dev,pets_1,0,1,pets,,single,medium,moderate,0,0,0,1,1,0,AVG|MAX,11,"SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype"
+dev,pets_1,0,1,pets,,single,medium,moderate,0,0,0,1,1,0,AVG,9,"SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype"
+dev,pets_1,0,1,pets,,single,medium,moderate,0,0,0,1,1,0,AVG,9,"SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype"
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,moderate,1,1,0,0,0,0,,17,"SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid"
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,moderate,1,1,0,0,0,0,,17,"SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid"
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith'
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith'
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT count(*) ,  T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid"
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"select count(*) ,  t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid group by t1.stuid"
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.fname ,  T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid HAVING count(*)  >  1"
+dev,pets_1,1,2,student|has_pet,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.fname ,  T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid HAVING count(*)  >  1"
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,30,SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pet_age  =  3 AND T3.pettype  =  'cat'
+dev,pets_1,2,3,student|has_pet|pets,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,30,SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pet_age  =  3 AND T3.pettype  =  'cat'
+dev,pets_1,0,2,student|has_pet,,binary,hard,moderate,0,0,1,0,1,1,AVG,12,select avg(age) from student where stuid not in (select stuid from has_pet)
+dev,pets_1,0,2,student|has_pet,,binary,hard,moderate,0,0,1,0,1,1,AVG,12,select avg(age) from student where stuid not in (select stuid from has_pet)
+dev,car_1,0,1,CONTINENTS,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM CONTINENTS;
+dev,car_1,0,1,CONTINENTS,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM CONTINENTS;
+dev,car_1,1,2,CONTINENTS|COUNTRIES,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT T1.ContId ,  T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.Continent GROUP BY T1.ContId;"
+dev,car_1,1,2,CONTINENTS|COUNTRIES,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT T1.ContId ,  T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.Continent GROUP BY T1.ContId;"
+dev,car_1,0,1,COUNTRIES,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM COUNTRIES;
+dev,car_1,0,1,COUNTRIES,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM COUNTRIES;
+dev,car_1,1,2,CAR_MAKERS|MODEL_LIST,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;"
+dev,car_1,1,2,CAR_MAKERS|MODEL_LIST,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;"
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,hard,complex,1,1,1,0,1,1,AVG,21,SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Weight  <  (SELECT avg(Weight) FROM CARS_DATA)
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,hard,complex,1,1,1,0,1,1,AVG,21,SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Weight  <  (SELECT avg(Weight) FROM CARS_DATA)
+dev,car_1,3,4,CAR_MAKERS|MODEL_LIST|CAR_NAMES|CARS_DATA,INNER|INNER|INNER,chain_or_star,hard,complex,3,3,0,0,0,1,,35,SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model JOIN CARS_DATA AS T4 ON T3.MakeId  =  T4.id WHERE T4.year  =  '1970';
+dev,car_1,3,4,CAR_MAKERS|MODEL_LIST|CAR_NAMES|CARS_DATA,INNER|INNER|INNER,chain_or_star,hard,complex,3,3,0,0,0,1,,35,SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model JOIN CARS_DATA AS T4 ON T3.MakeId  =  T4.id WHERE T4.year  =  '1970';
+dev,car_1,1,2,CARS_DATA|CAR_NAMES,INNER,binary,hard,complex,1,1,1,0,1,1,MIN,23,"SELECT T2.Make ,  T1.Year FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T1.Year  =  (SELECT min(YEAR) FROM CARS_DATA);"
+dev,car_1,1,2,CARS_DATA|CAR_NAMES,INNER,binary,hard,complex,1,1,1,0,1,1,MIN,23,"SELECT T2.Make ,  T1.Year FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T1.Year  =  (SELECT min(YEAR) FROM CARS_DATA);"
+dev,car_1,2,3,MODEL_LIST|CAR_NAMES|CARS_DATA,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,27,SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.model  =  T2.model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.id WHERE T3.year  >  1980;
+dev,car_1,2,3,MODEL_LIST|CAR_NAMES|CARS_DATA,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,27,SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.model  =  T2.model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.id WHERE T3.year  >  1980;
+dev,car_1,2,3,CONTINENTS|COUNTRIES|car_makers,INNER|INNER,chain,hard,complex,2,2,0,1,1,0,COUNT,27,"SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;"
+dev,car_1,2,3,CONTINENTS|COUNTRIES|car_makers,INNER|INNER,chain,hard,complex,2,2,0,1,1,0,COUNT,27,"SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;"
+dev,car_1,1,2,CAR_MAKERS|COUNTRIES,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T2.CountryName FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId GROUP BY T1.Country ORDER BY Count(*) DESC LIMIT 1;
+dev,car_1,1,2,CAR_MAKERS|COUNTRIES,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T2.CountryName FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId GROUP BY T1.Country ORDER BY Count(*) DESC LIMIT 1;
+dev,car_1,1,2,model_list|car_makers,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"select count(*) ,  t2.fullname from model_list as t1 join car_makers as t2 on t1.maker  =  t2.id group by t2.id;"
+dev,car_1,1,2,MODEL_LIST|CAR_MAKERS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;"
+dev,car_1,1,2,CARS_DATA|CAR_NAMES,INNER,binary,medium,moderate,1,1,0,0,0,1,,21,SELECT T1.Accelerate FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T2.Make  =  'amc hornet sportabout (sw)';
+dev,car_1,1,2,CARS_DATA|CAR_NAMES,INNER,binary,medium,moderate,1,1,0,0,0,1,,21,SELECT T1.Accelerate FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T2.Make  =  'amc hornet sportabout (sw)';
+dev,car_1,1,2,CAR_MAKERS|COUNTRIES,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'france';
+dev,car_1,1,2,CAR_MAKERS|COUNTRIES,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'france';
+dev,car_1,2,3,MODEL_LIST|CAR_MAKERS|COUNTRIES,INNER|INNER,chain,hard,complex,2,2,0,0,1,1,COUNT,26,SELECT count(*) FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';
+dev,car_1,2,3,MODEL_LIST|CAR_MAKERS|COUNTRIES,INNER|INNER,chain,hard,complex,2,2,0,0,1,1,COUNT,26,SELECT count(*) FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,AVG,8,SELECT avg(mpg) FROM CARS_DATA WHERE Cylinders  =  4;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,AVG,8,SELECT avg(mpg) FROM CARS_DATA WHERE Cylinders  =  4;
+dev,car_1,0,1,cars_data,,single,medium,simple,0,0,0,0,1,1,MIN,12,select min(weight) from cars_data where cylinders  =  8 and year  =  1974
+dev,car_1,0,1,cars_data,,single,medium,simple,0,0,0,0,1,1,MIN,12,select min(weight) from cars_data where cylinders  =  8 and year  =  1974
+dev,car_1,0,1,MODEL_LIST,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Maker ,  Model FROM MODEL_LIST;"
+dev,car_1,0,1,MODEL_LIST,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Maker ,  Model FROM MODEL_LIST;"
+dev,car_1,1,2,COUNTRIES|CAR_MAKERS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.CountryName ,  T1.CountryId FROM COUNTRIES AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.CountryId HAVING count(*)  >=  1;"
+dev,car_1,1,2,COUNTRIES|CAR_MAKERS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.CountryName ,  T1.CountryId FROM COUNTRIES AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.CountryId HAVING count(*)  >=  1;"
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM CARS_DATA WHERE horsepower  >  150;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM CARS_DATA WHERE horsepower  >  150;
+dev,car_1,0,1,CARS_DATA,,single,medium,moderate,0,0,0,1,1,0,AVG,9,"SELECT avg(Weight) ,  YEAR FROM CARS_DATA GROUP BY YEAR;"
+dev,car_1,0,1,CARS_DATA,,single,medium,moderate,0,0,0,1,1,0,AVG,9,"SELECT avg(Weight) ,  YEAR FROM CARS_DATA GROUP BY YEAR;"
+dev,car_1,2,3,COUNTRIES|CONTINENTS|CAR_MAKERS,INNER|INNER,chain,hard,extra,2,2,0,1,1,1,COUNT,33,SELECT T1.CountryName FROM COUNTRIES AS T1 JOIN CONTINENTS AS T2 ON T1.Continent  =  T2.ContId JOIN CAR_MAKERS AS T3 ON T1.CountryId  =  T3.Country WHERE T2.Continent  =  'europe' GROUP BY T1.CountryName HAVING count(*)  >=  3;
+dev,car_1,2,3,COUNTRIES|CONTINENTS|CAR_MAKERS,INNER|INNER,chain,hard,extra,2,2,0,1,1,1,COUNT,33,SELECT T1.CountryName FROM COUNTRIES AS T1 JOIN CONTINENTS AS T2 ON T1.Continent  =  T2.ContId JOIN CAR_MAKERS AS T3 ON T1.CountryId  =  T3.Country WHERE T2.Continent  =  'europe' GROUP BY T1.CountryName HAVING count(*)  >=  3;
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,0,1,,26,"SELECT T2.horsepower ,  T1.Make FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.cylinders  =  3 ORDER BY T2.horsepower DESC LIMIT 1;"
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,0,1,,26,"SELECT T2.horsepower ,  T1.Make FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.cylinders  =  3 ORDER BY T2.horsepower DESC LIMIT 1;"
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.mpg DESC LIMIT 1;
+dev,car_1,1,2,car_names|cars_data,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,select t1.model from car_names as t1 join cars_data as t2 on t1.makeid  =  t2.id order by t2.mpg desc limit 1;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,AVG,8,SELECT avg(horsepower) FROM CARS_DATA WHERE YEAR  <  1980;
+dev,car_1,0,1,cars_data,,single,medium,simple,0,0,0,0,1,1,AVG,8,select avg(horsepower) from cars_data where year  <  1980;
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,1,1,AVG,18,SELECT avg(T2.edispl) FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T1.Model  =  'volvo';
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,1,1,AVG,18,SELECT avg(T2.edispl) FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T1.Model  =  'volvo';
+dev,car_1,0,1,CARS_DATA,,single,medium,moderate,0,0,0,1,1,0,MAX,9,"SELECT max(Accelerate) ,  Cylinders FROM CARS_DATA GROUP BY Cylinders;"
+dev,car_1,0,1,CARS_DATA,,single,medium,moderate,0,0,0,1,1,0,MAX,9,"SELECT max(Accelerate) ,  Cylinders FROM CARS_DATA GROUP BY Cylinders;"
+dev,car_1,0,1,CAR_NAMES,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;
+dev,car_1,0,1,CAR_NAMES,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM CARS_DATA WHERE Cylinders  >  4;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM CARS_DATA WHERE Cylinders  >  4;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM CARS_DATA WHERE YEAR  =  1980;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM CARS_DATA WHERE YEAR  =  1980;
+dev,car_1,1,2,CAR_MAKERS|MODEL_LIST,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,20,SELECT count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';
+dev,car_1,1,2,CAR_MAKERS|MODEL_LIST,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,20,SELECT count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';
+dev,car_1,1,2,CAR_MAKERS|MODEL_LIST,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.FullName ,  T1.Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;"
+dev,car_1,1,2,CAR_MAKERS|MODEL_LIST,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.FullName ,  T1.Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;"
+dev,car_1,3,4,CAR_NAMES|MODEL_LIST|CAR_MAKERS|CARS_DATA,INNER|INNER|INNER,chain_or_star,hard,complex,3,3,0,0,0,1,,40,SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model  =  T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker  =  T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId  =  T4.Id WHERE T3.FullName  =  'General Motors' OR T4.weight  >  3500;
+dev,car_1,3,4,CAR_NAMES|MODEL_LIST|CAR_MAKERS|CARS_DATA,INNER|INNER|INNER,chain_or_star,hard,complex,3,3,0,0,0,1,,40,SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model  =  T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker  =  T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId  =  T4.Id WHERE T3.FullName  =  'General Motors' OR T4.weight  >  3500;
+dev,car_1,0,1,cars_data,,single,easy,simple,0,0,0,0,0,1,,11,select distinct year from cars_data where weight between 3000 and 4000;
+dev,car_1,0,1,cars_data,,single,easy,simple,0,0,0,0,0,1,,11,select distinct year from cars_data where weight between 3000 and 4000;
+dev,car_1,0,1,CARS_DATA,,single,easy,simple,0,0,0,0,0,0,,12,SELECT T1.horsepower FROM CARS_DATA AS T1 ORDER BY T1.accelerate DESC LIMIT 1;
+dev,car_1,0,1,CARS_DATA,,single,easy,simple,0,0,0,0,0,0,,12,SELECT T1.horsepower FROM CARS_DATA AS T1 ORDER BY T1.accelerate DESC LIMIT 1;
+dev,car_1,1,2,CARS_DATA|CAR_NAMES,INNER,binary,medium,moderate,1,1,0,0,0,1,,24,SELECT T1.cylinders FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T2.Model  =  'volvo' ORDER BY T1.accelerate ASC LIMIT 1;
+dev,car_1,1,2,CARS_DATA|CAR_NAMES,INNER,binary,medium,moderate,1,1,0,0,0,1,,24,SELECT T1.cylinders FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T2.Model  =  'volvo' ORDER BY T1.accelerate ASC LIMIT 1;
+dev,car_1,0,1,CARS_DATA,,single,hard,moderate,0,0,1,0,1,1,COUNT,19,SELECT COUNT(*) FROM CARS_DATA WHERE Accelerate  >  ( SELECT Accelerate FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1 );
+dev,car_1,0,1,CARS_DATA,,single,hard,moderate,0,0,1,0,1,1,COUNT,19,SELECT COUNT(*) FROM CARS_DATA WHERE Accelerate  >  ( SELECT Accelerate FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1 );
+dev,car_1,1,2,countries|car_makers,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT|COUNT,21,select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2
+dev,car_1,1,2,countries|car_makers,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT|COUNT,21,select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT COUNT(*) FROM CARS_DATA WHERE Cylinders  >  6;
+dev,car_1,0,1,CARS_DATA,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT COUNT(*) FROM CARS_DATA WHERE Cylinders  >  6;
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,0,1,,24,SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Cylinders  =  4 ORDER BY T2.horsepower DESC LIMIT 1;
+dev,car_1,1,2,CAR_NAMES|CARS_DATA,INNER,binary,medium,moderate,1,1,0,0,0,1,,24,SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Cylinders  =  4 ORDER BY T2.horsepower DESC LIMIT 1;
+dev,car_1,1,2,CARS_DATA|CAR_NAMES,INNER,binary,hard,complex,1,1,1,0,1,1,MIN,27,"SELECT T2.MakeId ,  T2.Make FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T1.Horsepower  >  (SELECT min(Horsepower) FROM CARS_DATA) AND T1.Cylinders  <=  3;"
+dev,car_1,1,2,cars_data|car_names,INNER,binary,hard,complex,1,1,1,0,1,1,MIN,27,"select t2.makeid ,  t2.make from cars_data as t1 join car_names as t2 on t1.id  =  t2.makeid where t1.horsepower  >  (select min(horsepower) from cars_data) and t1.cylinders  <  4;"
+dev,car_1,0,1,cars_data,,single,medium,simple,0,0,0,0,1,1,MAX,12,select max(mpg) from cars_data where cylinders  =  8 or year  <  1980
+dev,car_1,0,1,cars_data,,single,medium,simple,0,0,0,0,1,1,MAX,12,select max(mpg) from cars_data where cylinders  =  8 or year  <  1980
+dev,car_1,3,4,MODEL_LIST|CAR_NAMES|CARS_DATA|CAR_MAKERS,INNER|INNER|INNER,chain_or_star,hard,complex,3,3,0,0,0,1,,41,SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.Model  =  T2.Model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.Id JOIN CAR_MAKERS AS T4 ON T1.Maker  =  T4.Id WHERE T3.weight  <  3500 AND T4.FullName != 'Ford Motor Company';
+dev,car_1,3,4,MODEL_LIST|CAR_NAMES|CARS_DATA|CAR_MAKERS,INNER|INNER|INNER,chain_or_star,hard,complex,3,3,0,0,0,1,,41,SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.Model  =  T2.Model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.Id JOIN CAR_MAKERS AS T4 ON T1.Maker  =  T4.Id WHERE T3.weight  <  3500 AND T4.FullName != 'Ford Motor Company';
+dev,car_1,1,2,countries|CAR_MAKERS,INNER,binary,extra hard,complex,1,1,1,0,0,0,,19,SELECT CountryName FROM countries EXCEPT SELECT T1.CountryName FROM countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.countryId  =  T2.Country;
+dev,car_1,1,2,countries|CAR_MAKERS,INNER,binary,extra hard,complex,1,1,1,0,0,0,,19,SELECT CountryName FROM countries EXCEPT SELECT T1.CountryName FROM countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.countryId  =  T2.Country;
+dev,car_1,3,3,car_makers|model_list|car_names,INNER|INNER|INNER,mesh,extra hard,extra,3,3,1,1,1,0,COUNT|COUNT,55,"select t1.id ,  t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker group by t1.id having count(*)  >=  2 intersect select t1.id ,  t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker join car_names as t3 on t2.model  =  t3.model group by t1.id having count(*)  >  3;"
+dev,car_1,3,3,CAR_MAKERS|MODEL_LIST|CAR_NAMES,INNER|INNER|INNER,mesh,extra hard,extra,3,3,1,1,1,0,COUNT|COUNT,55,"SELECT T1.Id ,  T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >=  2 INTERSECT SELECT T1.Id ,  T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model GROUP BY T1.Id HAVING count(*)  >  3;"
+dev,car_1,3,3,Countries|CAR_MAKERS|MODEL_LIST,INNER|INNER|INNER,mesh,extra hard,extra,3,3,1,1,1,1,COUNT,52,"SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';"
+dev,car_1,3,3,countries|car_makers|model_list,INNER|INNER|INNER,mesh,extra hard,extra,3,3,1,1,1,1,COUNT,52,"select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  3 union select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country join model_list as t3 on t2.id  =  t3.maker where t3.model  =  'fiat';"
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Country FROM AIRLINES WHERE Airline  =  ""JetBlue Airways"""
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Country FROM AIRLINES WHERE Airline  =  ""JetBlue Airways"""
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Abbreviation FROM AIRLINES WHERE Airline  =  ""JetBlue Airways"""
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Abbreviation FROM AIRLINES WHERE Airline  =  ""JetBlue Airways"""
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Airline ,  Abbreviation FROM AIRLINES WHERE Country  =  ""USA"""
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Airline ,  Abbreviation FROM AIRLINES WHERE Country  =  ""USA"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT AirportCode ,  AirportName FROM AIRPORTS WHERE city  =  ""Anthony"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT AirportCode ,  AirportName FROM AIRPORTS WHERE city  =  ""Anthony"""
+dev,flight_2,0,1,AIRLINES,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM AIRLINES
+dev,flight_2,0,1,AIRLINES,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM AIRLINES
+dev,flight_2,0,1,AIRPORTS,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM AIRPORTS
+dev,flight_2,0,1,AIRPORTS,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM AIRPORTS
+dev,flight_2,0,1,FLIGHTS,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM FLIGHTS
+dev,flight_2,0,1,FLIGHTS,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM FLIGHTS
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Airline FROM AIRLINES WHERE Abbreviation  =  ""UAL"""
+dev,flight_2,0,1,AIRLINES,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Airline FROM AIRLINES WHERE Abbreviation  =  ""UAL"""
+dev,flight_2,0,1,AIRLINES,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM AIRLINES WHERE Country  =  ""USA"""
+dev,flight_2,0,1,AIRLINES,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM AIRLINES WHERE Country  =  ""USA"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT City ,  Country FROM AIRPORTS WHERE AirportName  =  ""Alton"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT City ,  Country FROM AIRPORTS WHERE AirportName  =  ""Alton"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT AirportName FROM AIRPORTS WHERE AirportCode  =  ""AKO"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT AirportName FROM AIRPORTS WHERE AirportCode  =  ""AKO"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT AirportName FROM AIRPORTS WHERE City = ""Aberdeen"""
+dev,flight_2,0,1,AIRPORTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT AirportName FROM AIRPORTS WHERE City = ""Aberdeen"""
+dev,flight_2,0,1,FLIGHTS,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM FLIGHTS WHERE SourceAirport  =  ""APG"""
+dev,flight_2,0,1,FLIGHTS,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM FLIGHTS WHERE SourceAirport  =  ""APG"""
+dev,flight_2,0,1,FLIGHTS,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM FLIGHTS WHERE DestAirport  =  ""ATO"""
+dev,flight_2,0,1,FLIGHTS,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM FLIGHTS WHERE DestAirport  =  ""ATO"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.SourceAirport  =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.SourceAirport  =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,2,2,FLIGHTS|AIRPORTS,INNER|INNER,binary,hard,complex,2,2,0,0,1,1,COUNT,30,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode JOIN AIRPORTS AS T3 ON T1.SourceAirport  =  T3.AirportCode WHERE T2.City  =  ""Ashley"" AND T3.City  =  ""Aberdeen"""
+dev,flight_2,2,2,FLIGHTS|AIRPORTS,INNER|INNER,binary,hard,complex,2,2,0,0,1,1,COUNT,30,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode JOIN AIRPORTS AS T3 ON T1.SourceAirport  =  T3.AirportCode WHERE T2.City  =  ""Ashley"" AND T3.City  =  ""Aberdeen"""
+dev,flight_2,1,2,FLIGHTS|AIRLINES,INNER,binary,medium,moderate,0,1,0,0,1,1,COUNT,19,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T1.Airline  =  T2.uid WHERE T2.Airline = ""JetBlue Airways"""
+dev,flight_2,1,2,FLIGHTS|AIRLINES,INNER,binary,medium,moderate,0,1,0,0,1,1,COUNT,19,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T1.Airline  =  T2.uid WHERE T2.Airline = ""JetBlue Airways"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,1,1,COUNT,23,"SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline  =  T1.uid WHERE T1.Airline  =  ""United Airlines"" AND T2.DestAirport  =  ""ASY"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,1,1,COUNT,23,"SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline  =  T1.uid WHERE T1.Airline  =  ""United Airlines"" AND T2.DestAirport  =  ""ASY"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,1,1,COUNT,23,"SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline  =  T1.uid WHERE T1.Airline  =  ""United Airlines"" AND T2.SourceAirport  =  ""AHD"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,1,1,COUNT,23,"SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline  =  T1.uid WHERE T1.Airline  =  ""United Airlines"" AND T2.SourceAirport  =  ""AHD"""
+dev,flight_2,2,3,FLIGHTS|AIRPORTS|AIRLINES,INNER|INNER,chain,hard,complex,1,2,0,0,1,1,COUNT,31,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode JOIN AIRLINES AS T3 ON T3.uid  =  T1.Airline WHERE T2.City  =  ""Aberdeen"" AND T3.Airline  =  ""United Airlines"""
+dev,flight_2,2,3,FLIGHTS|AIRPORTS|AIRLINES,INNER|INNER,chain,hard,complex,1,2,0,0,1,1,COUNT,31,"SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode JOIN AIRLINES AS T3 ON T3.uid  =  T1.Airline WHERE T2.City  =  ""Aberdeen"" AND T3.Airline  =  ""United Airlines"""
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.City FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport GROUP BY T1.City ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.City FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport GROUP BY T1.City ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.City FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.SourceAirport GROUP BY T1.City ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.City FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.SourceAirport GROUP BY T1.City ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,26,SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1
+dev,flight_2,1,2,AIRPORTS|FLIGHTS,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,26,SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,23,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,23,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) DESC LIMIT 1
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,24,"SELECT T1.Abbreviation ,  T1.Country FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) LIMIT 1"
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,24,"SELECT T1.Abbreviation ,  T1.Country FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) LIMIT 1"
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,0,1,,18,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""AHD"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,0,1,,18,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""AHD"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,0,1,,18,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.DestAirport  =  ""AHD"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,moderate,0,1,0,0,0,1,,18,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.DestAirport  =  ""AHD"""
+dev,flight_2,2,2,AIRLINES|FLIGHTS,INNER|INNER,binary,extra hard,extra,0,2,1,0,0,1,,37,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""APG"" INTERSECT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""CVO"""
+dev,flight_2,2,2,AIRLINES|FLIGHTS,INNER|INNER,binary,extra hard,extra,0,2,1,0,0,1,,37,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""APG"" INTERSECT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""CVO"""
+dev,flight_2,2,2,AIRLINES|FLIGHTS,INNER|INNER,binary,extra hard,extra,0,2,1,0,0,1,,37,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""CVO"" EXCEPT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""APG"""
+dev,flight_2,2,2,AIRLINES|FLIGHTS,INNER|INNER,binary,extra hard,extra,0,2,1,0,0,1,,37,"SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""CVO"" EXCEPT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  ""APG"""
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,21,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  >  10
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,21,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  >  10
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,21,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  <  200
+dev,flight_2,1,2,AIRLINES|FLIGHTS,INNER,binary,medium,complex,0,1,0,1,1,0,COUNT,21,SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  <  200
+dev,flight_2,1,2,FLIGHTS|AIRLINES,INNER,binary,medium,moderate,0,1,0,0,0,1,,19,"SELECT T1.FlightNo FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T2.uid  =  T1.Airline WHERE T2.Airline  =  ""United Airlines"""
+dev,flight_2,1,2,FLIGHTS|AIRLINES,INNER,binary,medium,moderate,0,1,0,0,0,1,,19,"SELECT T1.FlightNo FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T2.uid  =  T1.Airline WHERE T2.Airline  =  ""United Airlines"""
+dev,flight_2,0,1,FLIGHTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT FlightNo FROM FLIGHTS WHERE SourceAirport  =  ""APG"""
+dev,flight_2,0,1,FLIGHTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT FlightNo FROM FLIGHTS WHERE SourceAirport  =  ""APG"""
+dev,flight_2,0,1,FLIGHTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT FlightNo FROM FLIGHTS WHERE DestAirport  =  ""APG"""
+dev,flight_2,0,1,FLIGHTS,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT FlightNo FROM FLIGHTS WHERE DestAirport  =  ""APG"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T1.FlightNo FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.SourceAirport   =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T1.FlightNo FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.SourceAirport   =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T1.FlightNo FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport   =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,1,2,FLIGHTS|AIRPORTS,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T1.FlightNo FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport   =  T2.AirportCode WHERE T2.City  =  ""Aberdeen"""
+dev,flight_2,1,2,Flights|Airports,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,22,"SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  =  ""Aberdeen"" OR T2.city  =  ""Abilene"""
+dev,flight_2,1,2,Flights|Airports,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,22,"SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  =  ""Aberdeen"" OR T2.city  =  ""Abilene"""
+dev,flight_2,0,2,Airports|Flights,,binary,extra hard,complex,0,0,1,0,0,1,,17,SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights)
+dev,flight_2,0,2,Airports|Flights,,binary,extra hard,complex,0,0,1,0,0,1,,17,SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights)
+dev,employee_hire_evaluation,0,1,employee,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM employee
+dev,employee_hire_evaluation,0,1,employee,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM employee
+dev,employee_hire_evaluation,0,1,employee,,single,easy,simple,0,0,0,0,0,0,,7,SELECT name FROM employee ORDER BY age
+dev,employee_hire_evaluation,0,1,employee,,single,easy,simple,0,0,0,0,0,0,,7,SELECT name FROM employee ORDER BY age
+dev,employee_hire_evaluation,0,1,employee,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  city FROM employee GROUP BY city"
+dev,employee_hire_evaluation,0,1,employee,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  city FROM employee GROUP BY city"
+dev,employee_hire_evaluation,0,1,employee,,single,medium,complex,0,0,0,1,1,1,COUNT,15,SELECT city FROM employee WHERE age  <  30 GROUP BY city HAVING count(*)  >  1
+dev,employee_hire_evaluation,0,1,employee,,single,medium,complex,0,0,0,1,1,1,COUNT,15,SELECT city FROM employee WHERE age  <  30 GROUP BY city HAVING count(*)  >  1
+dev,employee_hire_evaluation,0,1,shop,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  LOCATION FROM shop GROUP BY LOCATION"
+dev,employee_hire_evaluation,0,1,shop,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  LOCATION FROM shop GROUP BY LOCATION"
+dev,employee_hire_evaluation,0,1,shop,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT manager_name ,  district FROM shop ORDER BY number_products DESC LIMIT 1"
+dev,employee_hire_evaluation,0,1,shop,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT manager_name ,  district FROM shop ORDER BY number_products DESC LIMIT 1"
+dev,employee_hire_evaluation,0,1,shop,,single,medium,simple,0,0,0,0,1,0,MIN|MAX,6,"SELECT min(Number_products) ,  max(Number_products) FROM shop"
+dev,employee_hire_evaluation,0,1,shop,,single,medium,simple,0,0,0,0,1,0,MIN|MAX,6,"SELECT min(Number_products) ,  max(Number_products) FROM shop"
+dev,employee_hire_evaluation,0,1,shop,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT name ,  LOCATION ,  district FROM shop ORDER BY number_products DESC"
+dev,employee_hire_evaluation,0,1,shop,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT name ,  LOCATION ,  district FROM shop ORDER BY number_products DESC"
+dev,employee_hire_evaluation,0,1,shop,,single,hard,moderate,0,0,1,0,1,1,AVG,11,SELECT name FROM shop WHERE number_products  >  (SELECT avg(number_products) FROM shop)
+dev,employee_hire_evaluation,0,1,shop,,single,hard,moderate,0,0,1,0,1,1,AVG,11,SELECT name FROM shop WHERE number_products  >  (SELECT avg(number_products) FROM shop)
+dev,employee_hire_evaluation,1,2,employee|evaluation,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID GROUP BY t2.Employee_ID ORDER BY count(*) DESC LIMIT 1
+dev,employee_hire_evaluation,1,2,employee|evaluation,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID GROUP BY t2.Employee_ID ORDER BY count(*) DESC LIMIT 1
+dev,employee_hire_evaluation,1,2,employee|evaluation,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID ORDER BY t2.bonus DESC LIMIT 1
+dev,employee_hire_evaluation,1,2,employee|evaluation,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID ORDER BY t2.bonus DESC LIMIT 1
+dev,employee_hire_evaluation,0,2,employee|evaluation,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT name FROM employee WHERE Employee_ID NOT IN (SELECT Employee_ID FROM evaluation)
+dev,employee_hire_evaluation,0,2,employee|evaluation,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT name FROM employee WHERE Employee_ID NOT IN (SELECT Employee_ID FROM evaluation)
+dev,employee_hire_evaluation,1,2,hiring|shop,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT t2.name FROM hiring AS t1 JOIN shop AS t2 ON t1.shop_id  =  t2.shop_id GROUP BY t1.shop_id ORDER BY count(*) DESC LIMIT 1
+dev,employee_hire_evaluation,1,2,hiring|shop,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT t2.name FROM hiring AS t1 JOIN shop AS t2 ON t1.shop_id  =  t2.shop_id GROUP BY t1.shop_id ORDER BY count(*) DESC LIMIT 1
+dev,employee_hire_evaluation,0,2,shop|hiring,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring)
+dev,employee_hire_evaluation,0,2,shop|hiring,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring)
+dev,employee_hire_evaluation,1,2,hiring|shop,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT count(*) ,  t2.name FROM hiring AS t1 JOIN shop AS t2 ON t1.shop_id  =  t2.shop_id GROUP BY t2.name"
+dev,employee_hire_evaluation,1,2,hiring|shop,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT count(*) ,  t2.name FROM hiring AS t1 JOIN shop AS t2 ON t1.shop_id  =  t2.shop_id GROUP BY t2.name"
+dev,employee_hire_evaluation,0,1,evaluation,,single,medium,simple,0,0,0,0,1,0,SUM,4,SELECT sum(bonus) FROM evaluation
+dev,employee_hire_evaluation,0,1,evaluation,,single,medium,simple,0,0,0,0,1,0,SUM,4,SELECT sum(bonus) FROM evaluation
+dev,employee_hire_evaluation,0,1,hiring,,single,easy,simple,0,0,0,0,0,0,,4,SELECT * FROM hiring
+dev,employee_hire_evaluation,0,1,hiring,,single,easy,simple,0,0,0,0,0,0,,4,SELECT * FROM hiring
+dev,employee_hire_evaluation,0,1,shop,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT district FROM shop WHERE Number_products  <  3000 INTERSECT SELECT district FROM shop WHERE Number_products  >  10000
+dev,employee_hire_evaluation,0,1,shop,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT district FROM shop WHERE Number_products  <  3000 INTERSECT SELECT district FROM shop WHERE Number_products  >  10000
+dev,employee_hire_evaluation,0,1,shop,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT LOCATION) FROM shop
+dev,employee_hire_evaluation,0,1,shop,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT LOCATION) FROM shop
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Documents
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Documents
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,easy,simple,0,0,0,0,0,0,,8,"SELECT document_id ,  document_name ,  document_description FROM Documents"
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,easy,simple,0,0,0,0,0,0,,8,"SELECT document_id ,  document_name ,  document_description FROM Documents"
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT document_name ,  template_id FROM Documents WHERE Document_Description LIKE ""%w%"""
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT document_name ,  template_id FROM Documents WHERE Document_Description LIKE ""%w%"""
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,easy,simple,0,0,0,0,0,1,,13,"SELECT document_id ,  template_id ,  Document_Description FROM Documents WHERE document_name  =  ""Robbin CV"""
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,easy,simple,0,0,0,0,0,1,,13,"SELECT document_id ,  template_id ,  Document_Description FROM Documents WHERE document_name  =  ""Robbin CV"""
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT template_id) FROM Documents
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT template_id) FROM Documents
+dev,cre_Doc_Template_Mgt,1,2,Documents|Templates,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM Documents AS T1 JOIN Templates AS T2 ON T1.Template_ID  =  T2.Template_ID WHERE T2.Template_Type_Code  =  'PPT'
+dev,cre_Doc_Template_Mgt,1,2,Documents|Templates,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM Documents AS T1 JOIN Templates AS T2 ON T1.Template_ID  =  T2.Template_ID WHERE T2.Template_Type_Code  =  'PPT'
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT template_id ,  count(*) FROM Documents GROUP BY template_id"
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT template_id ,  count(*) FROM Documents GROUP BY template_id"
+dev,cre_Doc_Template_Mgt,1,2,Documents|Templates,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.template_id ,  T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_id ORDER BY count(*) DESC LIMIT 1"
+dev,cre_Doc_Template_Mgt,1,2,Documents|Templates,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.template_id ,  T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_id ORDER BY count(*) DESC LIMIT 1"
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT template_id FROM Documents GROUP BY template_id HAVING count(*)  >  1
+dev,cre_Doc_Template_Mgt,0,1,Documents,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT template_id FROM Documents GROUP BY template_id HAVING count(*)  >  1
+dev,cre_Doc_Template_Mgt,0,2,Templates|Documents,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents
+dev,cre_Doc_Template_Mgt,0,2,Templates|Documents,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Templates
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Templates
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,0,,8,"SELECT template_id ,  version_number ,  template_type_code FROM Templates"
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,0,,8,"SELECT template_id ,  version_number ,  template_type_code FROM Templates"
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,0,,5,SELECT DISTINCT template_type_code FROM Templates
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,0,,5,SELECT DISTINCT template_type_code FROM Templates
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT template_id FROM Templates WHERE template_type_code  =  ""PP"" OR template_type_code  =  ""PPT"""
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT template_id FROM Templates WHERE template_type_code  =  ""PP"" OR template_type_code  =  ""PPT"""
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM Templates WHERE template_type_code  =  ""CV"""
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM Templates WHERE template_type_code  =  ""CV"""
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT version_number ,  template_type_code FROM Templates WHERE version_number  >  5"
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT version_number ,  template_type_code FROM Templates WHERE version_number  >  5"
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT template_type_code ,  count(*) FROM Templates GROUP BY template_type_code"
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT template_type_code ,  count(*) FROM Templates GROUP BY template_type_code"
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT template_type_code FROM Templates GROUP BY template_type_code HAVING count(*)  <  3
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT template_type_code FROM Templates GROUP BY template_type_code HAVING count(*)  <  3
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,simple,0,0,0,0,1,0,MIN,6,"SELECT min(Version_Number) ,  template_type_code FROM Templates"
+dev,cre_Doc_Template_Mgt,0,1,Templates,,single,medium,simple,0,0,0,0,1,0,MIN,6,"SELECT min(Version_Number) ,  template_type_code FROM Templates"
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id WHERE T2.document_name  =  ""Data base"""
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id WHERE T2.document_name  =  ""Data base"""
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T2.document_name FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id WHERE T1.template_type_code  =  ""BK"""
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T2.document_name FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id WHERE T1.template_type_code  =  ""BK"""
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T1.template_type_code ,  count(*) FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_type_code"
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T1.template_type_code ,  count(*) FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_type_code"
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) DESC LIMIT 1
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) DESC LIMIT 1
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,extra hard,complex,1,1,1,0,0,0,,19,SELECT template_type_code FROM Templates EXCEPT SELECT template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id
+dev,cre_Doc_Template_Mgt,1,2,Templates|Documents,INNER,binary,extra hard,complex,1,1,1,0,0,0,,19,SELECT template_type_code FROM Templates EXCEPT SELECT template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id
+dev,cre_Doc_Template_Mgt,0,1,Ref_template_types,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT template_type_code ,  template_type_description FROM Ref_template_types"
+dev,cre_Doc_Template_Mgt,0,1,Ref_template_types,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT template_type_code ,  template_type_description FROM Ref_template_types"
+dev,cre_Doc_Template_Mgt,0,1,Ref_template_types,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT template_type_description FROM Ref_template_types WHERE template_type_code  =  ""AD"""
+dev,cre_Doc_Template_Mgt,0,1,Ref_template_types,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT template_type_description FROM Ref_template_types WHERE template_type_code  =  ""AD"""
+dev,cre_Doc_Template_Mgt,0,1,Ref_template_types,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT template_type_code FROM Ref_template_types WHERE template_type_description  =  ""Book"""
+dev,cre_Doc_Template_Mgt,0,1,Ref_template_types,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT template_type_code FROM Ref_template_types WHERE template_type_description  =  ""Book"""
+dev,cre_Doc_Template_Mgt,2,3,Ref_template_types|Templates|Documents,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,23,SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID  =  T3.template_ID
+dev,cre_Doc_Template_Mgt,2,3,Ref_template_types|Templates|Documents,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,23,SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID  =  T3.template_ID
+dev,cre_Doc_Template_Mgt,1,2,Ref_template_types|Templates,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T2.template_id FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code WHERE T1.template_type_description  =  ""Presentation"""
+dev,cre_Doc_Template_Mgt,1,2,Ref_template_types|Templates,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T2.template_id FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code WHERE T1.template_type_description  =  ""Presentation"""
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Paragraphs
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Paragraphs
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,19,SELECT count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_ID  =  T2.document_ID WHERE T2.document_name  =  'Summer Show'
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,19,SELECT count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_ID  =  T2.document_ID WHERE T2.document_name  =  'Summer Show'
+dev,cre_Doc_Template_Mgt,0,1,paragraphs,,single,easy,simple,0,0,0,0,0,1,,8,select other_details from paragraphs where paragraph_text like 'korea'
+dev,cre_Doc_Template_Mgt,0,1,paragraphs,,single,easy,simple,0,0,0,0,0,1,,8,select other_details from paragraphs where paragraph_text like 'korea'
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,"SELECT T1.paragraph_id ,   T1.paragraph_text FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id WHERE T2.Document_Name  =  'Welcome to NY'"
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,"SELECT T1.paragraph_id ,   T1.paragraph_text FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id WHERE T2.Document_Name  =  'Welcome to NY'"
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T1.paragraph_text FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id WHERE T2.document_name  =  ""Customer reviews"""
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T1.paragraph_text FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id WHERE T2.document_name  =  ""Customer reviews"""
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,moderate,0,0,0,1,1,0,COUNT,12,"SELECT document_id ,  count(*) FROM Paragraphs GROUP BY document_id ORDER BY document_id"
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,moderate,0,0,0,1,1,0,COUNT,12,"SELECT document_id ,  count(*) FROM Paragraphs GROUP BY document_id ORDER BY document_id"
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT T1.document_id ,  T2.document_name ,  count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id"
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,"SELECT T1.document_id ,  T2.document_name ,  count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id"
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*)  >=  2
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*)  >=  2
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.document_id ,  T2.document_name FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id ORDER BY count(*) DESC LIMIT 1"
+dev,cre_Doc_Template_Mgt,1,2,Paragraphs|Documents,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.document_id ,  T2.document_name FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id ORDER BY count(*) DESC LIMIT 1"
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT document_id FROM Paragraphs GROUP BY document_id ORDER BY count(*) ASC LIMIT 1
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT document_id FROM Paragraphs GROUP BY document_id ORDER BY count(*) ASC LIMIT 1
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,complex,0,0,0,1,1,0,COUNT,13,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) BETWEEN 1 AND 2
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,medium,complex,0,0,0,1,1,0,COUNT,13,SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) BETWEEN 1 AND 2
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT document_id FROM Paragraphs WHERE paragraph_text  =  'Brazil' INTERSECT SELECT document_id FROM Paragraphs WHERE paragraph_text  =  'Ireland'
+dev,cre_Doc_Template_Mgt,0,1,Paragraphs,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT document_id FROM Paragraphs WHERE paragraph_text  =  'Brazil' INTERSECT SELECT document_id FROM Paragraphs WHERE paragraph_text  =  'Ireland'
+dev,course_teach,0,1,teacher,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM teacher
+dev,course_teach,0,1,teacher,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM teacher
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM teacher ORDER BY Age ASC
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM teacher ORDER BY Age ASC
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Age ,  Hometown FROM teacher"
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Age ,  Hometown FROM teacher"
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,1,,11,"select name from teacher where hometown != ""little lever urban district"""
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,1,,11,"select name from teacher where hometown != ""little lever urban district"""
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,1,,12,SELECT Name FROM teacher WHERE Age  =  32 OR Age  =  33
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,1,,12,SELECT Name FROM teacher WHERE Age  =  32 OR Age  =  33
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Hometown FROM teacher ORDER BY Age ASC LIMIT 1
+dev,course_teach,0,1,teacher,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Hometown FROM teacher ORDER BY Age ASC LIMIT 1
+dev,course_teach,0,1,teacher,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Hometown ,  COUNT(*) FROM teacher GROUP BY Hometown"
+dev,course_teach,0,1,teacher,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Hometown ,  COUNT(*) FROM teacher GROUP BY Hometown"
+dev,course_teach,0,1,teacher,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1
+dev,course_teach,0,1,teacher,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1
+dev,course_teach,0,1,teacher,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT Hometown FROM teacher GROUP BY Hometown HAVING COUNT(*)  >=  2
+dev,course_teach,0,1,teacher,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT Hometown FROM teacher GROUP BY Hometown HAVING COUNT(*)  >=  2
+dev,course_teach,2,3,course_arrange|course|teacher,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,24,"SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID"
+dev,course_teach,2,3,course_arrange|course|teacher,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,24,"SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID"
+dev,course_teach,2,3,course_arrange|course|teacher,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,27,"SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID ORDER BY T3.Name"
+dev,course_teach,2,3,course_arrange|course|teacher,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,27,"SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID ORDER BY T3.Name"
+dev,course_teach,2,3,course_arrange|course|teacher,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,26,"SELECT T3.Name FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID WHERE T2.Course  =  ""Math"""
+dev,course_teach,2,3,course_arrange|course|teacher,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,26,"SELECT T3.Name FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID WHERE T2.Course  =  ""Math"""
+dev,course_teach,1,2,course_arrange|teacher,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.Name ,  COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name"
+dev,course_teach,1,2,course_arrange|teacher,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.Name ,  COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name"
+dev,course_teach,1,2,course_arrange|teacher,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T2.Name FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name HAVING COUNT(*)  >=  2
+dev,course_teach,1,2,course_arrange|teacher,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T2.Name FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name HAVING COUNT(*)  >=  2
+dev,course_teach,0,2,teacher|course_arrange,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Name FROM teacher WHERE Teacher_id NOT IN (SELECT Teacher_id FROM course_arrange)
+dev,course_teach,0,2,teacher|course_arrange,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Name FROM teacher WHERE Teacher_id NOT IN (SELECT Teacher_id FROM course_arrange)
+dev,museum_visit,0,1,visitor,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM visitor WHERE age  <  30
+dev,museum_visit,0,1,visitor,,single,medium,simple,0,0,0,0,0,1,,12,SELECT name FROM visitor WHERE Level_of_membership  >  4 ORDER BY Level_of_membership DESC
+dev,museum_visit,0,1,visitor,,single,medium,simple,0,0,0,0,1,1,AVG,8,SELECT avg(age) FROM visitor WHERE Level_of_membership  <=  4
+dev,museum_visit,0,1,visitor,,single,medium,simple,0,0,0,0,0,1,,14,"SELECT name ,  Level_of_membership FROM visitor WHERE Level_of_membership  >  4 ORDER BY age DESC"
+dev,museum_visit,0,1,museum,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT museum_id ,  name FROM museum ORDER BY num_of_staff DESC LIMIT 1"
+dev,museum_visit,0,1,museum,,single,medium,simple,0,0,0,0,1,1,AVG,8,SELECT avg(num_of_staff) FROM museum WHERE open_year  <  2009
+dev,museum_visit,0,1,museum,,single,easy,simple,0,0,0,0,0,1,,11,"SELECT Num_of_Staff ,  Open_Year FROM museum WHERE name  =  'Plaza Museum'"
+dev,museum_visit,0,1,museum,,single,hard,moderate,0,0,1,0,1,1,MIN,15,SELECT name FROM museum WHERE num_of_staff  >  (SELECT min(num_of_staff) FROM museum WHERE open_year  >  2010)
+dev,museum_visit,1,2,visitor|visit,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT t1.id ,  t1.name ,  t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id GROUP BY t1.id HAVING count(*)  >  1"
+dev,museum_visit,1,2,visitor|visit,INNER,binary,medium,complex,1,1,0,1,1,0,SUM,27,"SELECT t2.visitor_id ,  t1.name ,  t1.Level_of_membership FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id GROUP BY t2.visitor_id ORDER BY sum(t2.Total_spent) DESC LIMIT 1"
+dev,museum_visit,1,2,museum|visit,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT t2.Museum_ID ,  t1.name FROM museum AS t1 JOIN visit AS t2 ON t1.Museum_ID  =  t2.Museum_ID GROUP BY t2.Museum_ID ORDER BY count(*) DESC LIMIT 1"
+dev,museum_visit,0,2,museum|visit,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT name FROM museum WHERE Museum_ID NOT IN (SELECT museum_id FROM visit)
+dev,museum_visit,1,2,visitor|visit,INNER,binary,medium,moderate,1,1,0,0,0,0,,22,"SELECT t1.name ,  t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id ORDER BY t2.num_of_ticket DESC LIMIT 1"
+dev,museum_visit,0,1,visit,,single,medium,simple,0,0,0,0,1,0,AVG|MAX,6,"SELECT avg(num_of_ticket) ,  max(num_of_ticket) FROM visit"
+dev,museum_visit,1,2,visitor|visit,INNER,binary,medium,moderate,1,1,0,0,1,1,SUM,18,SELECT sum(t2.Total_spent) FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id WHERE t1.Level_of_membership  =  1
+dev,museum_visit,4,3,visitor|visit|museum,INNER|INNER|INNER|INNER,mesh,extra hard,extra,4,4,1,0,0,1,,53,SELECT t1.name FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id JOIN museum AS t3 ON t3.Museum_ID  =  t2.Museum_ID WHERE t3.open_year  <  2009 INTERSECT SELECT t1.name FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id JOIN museum AS t3 ON t3.Museum_ID  =  t2.Museum_ID WHERE t3.open_year  >  2011
+dev,museum_visit,1,3,visitor|museum|visit,INNER,partial,extra hard,complex,1,1,1,0,1,1,COUNT,26,SELECT count(*) FROM visitor WHERE id NOT IN (SELECT t2.visitor_id FROM museum AS t1 JOIN visit AS t2 ON t1.Museum_ID  =  t2.Museum_ID WHERE t1.open_year  >  2010)
+dev,museum_visit,0,1,museum,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM museum WHERE open_year  >  2013 OR open_year  <  2008
+dev,wta_1,0,1,players,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM players
+dev,wta_1,0,1,players,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM players
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM matches
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM matches
+dev,wta_1,0,1,players,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT first_name ,  birth_date FROM players WHERE country_code  =  'USA'"
+dev,wta_1,0,1,players,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT first_name ,  birth_date FROM players WHERE country_code  =  'USA'"
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,AVG|AVG,6,"SELECT avg(loser_age) ,  avg(winner_age) FROM matches"
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,AVG|AVG,6,"SELECT avg(loser_age) ,  avg(winner_age) FROM matches"
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(winner_rank) FROM matches
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(winner_rank) FROM matches
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,MIN,4,SELECT min(loser_rank) FROM matches
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,MIN,4,SELECT min(loser_rank) FROM matches
+dev,wta_1,0,1,players,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT country_code) FROM players
+dev,wta_1,0,1,players,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT country_code) FROM players
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT loser_name) FROM matches
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT loser_name) FROM matches
+dev,wta_1,0,1,matches,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*)  >  10
+dev,wta_1,0,1,matches,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*)  >  10
+dev,wta_1,0,1,matches,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT winner_name FROM matches WHERE YEAR  =  2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR  =  2016
+dev,wta_1,0,1,matches,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT winner_name FROM matches WHERE YEAR  =  2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR  =  2016
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM matches WHERE YEAR  =  2013 OR YEAR  =  2016
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM matches WHERE YEAR  =  2013 OR YEAR  =  2016
+dev,wta_1,2,2,players|matches,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,43,"SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'WTA Championships' INTERSECT SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'Australian Open'"
+dev,wta_1,2,2,players|matches,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,43,"SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'WTA Championships' INTERSECT SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'Australian Open'"
+dev,wta_1,0,1,players,,single,easy,simple,0,0,0,0,0,0,,11,"SELECT first_name ,  country_code FROM players ORDER BY birth_date LIMIT 1"
+dev,wta_1,0,1,players,,single,easy,simple,0,0,0,0,0,0,,11,"SELECT first_name ,  country_code FROM players ORDER BY birth_date LIMIT 1"
+dev,wta_1,0,1,players,,single,easy,simple,0,0,0,0,0,0,,9,"SELECT first_name ,  last_name FROM players ORDER BY birth_date"
+dev,wta_1,0,1,players,,single,easy,simple,0,0,0,0,0,0,,9,"SELECT first_name ,  last_name FROM players ORDER BY birth_date"
+dev,wta_1,0,1,players,,single,medium,simple,0,0,0,0,0,1,,13,"SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date"
+dev,wta_1,0,1,players,,single,medium,simple,0,0,0,0,0,1,,13,"SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date"
+dev,wta_1,1,2,players|rankings,INNER,binary,medium,moderate,1,1,0,0,0,0,,22,"SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id ORDER BY T2.tours DESC LIMIT 1"
+dev,wta_1,1,2,players|rankings,INNER,binary,medium,moderate,1,1,0,0,0,0,,22,"SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id ORDER BY T2.tours DESC LIMIT 1"
+dev,wta_1,0,1,matches,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT YEAR FROM matches GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+dev,wta_1,0,1,matches,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT YEAR FROM matches GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+dev,wta_1,0,1,matches,,single,medium,moderate,0,0,0,1,1,0,COUNT,15,"SELECT winner_name ,  winner_rank_points FROM matches GROUP BY winner_name ORDER BY count(*) DESC LIMIT 1"
+dev,wta_1,0,1,matches,,single,medium,moderate,0,0,0,1,1,0,COUNT,15,"SELECT winner_name ,  winner_rank_points FROM matches GROUP BY winner_name ORDER BY count(*) DESC LIMIT 1"
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,0,1,,15,SELECT winner_name FROM matches WHERE tourney_name  =  'Australian Open' ORDER BY winner_rank_points DESC LIMIT 1
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,0,1,,15,SELECT winner_name FROM matches WHERE tourney_name  =  'Australian Open' ORDER BY winner_rank_points DESC LIMIT 1
+dev,wta_1,0,1,matches,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1"
+dev,wta_1,0,1,matches,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1"
+dev,wta_1,1,2,players|rankings,INNER,binary,medium,complex,1,1,0,1,1,0,AVG,19,"SELECT avg(ranking) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name"
+dev,wta_1,1,2,players|rankings,INNER,binary,medium,complex,1,1,0,1,1,0,AVG,19,"SELECT avg(ranking) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name"
+dev,wta_1,1,2,players|rankings,INNER,binary,medium,complex,1,1,0,1,1,0,SUM,19,"SELECT sum(ranking_points) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name"
+dev,wta_1,1,2,players|rankings,INNER,binary,medium,complex,1,1,0,1,1,0,SUM,19,"SELECT sum(ranking_points) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name"
+dev,wta_1,0,1,players,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  country_code FROM players GROUP BY country_code"
+dev,wta_1,0,1,players,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  country_code FROM players GROUP BY country_code"
+dev,wta_1,0,1,players,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1
+dev,wta_1,0,1,players,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1
+dev,wta_1,0,1,players,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT country_code FROM players GROUP BY country_code HAVING count(*)  >  50
+dev,wta_1,0,1,players,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT country_code FROM players GROUP BY country_code HAVING count(*)  >  50
+dev,wta_1,0,1,rankings,,single,medium,moderate,0,0,0,1,1,0,SUM,9,"SELECT sum(tours) ,  ranking_date FROM rankings GROUP BY ranking_date"
+dev,wta_1,0,1,rankings,,single,medium,moderate,0,0,0,1,1,0,SUM,9,"SELECT sum(tours) ,  ranking_date FROM rankings GROUP BY ranking_date"
+dev,wta_1,0,1,matches,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  YEAR FROM matches GROUP BY YEAR"
+dev,wta_1,0,1,matches,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  YEAR FROM matches GROUP BY YEAR"
+dev,wta_1,0,1,matches,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT DISTINCT winner_name ,  winner_rank FROM matches ORDER BY winner_age LIMIT 3"
+dev,wta_1,0,1,matches,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT DISTINCT winner_name ,  winner_rank FROM matches ORDER BY winner_age LIMIT 3"
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,1,COUNT,14,SELECT count(DISTINCT winner_name) FROM matches WHERE tourney_name  =  'WTA Championships' AND winner_hand  =  'L'
+dev,wta_1,0,1,matches,,single,medium,simple,0,0,0,0,1,1,COUNT,14,SELECT count(DISTINCT winner_name) FROM matches WHERE tourney_name  =  'WTA Championships' AND winner_hand  =  'L'
+dev,wta_1,1,2,players|matches,INNER,binary,medium,moderate,1,1,0,0,0,0,,24,"SELECT T1.first_name ,  T1.country_code ,  T1.birth_date FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id ORDER BY T2.winner_rank_points DESC LIMIT 1"
+dev,wta_1,1,2,players|matches,INNER,binary,medium,moderate,1,1,0,0,0,0,,24,"SELECT T1.first_name ,  T1.country_code ,  T1.birth_date FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id ORDER BY T2.winner_rank_points DESC LIMIT 1"
+dev,wta_1,0,1,players,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  hand FROM players GROUP BY hand"
+dev,wta_1,0,1,players,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  hand FROM players GROUP BY hand"
+dev,battle_death,0,1,ship,,single,medium,simple,0,0,0,0,1,1,COUNT,8,SELECT count(*) FROM ship WHERE disposition_of_ship  =  'Captured'
+dev,battle_death,0,1,ship,,single,easy,simple,0,0,0,0,0,0,,10,"SELECT name ,  tonnage FROM ship ORDER BY name DESC"
+dev,battle_death,0,1,battle,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT name ,  date FROM battle"
+dev,battle_death,0,1,death,,single,medium,simple,0,0,0,0,1,0,MAX|MIN,6,"SELECT max(killed) ,  min(killed) FROM death"
+dev,battle_death,0,1,death,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(injured) FROM death
+dev,battle_death,1,2,death|ship,INNER,binary,medium,moderate,1,1,0,0,0,1,,20,"SELECT T1.killed ,  T1.injured FROM death AS T1 JOIN ship AS t2 ON T1.caused_by_ship_id  =  T2.id WHERE T2.tonnage  =  't'"
+dev,battle_death,0,1,battle,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT name ,  RESULT FROM battle WHERE bulgarian_commander != 'Boril'"
+dev,battle_death,1,2,battle|ship,INNER,binary,medium,moderate,1,1,0,0,0,1,,21,"SELECT DISTINCT T1.id ,  T1.name FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle WHERE T2.ship_type  =  'Brig'"
+dev,battle_death,2,3,battle|ship|death,INNER|INNER,chain,hard,extra,2,2,0,1,1,0,SUM,31,"SELECT T1.id ,  T1.name FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle JOIN death AS T3 ON T2.id  =  T3.caused_by_ship_id GROUP BY T1.id HAVING sum(T3.killed)  >  10"
+dev,battle_death,1,2,death|ship,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T2.id ,  T2.name FROM death AS T1 JOIN ship AS t2 ON T1.caused_by_ship_id  =  T2.id GROUP BY T2.id ORDER BY count(*) DESC LIMIT 1"
+dev,battle_death,0,1,battle,,single,easy,simple,0,0,0,0,0,1,,13,SELECT name FROM battle WHERE bulgarian_commander  =  'Kaloyan' AND latin_commander  =  'Baldwin I'
+dev,battle_death,0,1,battle,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT RESULT) FROM battle
+dev,battle_death,0,2,battle|ship,,binary,hard,moderate,0,0,1,0,1,1,COUNT,18,SELECT count(*) FROM battle WHERE id NOT IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );
+dev,battle_death,2,2,battle|ship,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,42,"SELECT T1.name ,  T1.date FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle WHERE T2.name  =  'Lettice' INTERSECT SELECT T1.name ,  T1.date FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle WHERE T2.name  =  'HMS Atalanta'"
+dev,battle_death,1,2,battle|ship,INNER,binary,extra hard,complex,1,1,1,0,0,1,,32,"SELECT name ,  RESULT ,  bulgarian_commander FROM battle EXCEPT SELECT T1.name ,  T1.result ,  T1.bulgarian_commander FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle WHERE T2.location  =  'English Channel'"
+dev,battle_death,0,1,death,,single,easy,simple,0,0,0,0,0,1,,8,SELECT note FROM death WHERE note LIKE '%East%'
+dev,student_transcripts_tracking,0,1,addresses,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT line_1 ,  line_2 FROM addresses"
+dev,student_transcripts_tracking,0,1,addresses,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT line_1 ,  line_2 FROM addresses"
+dev,student_transcripts_tracking,0,1,Courses,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Courses
+dev,student_transcripts_tracking,0,1,Courses,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Courses
+dev,student_transcripts_tracking,0,1,Courses,,single,easy,simple,0,0,0,0,0,1,,8,SELECT course_description FROM Courses WHERE course_name  =  'math'
+dev,student_transcripts_tracking,0,1,Courses,,single,easy,simple,0,0,0,0,0,1,,8,SELECT course_description FROM Courses WHERE course_name  =  'math'
+dev,student_transcripts_tracking,0,1,Addresses,,single,easy,simple,0,0,0,0,0,1,,9,SELECT zip_postcode FROM Addresses WHERE city  =  'Port Chelsea'
+dev,student_transcripts_tracking,0,1,Addresses,,single,easy,simple,0,0,0,0,0,1,,9,SELECT zip_postcode FROM Addresses WHERE city  =  'Port Chelsea'
+dev,student_transcripts_tracking,1,2,Degree_Programs|Departments,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T2.department_name ,  T1.department_id FROM Degree_Programs AS T1 JOIN Departments AS T2 ON T1.department_id  =  T2.department_id GROUP BY T1.department_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,1,2,degree_programs|departments,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"select t2.department_name ,  t1.department_id from degree_programs as t1 join departments as t2 on t1.department_id  =  t2.department_id group by t1.department_id order by count(*) desc limit 1"
+dev,student_transcripts_tracking,0,1,Degree_Programs,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT department_id) FROM Degree_Programs
+dev,student_transcripts_tracking,0,1,Degree_Programs,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT department_id) FROM Degree_Programs
+dev,student_transcripts_tracking,0,1,Degree_Programs,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT degree_summary_name) FROM Degree_Programs
+dev,student_transcripts_tracking,0,1,Degree_Programs,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT degree_summary_name) FROM Degree_Programs
+dev,student_transcripts_tracking,1,2,Departments|Degree_Programs,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM Departments AS T1 JOIN Degree_Programs AS T2 ON T1.department_id  =  T2.department_id WHERE T1.department_name  =  'engineer'
+dev,student_transcripts_tracking,1,2,Departments|Degree_Programs,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,SELECT count(*) FROM Departments AS T1 JOIN Degree_Programs AS T2 ON T1.department_id  =  T2.department_id WHERE T1.department_name  =  'engineer'
+dev,student_transcripts_tracking,0,1,Sections,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT section_name ,  section_description FROM Sections"
+dev,student_transcripts_tracking,0,1,Sections,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT section_name ,  section_description FROM Sections"
+dev,student_transcripts_tracking,1,2,Courses|Sections,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(*)  <=  2"
+dev,student_transcripts_tracking,1,2,Courses|Sections,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(*)  <=  2"
+dev,student_transcripts_tracking,0,1,Sections,,single,easy,simple,0,0,0,0,0,0,,8,SELECT section_name FROM Sections ORDER BY section_name DESC
+dev,student_transcripts_tracking,0,1,Sections,,single,easy,simple,0,0,0,0,0,0,,8,SELECT section_name FROM Sections ORDER BY section_name DESC
+dev,student_transcripts_tracking,1,2,Semesters|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,1,2,Semesters|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Departments,,single,easy,simple,0,0,0,0,0,1,,8,SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+dev,student_transcripts_tracking,0,1,Departments,,single,easy,simple,0,0,0,0,0,1,,8,SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+dev,student_transcripts_tracking,1,2,Students|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,"SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING count(*)  =  2"
+dev,student_transcripts_tracking,1,2,Students|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,"SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING count(*)  =  2"
+dev,student_transcripts_tracking,2,3,Students|Student_Enrolment|Degree_Programs,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,31,"SELECT DISTINCT T1.first_name ,  T1.middle_name ,  T1.last_name FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id JOIN Degree_Programs AS T3 ON T2.degree_program_id  =  T3.degree_program_id WHERE T3.degree_summary_name  =  'Bachelor'"
+dev,student_transcripts_tracking,2,3,Students|Student_Enrolment|Degree_Programs,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,31,"SELECT DISTINCT T1.first_name ,  T1.middle_name ,  T1.last_name FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id JOIN Degree_Programs AS T3 ON T2.degree_program_id  =  T3.degree_program_id WHERE T3.degree_summary_name  =  'Bachelor'"
+dev,student_transcripts_tracking,1,2,Degree_Programs|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1
+dev,student_transcripts_tracking,1,2,Degree_Programs|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1
+dev,student_transcripts_tracking,1,2,Degree_Programs|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.degree_program_id ,  T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,1,2,Degree_Programs|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.degree_program_id ,  T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,1,2,Students|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT|COUNT,33,"SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,1,2,Students|Student_Enrolment,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT|COUNT,33,"SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,0,2,Semesters|Student_Enrolment,,binary,hard,moderate,0,0,1,0,0,1,,13,SELECT semester_name FROM Semesters WHERE semester_id NOT IN( SELECT semester_id FROM Student_Enrolment )
+dev,student_transcripts_tracking,0,2,Semesters|Student_Enrolment,,binary,hard,moderate,0,0,1,0,0,1,,13,SELECT semester_name FROM Semesters WHERE semester_id NOT IN( SELECT semester_id FROM Student_Enrolment )
+dev,student_transcripts_tracking,1,2,Courses|Student_Enrolment_Courses,INNER,binary,medium,moderate,1,1,0,0,0,0,,15,SELECT DISTINCT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id
+dev,student_transcripts_tracking,1,2,Courses|Student_Enrolment_Courses,INNER,binary,medium,moderate,1,1,0,0,0,0,,15,SELECT DISTINCT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id
+dev,student_transcripts_tracking,1,2,Courses|Student_Enrolment_Courses,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1
+dev,student_transcripts_tracking,1,2,Courses|Student_Enrolment_Courses,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1
+dev,student_transcripts_tracking,2,3,Students|Addresses|Student_Enrolment,INNER|INNER,chain,extra hard,extra,2,2,1,0,0,1,,34,SELECT T1.last_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.state_province_county  =  'NorthCarolina' EXCEPT SELECT DISTINCT T3.last_name FROM Students AS T3 JOIN Student_Enrolment AS T4 ON T3.student_id  =  T4.student_id
+dev,student_transcripts_tracking,2,3,Students|Addresses|Student_Enrolment,INNER|INNER,chain,extra hard,extra,2,2,1,0,0,1,,34,SELECT T1.last_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.state_province_county  =  'NorthCarolina' EXCEPT SELECT DISTINCT T3.last_name FROM Students AS T3 JOIN Student_Enrolment AS T4 ON T3.student_id  =  T4.student_id
+dev,student_transcripts_tracking,1,2,Transcript_Contents|Transcripts,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*)  >=  2"
+dev,student_transcripts_tracking,1,2,Transcript_Contents|Transcripts,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*)  >=  2"
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,1,,12,SELECT cell_mobile_number FROM Students WHERE first_name  =  'Timmothy' AND last_name  =  'Ward'
+dev,student_transcripts_tracking,0,1,students,,single,easy,simple,0,0,0,0,0,1,,12,select cell_mobile_number from students where first_name  =  'timmothy' and last_name  =  'ward'
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,0,,14,"SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,0,,14,"SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,0,,14,"SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,0,,14,"SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,1,,8,SELECT first_name FROM Students WHERE current_address_id != permanent_address_id
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,1,,8,SELECT first_name FROM Students WHERE current_address_id != permanent_address_id
+dev,student_transcripts_tracking,1,2,Addresses|Students,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,"SELECT T1.address_id ,  T1.line_1 ,  T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id  =  T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,1,2,Addresses|Students,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,"SELECT T1.address_id ,  T1.line_1 ,  T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id  =  T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Transcripts,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(transcript_date) FROM Transcripts
+dev,student_transcripts_tracking,0,1,Transcripts,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(transcript_date) FROM Transcripts
+dev,student_transcripts_tracking,0,1,Transcripts,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT transcript_date ,  other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Transcripts,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT transcript_date ,  other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Transcripts,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Transcripts
+dev,student_transcripts_tracking,0,1,Transcripts,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Transcripts
+dev,student_transcripts_tracking,0,1,Transcripts,,single,easy,simple,0,0,0,0,0,0,,10,SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1
+dev,student_transcripts_tracking,0,1,Transcripts,,single,easy,simple,0,0,0,0,0,0,,10,SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1
+dev,student_transcripts_tracking,0,1,Transcript_Contents,,single,medium,moderate,0,0,0,1,1,0,COUNT|COUNT,15,"SELECT count(*) ,  student_course_id FROM Transcript_Contents GROUP BY student_course_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,0,1,Transcript_Contents,,single,medium,moderate,0,0,0,1,1,0,COUNT|COUNT,15,"SELECT count(*) ,  student_course_id FROM Transcript_Contents GROUP BY student_course_id ORDER BY count(*) DESC LIMIT 1"
+dev,student_transcripts_tracking,1,2,Transcript_Contents|Transcripts,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id ORDER BY count(*) ASC LIMIT 1"
+dev,student_transcripts_tracking,1,2,Transcript_Contents|Transcripts,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id ORDER BY count(*) ASC LIMIT 1"
+dev,student_transcripts_tracking,2,2,Degree_Programs|Student_Enrolment,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,39,SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id WHERE degree_summary_name  =  'Master' INTERSECT SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id WHERE degree_summary_name  =  'Bachelor'
+dev,student_transcripts_tracking,2,2,Degree_Programs|Student_Enrolment,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,39,SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id WHERE degree_summary_name  =  'Master' INTERSECT SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id WHERE degree_summary_name  =  'Bachelor'
+dev,student_transcripts_tracking,0,1,Students,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT current_address_id) FROM Students
+dev,student_transcripts_tracking,0,1,Students,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT current_address_id) FROM Students
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,0,,8,SELECT other_student_details FROM Students ORDER BY other_student_details DESC
+dev,student_transcripts_tracking,0,1,Students,,single,easy,simple,0,0,0,0,0,0,,8,SELECT other_student_details FROM Students ORDER BY other_student_details DESC
+dev,student_transcripts_tracking,0,1,Sections,,single,easy,simple,0,0,0,0,0,1,,8,SELECT section_description FROM Sections WHERE section_name  =  'h'
+dev,student_transcripts_tracking,0,1,Sections,,single,easy,simple,0,0,0,0,0,1,,8,SELECT section_description FROM Sections WHERE section_name  =  'h'
+dev,student_transcripts_tracking,1,2,students|addresses,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id  =  t2.address_id where t2.country  =  'haiti' or t1.cell_mobile_number  =  '09700166582'
+dev,student_transcripts_tracking,1,2,students|addresses,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id  =  t2.address_id where t2.country  =  'haiti' or t1.cell_mobile_number  =  '09700166582'
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,0,,7,SELECT Title FROM Cartoon ORDER BY title
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,0,,7,SELECT Title FROM Cartoon ORDER BY title
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Title FROM Cartoon WHERE Directed_by = ""Ben Jones"";"
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Title FROM Cartoon WHERE Directed_by = ""Ben Jones"";"
+dev,tvshow,0,1,Cartoon,,single,medium,simple,0,0,0,0,1,1,COUNT,9,"SELECT count(*) FROM Cartoon WHERE Written_by = ""Joseph Kuhr"";"
+dev,tvshow,0,1,Cartoon,,single,medium,simple,0,0,0,0,1,1,COUNT,9,"SELECT count(*) FROM Cartoon WHERE Written_by = ""Joseph Kuhr"";"
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,0,,9,"SELECT title ,  Directed_by FROM Cartoon ORDER BY Original_air_date"
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,0,,9,"SELECT title ,  Directed_by FROM Cartoon ORDER BY Original_air_date"
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,1,,14,"SELECT Title FROM Cartoon WHERE Directed_by = ""Ben Jones"" OR Directed_by = ""Brandon Vietti"";"
+dev,tvshow,0,1,Cartoon,,single,easy,simple,0,0,0,0,0,1,,14,"SELECT Title FROM Cartoon WHERE Directed_by = ""Ben Jones"" OR Directed_by = ""Brandon Vietti"";"
+dev,tvshow,0,1,TV_Channel,,single,medium,moderate,0,0,0,1,1,0,COUNT|COUNT,15,"SELECT Country ,  count(*) FROM TV_Channel GROUP BY Country ORDER BY count(*) DESC LIMIT 1;"
+dev,tvshow,0,1,TV_Channel,,single,medium,moderate,0,0,0,1,1,0,COUNT|COUNT,15,"SELECT Country ,  count(*) FROM TV_Channel GROUP BY Country ORDER BY count(*) DESC LIMIT 1;"
+dev,tvshow,0,1,TV_Channel,,single,medium,simple,0,0,0,0,1,0,COUNT|COUNT,8,"SELECT count(DISTINCT series_name) ,  count(DISTINCT content) FROM TV_Channel;"
+dev,tvshow,0,1,TV_Channel,,single,medium,simple,0,0,0,0,1,0,COUNT|COUNT,8,"SELECT count(DISTINCT series_name) ,  count(DISTINCT content) FROM TV_Channel;"
+dev,tvshow,0,1,TV_Channel,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Content FROM TV_Channel WHERE series_name = ""Sky Radio"";"
+dev,tvshow,0,1,TV_Channel,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Content FROM TV_Channel WHERE series_name = ""Sky Radio"";"
+dev,tvshow,0,1,TV_Channel,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Package_Option FROM TV_Channel WHERE series_name = ""Sky Radio"";"
+dev,tvshow,0,1,TV_Channel,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT Package_Option FROM TV_Channel WHERE series_name = ""Sky Radio"";"
+dev,tvshow,0,1,TV_Channel,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM TV_Channel WHERE LANGUAGE = ""English"";"
+dev,tvshow,0,1,TV_Channel,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM TV_Channel WHERE LANGUAGE = ""English"";"
+dev,tvshow,0,1,TV_Channel,,single,medium,moderate,0,0,0,1,1,0,COUNT|COUNT,15,"SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE ORDER BY count(*) ASC LIMIT 1;"
+dev,tvshow,0,1,TV_Channel,,single,medium,moderate,0,0,0,1,1,0,COUNT|COUNT,15,"SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE ORDER BY count(*) ASC LIMIT 1;"
+dev,tvshow,0,1,TV_Channel,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE"
+dev,tvshow,0,1,TV_Channel,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE"
+dev,tvshow,1,2,TV_Channel|Cartoon,INNER,binary,medium,moderate,1,1,0,0,0,1,,23,"SELECT T1.series_name FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T2.Title = ""The Rise of the Blue Beetle!"";"
+dev,tvshow,1,2,TV_Channel|Cartoon,INNER,binary,medium,moderate,1,1,0,0,0,1,,23,"SELECT T1.series_name FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T2.Title = ""The Rise of the Blue Beetle!"";"
+dev,tvshow,1,2,TV_Channel|Cartoon,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T2.Title FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T1.series_name = ""Sky Radio"";"
+dev,tvshow,1,2,TV_Channel|Cartoon,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T2.Title FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T1.series_name = ""Sky Radio"";"
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,0,,7,SELECT Episode FROM TV_series ORDER BY rating
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,0,,7,SELECT Episode FROM TV_series ORDER BY rating
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT Episode ,  Rating FROM TV_series ORDER BY Rating DESC LIMIT 3;"
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT Episode ,  Rating FROM TV_series ORDER BY Rating DESC LIMIT 3;"
+dev,tvshow,0,1,TV_series,,single,medium,simple,0,0,0,0,1,0,MAX|MIN,6,"SELECT max(SHARE) , min(SHARE) FROM TV_series;"
+dev,tvshow,0,1,TV_series,,single,medium,simple,0,0,0,0,1,0,MAX|MIN,6,"SELECT max(SHARE) , min(SHARE) FROM TV_series;"
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT Air_Date FROM TV_series WHERE Episode = ""A Love of a Lifetime"";"
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT Air_Date FROM TV_series WHERE Episode = ""A Love of a Lifetime"";"
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT Weekly_Rank FROM TV_series WHERE Episode = ""A Love of a Lifetime"";"
+dev,tvshow,0,1,TV_series,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT Weekly_Rank FROM TV_series WHERE Episode = ""A Love of a Lifetime"";"
+dev,tvshow,1,2,TV_Channel|TV_series,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,"SELECT T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Episode = ""A Love of a Lifetime"";"
+dev,tvshow,1,2,TV_Channel|TV_series,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,"SELECT T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Episode = ""A Love of a Lifetime"";"
+dev,tvshow,1,2,TV_Channel|TV_series,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T2.Episode FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T1.series_name = ""Sky Radio"";"
+dev,tvshow,1,2,TV_Channel|TV_series,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,"SELECT T2.Episode FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T1.series_name = ""Sky Radio"";"
+dev,tvshow,0,1,cartoon,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  Directed_by FROM cartoon GROUP BY Directed_by"
+dev,tvshow,0,1,cartoon,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT count(*) ,  Directed_by FROM cartoon GROUP BY Directed_by"
+dev,tvshow,0,1,cartoon,,single,easy,simple,0,0,0,0,0,0,,12,"select production_code ,  channel from cartoon order by original_air_date desc limit 1"
+dev,tvshow,0,1,cartoon,,single,easy,simple,0,0,0,0,0,0,,12,"select production_code ,  channel from cartoon order by original_air_date desc limit 1"
+dev,tvshow,0,1,TV_Channel,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT package_option ,  series_name FROM TV_Channel WHERE hight_definition_TV  =  ""yes"""
+dev,tvshow,0,1,TV_Channel,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT package_option ,  series_name FROM TV_Channel WHERE hight_definition_TV  =  ""yes"""
+dev,tvshow,1,2,TV_Channel|cartoon,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by  =  'Todd Casey'
+dev,tvshow,1,2,TV_Channel|cartoon,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by  =  'Todd Casey'
+dev,tvshow,1,2,TV_Channel|cartoon,INNER,binary,extra hard,complex,1,1,1,0,0,1,,24,SELECT country FROM TV_Channel EXCEPT SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by  =  'Todd Casey'
+dev,tvshow,1,2,TV_Channel|cartoon,INNER,binary,extra hard,complex,1,1,1,0,0,1,,24,SELECT country FROM TV_Channel EXCEPT SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by  =  'Todd Casey'
+dev,tvshow,2,2,TV_Channel|cartoon,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,43,"SELECT T1.series_name ,  T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by  =  'Michael Chang' INTERSECT SELECT T1.series_name ,  T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by  =  'Ben Jones'"
+dev,tvshow,2,2,TV_Channel|cartoon,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,43,"SELECT T1.series_name ,  T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by  =  'Michael Chang' INTERSECT SELECT T1.series_name ,  T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by  =  'Ben Jones'"
+dev,tvshow,0,1,tv_channel,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Pixel_aspect_ratio_PAR ,  country FROM tv_channel WHERE LANGUAGE != 'English'"
+dev,tvshow,0,1,tv_channel,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Pixel_aspect_ratio_PAR ,  country FROM tv_channel WHERE LANGUAGE != 'English'"
+dev,tvshow,0,1,tv_channel,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT id FROM tv_channel GROUP BY country HAVING count(*)  >  2
+dev,tvshow,0,1,tv_channel,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT id FROM tv_channel GROUP BY country HAVING count(*)  >  2
+dev,tvshow,0,2,TV_Channel|cartoon,,binary,extra hard,complex,0,0,1,0,0,1,,14,SELECT id FROM TV_Channel EXCEPT SELECT channel FROM cartoon WHERE directed_by  =  'Ben Jones'
+dev,tvshow,0,2,TV_Channel|cartoon,,binary,extra hard,complex,0,0,1,0,0,1,,14,SELECT id FROM TV_Channel EXCEPT SELECT channel FROM cartoon WHERE directed_by  =  'Ben Jones'
+dev,tvshow,0,2,TV_Channel|cartoon,,binary,hard,moderate,0,0,1,0,0,1,,17,SELECT package_option FROM TV_Channel WHERE id NOT IN (SELECT channel FROM cartoon WHERE directed_by  =  'Ben Jones')
+dev,tvshow,0,2,TV_Channel|cartoon,,binary,hard,moderate,0,0,1,0,0,1,,17,SELECT package_option FROM TV_Channel WHERE id NOT IN (SELECT channel FROM cartoon WHERE directed_by  =  'Ben Jones')
+dev,poker_player,0,1,poker_player,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM poker_player
+dev,poker_player,0,1,poker_player,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM poker_player
+dev,poker_player,0,1,poker_player,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Earnings FROM poker_player ORDER BY Earnings DESC
+dev,poker_player,0,1,poker_player,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Earnings FROM poker_player ORDER BY Earnings DESC
+dev,poker_player,0,1,poker_player,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Final_Table_Made ,  Best_Finish FROM poker_player"
+dev,poker_player,0,1,poker_player,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Final_Table_Made ,  Best_Finish FROM poker_player"
+dev,poker_player,0,1,poker_player,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(Earnings) FROM poker_player
+dev,poker_player,0,1,poker_player,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(Earnings) FROM poker_player
+dev,poker_player,0,1,poker_player,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1
+dev,poker_player,0,1,poker_player,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1
+dev,poker_player,0,1,poker_player,,single,medium,simple,0,0,0,0,1,1,MAX,8,SELECT max(Final_Table_Made) FROM poker_player WHERE Earnings  <  200000
+dev,poker_player,0,1,poker_player,,single,medium,simple,0,0,0,0,1,1,MAX,8,SELECT max(Final_Table_Made) FROM poker_player WHERE Earnings  <  200000
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,14,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,14,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID WHERE T2.Earnings  >  300000
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID WHERE T2.Earnings  >  300000
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,17,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Final_Table_Made
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,17,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Final_Table_Made
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT T2.Money_Rank FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T1.Height DESC LIMIT 1
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,20,SELECT T2.Money_Rank FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T1.Height DESC LIMIT 1
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,1,1,AVG,18,SELECT avg(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID WHERE T1.Height  >  200
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,1,1,AVG,18,SELECT avg(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID WHERE T1.Height  >  200
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,18,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings DESC
+dev,poker_player,1,2,people|poker_player,INNER,binary,medium,moderate,1,1,0,0,0,0,,18,SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings DESC
+dev,poker_player,0,1,people,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Nationality ,  COUNT(*) FROM people GROUP BY Nationality"
+dev,poker_player,0,1,people,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Nationality ,  COUNT(*) FROM people GROUP BY Nationality"
+dev,poker_player,0,1,people,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1
+dev,poker_player,0,1,people,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1
+dev,poker_player,0,1,people,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*)  >=  2
+dev,poker_player,0,1,people,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*)  >=  2
+dev,poker_player,0,1,people,,single,easy,simple,0,0,0,0,0,0,,10,"SELECT Name ,  Birth_Date FROM people ORDER BY Name ASC"
+dev,poker_player,0,1,people,,single,easy,simple,0,0,0,0,0,0,,10,"SELECT Name ,  Birth_Date FROM people ORDER BY Name ASC"
+dev,poker_player,0,1,people,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Name FROM people WHERE Nationality != ""Russia"""
+dev,poker_player,0,1,people,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Name FROM people WHERE Nationality != ""Russia"""
+dev,poker_player,0,2,people|poker_player,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Name FROM people WHERE People_ID NOT IN (SELECT People_ID FROM poker_player)
+dev,poker_player,0,2,people|poker_player,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Name FROM people WHERE People_ID NOT IN (SELECT People_ID FROM poker_player)
+dev,poker_player,0,1,people,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT Nationality) FROM people
+dev,poker_player,0,1,people,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT Nationality) FROM people
+dev,voter_1,0,1,area_code_state,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM area_code_state
+dev,voter_1,0,1,contestants,,single,easy,simple,0,0,0,0,0,0,,10,"SELECT contestant_number ,  contestant_name FROM contestants ORDER BY contestant_name DESC"
+dev,voter_1,0,1,votes,,single,easy,simple,0,0,0,0,0,0,,8,"SELECT vote_id ,  phone_number ,  state FROM votes"
+dev,voter_1,0,1,area_code_state,,single,medium,simple,0,0,0,0,1,0,MAX|MIN,6,"SELECT max(area_code) ,  min(area_code) FROM area_code_state"
+dev,voter_1,0,1,votes,,single,medium,simple,0,0,0,0,1,1,MAX,8,SELECT max(created) FROM votes WHERE state  =  'CA'
+dev,voter_1,0,1,contestants,,single,easy,simple,0,0,0,0,0,1,,9,SELECT contestant_name FROM contestants WHERE contestant_name != 'Jessie Alloway'
+dev,voter_1,0,1,votes,,single,easy,simple,0,0,0,0,0,0,,7,"SELECT DISTINCT state ,  created FROM votes"
+dev,voter_1,1,2,contestants|votes,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.contestant_number , T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number  =  T2.contestant_number GROUP BY T1.contestant_number HAVING count(*)  >=  2"
+dev,voter_1,1,2,contestants|votes,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.contestant_number , T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number  =  T2.contestant_number GROUP BY T1.contestant_number ORDER BY count(*) ASC LIMIT 1"
+dev,voter_1,0,1,votes,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM votes WHERE state  =  'NY' OR state  =  'CA'
+dev,voter_1,0,2,contestants|votes,,binary,hard,moderate,0,0,1,0,1,1,COUNT,14,SELECT count(*) FROM contestants WHERE contestant_number NOT IN ( SELECT contestant_number FROM votes )
+dev,voter_1,1,2,area_code_state|votes,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.area_code FROM area_code_state AS T1 JOIN votes AS T2 ON T1.state  =  T2.state GROUP BY T1.area_code ORDER BY count(*) DESC LIMIT 1
+dev,voter_1,1,2,contestants|votes,INNER,binary,medium,moderate,1,1,0,0,0,1,,23,"SELECT T2.created ,  T2.state ,  T2.phone_number FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number  =  T2.contestant_number WHERE T1.contestant_name  =  'Tabatha Gehling'"
+dev,voter_1,4,3,contestants|votes|area_code_state,INNER|INNER|INNER|INNER,mesh,extra hard,extra,4,4,1,0,0,1,,55,SELECT T3.area_code FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number  =  T2.contestant_number JOIN area_code_state AS T3 ON T2.state  =  T3.state WHERE T1.contestant_name  =  'Tabatha Gehling' INTERSECT SELECT T3.area_code FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number  =  T2.contestant_number JOIN area_code_state AS T3 ON T2.state  =  T3.state WHERE T1.contestant_name  =  'Kelly Clauss'
+dev,voter_1,0,1,contestants,,single,easy,simple,0,0,0,0,0,1,,8,"select contestant_name from contestants where contestant_name like ""%al%"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,8,SELECT Name FROM country WHERE IndepYear  >  1950
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,8,SELECT Name FROM country WHERE IndepYear  >  1950
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM country WHERE GovernmentForm  =  ""Republic"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM country WHERE GovernmentForm  =  ""Republic"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM,8,"SELECT sum(SurfaceArea) FROM country WHERE Region  =  ""Caribbean"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM,8,"SELECT sum(SurfaceArea) FROM country WHERE Region  =  ""Caribbean"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Continent FROM country WHERE Name  =  ""Anguilla"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Continent FROM country WHERE Name  =  ""Anguilla"""
+dev,world_1,1,2,country|city,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT Region FROM country AS T1 JOIN city AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Name  =  ""Kabul"""
+dev,world_1,1,2,country|city,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT Region FROM country AS T1 JOIN city AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Name  =  ""Kabul"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,0,1,,24,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  ""Aruba"" ORDER BY Percentage DESC LIMIT 1"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,0,1,,24,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  ""Aruba"" ORDER BY Percentage DESC LIMIT 1"
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Population ,  LifeExpectancy FROM country WHERE Name  =  ""Brazil"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Population ,  LifeExpectancy FROM country WHERE Name  =  ""Brazil"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Population ,  Region FROM country WHERE Name  =  ""Angola"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,10,"SELECT Population ,  Region FROM country WHERE Name  =  ""Angola"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,AVG,9,"SELECT avg(LifeExpectancy) FROM country WHERE Region  =  ""Central Africa"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,AVG,9,"SELECT avg(LifeExpectancy) FROM country WHERE Region  =  ""Central Africa"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,0,1,,13,"SELECT Name FROM country WHERE Continent  =  ""Asia"" ORDER BY LifeExpectancy LIMIT 1"
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,0,1,,13,"SELECT Name FROM country WHERE Continent  =  ""Asia"" ORDER BY LifeExpectancy LIMIT 1"
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM|MAX,10,"SELECT sum(Population) ,  max(GNP) FROM country WHERE Continent  =  ""Asia"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM|MAX,10,"SELECT sum(Population) ,  max(GNP) FROM country WHERE Continent  =  ""Asia"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,AVG,12,"SELECT avg(LifeExpectancy) FROM country WHERE Continent  =  ""Africa"" AND GovernmentForm  =  ""Republic"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,AVG,12,"SELECT avg(LifeExpectancy) FROM country WHERE Continent  =  ""Africa"" AND GovernmentForm  =  ""Republic"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM,12,"SELECT sum(SurfaceArea) FROM country WHERE Continent  =  ""Asia"" OR Continent  =  ""Europe"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM,12,"SELECT sum(SurfaceArea) FROM country WHERE Continent  =  ""Asia"" OR Continent  =  ""Europe"""
+dev,world_1,0,1,city,,single,medium,simple,0,0,0,0,1,1,SUM,8,"SELECT sum(Population) FROM city WHERE District  =  ""Gelderland"""
+dev,world_1,0,1,city,,single,medium,simple,0,0,0,0,1,1,SUM,8,"SELECT sum(Population) FROM city WHERE District  =  ""Gelderland"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,AVG|SUM,11,"SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  ""US Territory"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,AVG|SUM,11,"SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  ""US Territory"""
+dev,world_1,0,1,countrylanguage,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT LANGUAGE) FROM countrylanguage
+dev,world_1,0,1,countrylanguage,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT LANGUAGE) FROM countrylanguage
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,COUNT,9,"SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent  =  ""Africa"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,COUNT,9,"SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent  =  ""Africa"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  ""Aruba"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  ""Aruba"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,22,"SELECT COUNT(*) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  ""Afghanistan"" AND IsOfficial  =  ""T"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,22,"SELECT COUNT(*) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  ""Afghanistan"" AND IsOfficial  =  ""T"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.Continent FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Continent ORDER BY COUNT(*) DESC LIMIT 1
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.Continent FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Continent ORDER BY COUNT(*) DESC LIMIT 1
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,1,1,COUNT,40,"SELECT COUNT(*) FROM (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""Dutch"")"
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,1,1,COUNT,40,"SELECT COUNT(*) FROM (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""Dutch"")"
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,37,"SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""French"""
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,37,"SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""French"""
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,45,"SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" AND T2.IsOfficial  =  ""T"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""French"" AND T2.IsOfficial  =  ""T"""
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,45,"SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" AND T2.IsOfficial  =  ""T"" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""French"" AND T2.IsOfficial  =  ""T"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,20,"SELECT COUNT( DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""Chinese"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,20,"SELECT COUNT( DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""Chinese"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,0,1,,23,"SELECT DISTINCT T1.Region FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" OR T2.Language  =  ""Dutch"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,0,1,,23,"SELECT DISTINCT T1.Region FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" OR T2.Language  =  ""Dutch"""
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,45,"select t1.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  ""english"" and isofficial  =  ""t"" union select t1.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  ""dutch"" and isofficial  =  ""t"""
+dev,world_1,2,2,country|countrylanguage,INNER|INNER,binary,extra hard,extra,2,2,1,0,0,1,,45,"SELECT * FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" AND IsOfficial  =  ""T"" UNION SELECT * FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""Dutch"" AND IsOfficial  =  ""T"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,hard,complex,1,1,0,1,1,1,COUNT,28,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Continent  =  ""Asia"" GROUP BY T2.Language ORDER BY COUNT (*) DESC LIMIT 1"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,hard,complex,1,1,0,1,1,1,COUNT,28,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Continent  =  ""Asia"" GROUP BY T2.Language ORDER BY COUNT (*) DESC LIMIT 1"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,1,COUNT,25,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.GovernmentForm  =  ""Republic"" GROUP BY T2.Language HAVING COUNT(*)  =  1"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,1,COUNT,25,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.GovernmentForm  =  ""Republic"" GROUP BY T2.Language HAVING COUNT(*)  =  1"
+dev,world_1,1,2,city|countrylanguage,INNER,binary,medium,moderate,0,1,0,0,0,1,,26,"SELECT T1.Name ,  T1.Population FROM city AS T1 JOIN countrylanguage AS T2 ON T1.CountryCode  =  T2.CountryCode WHERE T2.Language  =  ""English"" ORDER BY T1.Population DESC LIMIT 1"
+dev,world_1,1,2,city|countrylanguage,INNER,binary,medium,moderate,0,1,0,0,0,1,,26,"SELECT T1.Name ,  T1.Population FROM city AS T1 JOIN countrylanguage AS T2 ON T1.CountryCode  =  T2.CountryCode WHERE T2.Language  =  ""English"" ORDER BY T1.Population DESC LIMIT 1"
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,0,1,,18,"SELECT Name ,  Population ,  LifeExpectancy FROM country WHERE Continent  =  ""Asia"" ORDER BY SurfaceArea DESC LIMIT 1"
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,0,1,,18,"SELECT Name ,  Population ,  LifeExpectancy FROM country WHERE Continent  =  ""Asia"" ORDER BY SurfaceArea DESC LIMIT 1"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,extra hard,complex,1,1,1,0,1,1,AVG,30,"SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" AND T2.IsOfficial  =  ""T"")"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,extra hard,complex,1,1,1,0,1,1,AVG,30,"SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"" AND T2.IsOfficial  =  ""T"")"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,extra hard,complex,1,1,1,0,1,1,SUM,26,"SELECT sum(Population) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"")"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,extra hard,complex,1,1,1,0,1,1,SUM,26,"SELECT sum(Population) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  ""English"")"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.HeadOfState  =  ""Beatrix"" AND T2.IsOfficial  =  ""T"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,0,1,,22,"SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.HeadOfState  =  ""Beatrix"" AND T2.IsOfficial  =  ""T"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,23,"SELECT count(DISTINCT T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE  IndepYear  <  1930 AND T2.IsOfficial  =  ""T"""
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,23,"SELECT count(DISTINCT T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE  IndepYear  <  1930 AND T2.IsOfficial  =  ""T"""
+dev,world_1,0,1,country,,single,hard,moderate,0,0,1,0,1,1,MIN,15,"SELECT Name FROM country WHERE SurfaceArea  >  (SELECT min(SurfaceArea) FROM country WHERE Continent  =  ""Europe"")"
+dev,world_1,0,1,country,,single,hard,moderate,0,0,1,0,1,1,MIN,15,"SELECT Name FROM country WHERE SurfaceArea  >  (SELECT min(SurfaceArea) FROM country WHERE Continent  =  ""Europe"")"
+dev,world_1,0,1,country,,single,hard,moderate,0,0,1,0,1,1,MAX,19,"SELECT Name FROM country WHERE Continent  =  ""Africa""  AND population  <  (SELECT max(population) FROM country WHERE Continent  =  ""Asia"")"
+dev,world_1,0,1,country,,single,hard,moderate,0,0,1,0,1,1,MIN,19,"SELECT Name FROM country WHERE Continent  =  ""Africa""  AND population  <  (SELECT min(population) FROM country WHERE Continent  =  ""Asia"")"
+dev,world_1,0,1,country,,single,hard,moderate,0,0,1,0,1,1,MAX,19,"SELECT Name FROM country WHERE Continent  =  ""Asia""  AND population  >  (SELECT max(population) FROM country WHERE Continent  =  ""Africa"")"
+dev,world_1,0,1,country,,single,hard,moderate,0,0,1,0,1,1,MIN,19,"SELECT Name FROM country WHERE Continent  =  ""Asia""  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  ""Africa"")"
+dev,world_1,0,1,countrylanguage,,single,extra hard,complex,0,0,1,0,0,1,,13,"SELECT CountryCode FROM countrylanguage EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  ""English"""
+dev,world_1,0,1,countrylanguage,,single,extra hard,complex,0,0,1,0,0,1,,13,"SELECT CountryCode FROM countrylanguage EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  ""English"""
+dev,world_1,0,1,countrylanguage,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != ""English"""
+dev,world_1,0,1,countrylanguage,,single,easy,simple,0,0,0,0,0,1,,9,"SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != ""English"""
+dev,world_1,0,2,country|countrylanguage,,binary,extra hard,complex,0,0,1,0,0,1,,17,"SELECT Code FROM country WHERE GovernmentForm != ""Republic"" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  ""English"""
+dev,world_1,0,2,country|countrylanguage,,binary,extra hard,complex,0,0,1,0,0,1,,17,"SELECT Code FROM country WHERE GovernmentForm != ""Republic"" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  ""English"""
+dev,world_1,2,3,country|city|countrylanguage,INNER|INNER,chain,extra hard,complex,2,2,1,0,0,1,,45,SELECT DISTINCT T2.Name FROM country AS T1 JOIN city AS T2 ON T2.CountryCode  =  T1.Code WHERE T1.Continent  =  'Europe' AND T1.Name NOT IN (SELECT T3.Name FROM country AS T3 JOIN countrylanguage AS T4 ON T3.Code  =  T4.CountryCode WHERE T4.IsOfficial  =  'T' AND T4.Language  =  'English')
+dev,world_1,2,3,country|city|countrylanguage,INNER|INNER,chain,extra hard,complex,2,2,1,0,0,1,,45,SELECT DISTINCT T2.Name FROM country AS T1 JOIN city AS T2 ON T2.CountryCode  =  T1.Code WHERE T1.Continent  =  'Europe' AND T1.Name NOT IN (SELECT T3.Name FROM country AS T3 JOIN countrylanguage AS T4 ON T3.Code  =  T4.CountryCode WHERE T4.IsOfficial  =  'T' AND T4.Language  =  'English')
+dev,world_1,2,3,country|countrylanguage|city,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,35,"select distinct t3.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode join city as t3 on t1.code  =  t3.countrycode where t2.isofficial  =  't' and t2.language  =  'chinese' and t1.continent  =  ""asia"""
+dev,world_1,2,3,country|countrylanguage|city,INNER|INNER,chain,hard,complex,2,2,0,0,0,1,,35,"SELECT DISTINCT T3.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode JOIN city AS T3 ON T1.Code  =  T3.CountryCode WHERE T2.IsOfficial  =  'T' AND T2.Language  =  'Chinese' AND T1.Continent  =  ""Asia"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,13,"SELECT Name ,  SurfaceArea ,  IndepYear FROM country ORDER BY Population LIMIT 1"
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,13,"SELECT Name ,  SurfaceArea ,  IndepYear FROM country ORDER BY Population LIMIT 1"
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,14,"SELECT Name ,  population ,  HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1"
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,14,"SELECT Name ,  population ,  HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT|COUNT,23,"SELECT COUNT(T2.Language) ,  T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name HAVING COUNT(*)  >  2"
+dev,world_1,1,2,country|countrylanguage,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT|COUNT,23,"SELECT COUNT(T2.Language) ,  T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name HAVING COUNT(*)  >  2"
+dev,world_1,0,1,city,,single,hard,complex,0,0,1,1,1,1,COUNT|AVG,16,"SELECT count(*) ,  District FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District"
+dev,world_1,0,1,city,,single,hard,complex,0,0,1,1,1,1,COUNT|AVG,16,"SELECT count(*) ,  District FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District"
+dev,world_1,0,1,country,,single,medium,complex,0,0,0,1,1,0,SUM|AVG,13,"SELECT sum(Population) ,  GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72"
+dev,world_1,0,1,country,,single,medium,complex,0,0,0,1,1,0,SUM|AVG,13,"SELECT sum(Population) ,  GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72"
+dev,world_1,0,1,country,,single,medium,complex,0,0,0,1,1,0,SUM|AVG|AVG,15,"SELECT sum(Population) ,  avg(LifeExpectancy) ,  Continent FROM country GROUP BY Continent HAVING avg(LifeExpectancy)  <  72"
+dev,world_1,0,1,country,,single,medium,complex,0,0,0,1,1,0,SUM|AVG|AVG,15,"SELECT sum(Population) ,  avg(LifeExpectancy) ,  Continent FROM country GROUP BY Continent HAVING avg(LifeExpectancy)  <  72"
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5"
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,12,"SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5"
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM country WHERE continent  =  ""Asia"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,COUNT,8,"SELECT count(*) FROM country WHERE continent  =  ""Asia"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT Name FROM country WHERE continent  =  ""Europe"" AND Population  =  ""80000"""
+dev,world_1,0,1,country,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT Name FROM country WHERE continent  =  ""Europe"" AND Population  =  ""80000"""
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM|AVG,15,"select sum(population) ,  avg(surfacearea) from country where continent  =  ""north america"" and surfacearea  >  3000"
+dev,world_1,0,1,country,,single,medium,simple,0,0,0,0,1,1,SUM|AVG,15,"select sum(population) ,  avg(surfacearea) from country where continent  =  ""north america"" and surfacearea  >  3000"
+dev,world_1,0,1,city,,single,easy,simple,0,0,0,0,0,1,,10,SELECT name FROM city WHERE Population BETWEEN 160000 AND 900000
+dev,world_1,0,1,city,,single,easy,simple,0,0,0,0,0,1,,10,select name from city where population between 160000 and 900000
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) DESC LIMIT 1
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) DESC LIMIT 1
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,0,MAX,11,"SELECT LANGUAGE ,  CountryCode ,  max(Percentage) FROM countrylanguage GROUP BY CountryCode"
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,0,MAX,11,"SELECT LANGUAGE ,  CountryCode ,  max(Percentage) FROM countrylanguage GROUP BY CountryCode"
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,1,COUNT|MAX,13,"SELECT count(*) ,   max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  ""Spanish"" GROUP BY CountryCode"
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,1,COUNT|MAX,13,"SELECT count(*) ,   max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  ""Spanish"" GROUP BY CountryCode"
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,1,MAX,13,"SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  ""Spanish"" GROUP BY CountryCode"
+dev,world_1,0,1,countrylanguage,,single,medium,moderate,0,0,0,1,1,1,MAX,13,"SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  ""Spanish"" GROUP BY CountryCode"
+dev,orchestra,0,1,conductor,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM conductor
+dev,orchestra,0,1,conductor,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM conductor
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM conductor ORDER BY Age ASC
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM conductor ORDER BY Age ASC
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,1,,8,SELECT Name FROM conductor WHERE Nationality != 'USA'
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,1,,8,SELECT Name FROM conductor WHERE Nationality != 'USA'
+dev,orchestra,0,1,orchestra,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+dev,orchestra,0,1,orchestra,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+dev,orchestra,0,1,SHOW,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(Attendance) FROM SHOW
+dev,orchestra,0,1,SHOW,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(Attendance) FROM SHOW
+dev,orchestra,0,1,performance,,single,medium,simple,0,0,0,0,1,1,MAX|MIN,11,"SELECT max(SHARE) ,  min(SHARE) FROM performance WHERE TYPE != ""Live final"""
+dev,orchestra,0,1,performance,,single,medium,simple,0,0,0,0,1,1,MAX|MIN,11,"SELECT max(SHARE) ,  min(SHARE) FROM performance WHERE TYPE != ""Live final"""
+dev,orchestra,0,1,conductor,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT Nationality) FROM conductor
+dev,orchestra,0,1,conductor,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT Nationality) FROM conductor
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM conductor ORDER BY Year_of_Work DESC
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM conductor ORDER BY Year_of_Work DESC
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1
+dev,orchestra,0,1,conductor,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.Name ,  T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID"
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.Name ,  T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID"
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID HAVING COUNT(*)  >  1
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID HAVING COUNT(*)  >  1
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID WHERE Year_of_Founded  >  2008
+dev,orchestra,1,2,conductor|orchestra,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID WHERE Year_of_Founded  >  2008
+dev,orchestra,0,1,orchestra,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Record_Company ,  COUNT(*) FROM orchestra GROUP BY Record_Company"
+dev,orchestra,0,1,orchestra,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Record_Company ,  COUNT(*) FROM orchestra GROUP BY Record_Company"
+dev,orchestra,0,1,orchestra,,single,medium,moderate,0,0,0,1,1,0,COUNT,11,SELECT Major_Record_Format FROM orchestra GROUP BY Major_Record_Format ORDER BY COUNT(*) ASC
+dev,orchestra,0,1,orchestra,,single,medium,moderate,0,0,0,1,1,0,COUNT,11,SELECT Major_Record_Format FROM orchestra GROUP BY Major_Record_Format ORDER BY COUNT(*) ASC
+dev,orchestra,0,1,orchestra,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1
+dev,orchestra,0,1,orchestra,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1
+dev,orchestra,0,2,orchestra|performance,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)
+dev,orchestra,0,2,orchestra|performance,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)
+dev,orchestra,0,1,orchestra,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT Record_Company FROM orchestra WHERE Year_of_Founded  <  2003 INTERSECT SELECT Record_Company FROM orchestra WHERE Year_of_Founded  >  2003
+dev,orchestra,0,1,orchestra,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT Record_Company FROM orchestra WHERE Year_of_Founded  <  2003 INTERSECT SELECT Record_Company FROM orchestra WHERE Year_of_Founded  >  2003
+dev,orchestra,0,1,orchestra,,single,medium,simple,0,0,0,0,1,1,COUNT,12,"SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format  =  ""CD"" OR Major_Record_Format  =  ""DVD"""
+dev,orchestra,0,1,orchestra,,single,medium,simple,0,0,0,0,1,1,COUNT,12,"SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format  =  ""CD"" OR Major_Record_Format  =  ""DVD"""
+dev,orchestra,1,2,orchestra|performance,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT Year_of_Founded FROM orchestra AS T1 JOIN performance AS T2 ON T1.Orchestra_ID  =  T2.Orchestra_ID GROUP BY T2.Orchestra_ID HAVING COUNT(*)  >  1
+dev,orchestra,1,2,orchestra|performance,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT Year_of_Founded FROM orchestra AS T1 JOIN performance AS T2 ON T1.Orchestra_ID  =  T2.Orchestra_ID GROUP BY T2.Orchestra_ID HAVING COUNT(*)  >  1
+dev,network_1,0,1,Highschooler,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Highschooler
+dev,network_1,0,1,Highschooler,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Highschooler
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT name ,  grade FROM Highschooler"
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT name ,  grade FROM Highschooler"
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,0,,4,SELECT grade FROM Highschooler
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,0,,4,SELECT grade FROM Highschooler
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT grade FROM Highschooler WHERE name  =  ""Kyle"""
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT grade FROM Highschooler WHERE name  =  ""Kyle"""
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,1,,8,SELECT name FROM Highschooler WHERE grade  =  10
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,1,,8,SELECT name FROM Highschooler WHERE grade  =  10
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT ID FROM Highschooler WHERE name  =  ""Kyle"""
+dev,network_1,0,1,Highschooler,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT ID FROM Highschooler WHERE name  =  ""Kyle"""
+dev,network_1,0,1,Highschooler,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM Highschooler WHERE grade  =  9 OR grade  =  10
+dev,network_1,0,1,Highschooler,,single,medium,simple,0,0,0,0,1,1,COUNT,12,SELECT count(*) FROM Highschooler WHERE grade  =  9 OR grade  =  10
+dev,network_1,0,1,Highschooler,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT grade ,  count(*) FROM Highschooler GROUP BY grade"
+dev,network_1,0,1,Highschooler,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT grade ,  count(*) FROM Highschooler GROUP BY grade"
+dev,network_1,0,1,Highschooler,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT grade FROM Highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+dev,network_1,0,1,Highschooler,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT grade FROM Highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+dev,network_1,0,1,Highschooler,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT grade FROM Highschooler GROUP BY grade HAVING count(*)  >=  4
+dev,network_1,0,1,Highschooler,,single,medium,complex,0,0,0,1,1,0,COUNT,11,SELECT grade FROM Highschooler GROUP BY grade HAVING count(*)  >=  4
+dev,network_1,0,1,Friend,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT student_id ,  count(*) FROM Friend GROUP BY student_id"
+dev,network_1,0,1,Friend,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT student_id ,  count(*) FROM Friend GROUP BY student_id"
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id"
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id"
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  3
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  3
+dev,network_1,2,2,Friend|Highschooler,INNER|INNER,binary,hard,complex,2,2,0,0,0,1,,26,"SELECT T3.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id JOIN Highschooler AS T3 ON T1.friend_id  =  T3.id WHERE T2.name  =  ""Kyle"""
+dev,network_1,2,2,Friend|Highschooler,INNER|INNER,binary,hard,complex,2,2,0,0,0,1,,26,"SELECT T3.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id JOIN Highschooler AS T3 ON T1.friend_id  =  T3.id WHERE T2.name  =  ""Kyle"""
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  ""Kyle"""
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  ""Kyle"""
+dev,network_1,0,2,Highschooler|Friend,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend
+dev,network_1,0,2,Highschooler|Friend,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend
+dev,network_1,1,2,Highschooler|Friend,INNER,binary,extra hard,complex,1,1,1,0,0,0,,19,SELECT name FROM Highschooler EXCEPT SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id
+dev,network_1,1,2,Highschooler|Friend,INNER,binary,extra hard,complex,1,1,1,0,0,0,,19,SELECT name FROM Highschooler EXCEPT SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id
+dev,network_1,0,2,Friend|Likes,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT student_id FROM Friend INTERSECT SELECT liked_id FROM Likes
+dev,network_1,0,2,Friend|Likes,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT student_id FROM Friend INTERSECT SELECT liked_id FROM Likes
+dev,network_1,2,3,Friend|Highschooler|Likes,INNER|INNER,chain,extra hard,extra,2,2,1,0,0,0,,29,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id INTERSECT SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.liked_id  =  T2.id
+dev,network_1,2,3,Friend|Highschooler|Likes,INNER|INNER,chain,extra hard,extra,2,2,1,0,0,0,,29,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id INTERSECT SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.liked_id  =  T2.id
+dev,network_1,0,1,Likes,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT student_id ,  count(*) FROM Likes GROUP BY student_id"
+dev,network_1,0,1,Likes,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT student_id ,  count(*) FROM Likes GROUP BY student_id"
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id"
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,19,"SELECT T2.name ,  count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id"
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  2
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  2
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,1,COUNT,25,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.grade  >  5 GROUP BY T1.student_id HAVING count(*)  >=  2
+dev,network_1,1,2,Friend|Highschooler,INNER,binary,medium,complex,1,1,0,1,1,1,COUNT,25,SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.grade  >  5 GROUP BY T1.student_id HAVING count(*)  >=  2
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  ""Kyle"""
+dev,network_1,1,2,Likes|Highschooler,INNER,binary,medium,moderate,1,1,0,0,1,1,COUNT,18,"SELECT count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  ""Kyle"""
+dev,network_1,1,2,Highschooler|Friend,INNER,binary,hard,complex,1,1,1,0,1,1,AVG,21,SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+dev,network_1,1,2,Highschooler|Friend,INNER,binary,hard,complex,1,1,1,0,1,1,AVG,21,SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+dev,network_1,1,2,Highschooler|Friend,INNER,binary,hard,complex,1,1,1,0,1,1,MIN,22,SELECT min(grade) FROM Highschooler WHERE id NOT IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+dev,network_1,1,2,Highschooler|Friend,INNER,binary,hard,complex,1,1,1,0,1,1,MIN,22,SELECT min(grade) FROM Highschooler WHERE id NOT IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+dev,dog_kennels,0,2,Owners|Professionals,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT state FROM Owners INTERSECT SELECT state FROM Professionals
+dev,dog_kennels,0,2,Owners|Professionals,,binary,extra hard,complex,0,0,1,0,0,0,,9,SELECT state FROM Owners INTERSECT SELECT state FROM Professionals
+dev,dog_kennels,0,2,Dogs|Treatments,,binary,hard,moderate,0,0,1,0,1,1,AVG,13,SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )
+dev,dog_kennels,0,2,Dogs|Treatments,,binary,hard,moderate,0,0,1,0,1,1,AVG,13,SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,extra hard,extra,1,1,1,1,1,1,COUNT,38,"SELECT professional_id ,  last_name ,  cell_number FROM Professionals WHERE state  =  'Indiana' UNION SELECT T1.professional_id ,  T1.last_name ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >  2"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,extra hard,extra,1,1,1,1,1,1,COUNT,38,"SELECT professional_id ,  last_name ,  cell_number FROM Professionals WHERE state  =  'Indiana' UNION SELECT T1.professional_id ,  T1.last_name ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >  2"
+dev,dog_kennels,0,2,dogs|treatments,,binary,hard,complex,0,0,1,1,1,1,SUM,21,select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
+dev,dog_kennels,0,2,dogs|treatments,,binary,hard,complex,0,0,1,1,1,1,SUM,21,select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
+dev,dog_kennels,0,3,Professionals|Owners|Dogs,,partial,extra hard,complex,0,0,1,0,0,0,,14,SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs
+dev,dog_kennels,0,3,Professionals|Owners|Dogs,,partial,extra hard,complex,0,0,1,0,0,0,,14,SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,extra hard,complex,1,1,1,0,0,0,,27,"SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,extra hard,complex,1,1,1,0,0,0,,27,"SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id"
+dev,dog_kennels,1,2,Dogs|Owners,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,"SELECT T1.owner_id ,  T2.first_name ,  T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id  =  T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1"
+dev,dog_kennels,1,2,Dogs|Owners,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,27,"SELECT T1.owner_id ,  T2.first_name ,  T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id  =  T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.professional_id ,  T1.role_code ,  T1.first_name FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,25,"SELECT T1.professional_id ,  T1.role_code ,  T1.first_name FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2"
+dev,dog_kennels,1,2,Breeds|Dogs,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.breed_name FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1
+dev,dog_kennels,1,2,Breeds|Dogs,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,SELECT T1.breed_name FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1
+dev,dog_kennels,2,3,Owners|Dogs|Treatments,INNER|INNER,chain,hard,complex,2,2,0,1,1,0,COUNT,33,"SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1"
+dev,dog_kennels,2,3,Owners|Dogs|Treatments,INNER|INNER,chain,hard,complex,2,2,0,1,1,0,COUNT,33,"SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1"
+dev,dog_kennels,1,2,Treatment_types|Treatments,INNER,binary,medium,complex,1,1,0,1,1,0,SUM,23,SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1
+dev,dog_kennels,1,2,Treatment_types|Treatments,INNER,binary,medium,complex,1,1,0,1,1,0,SUM,23,SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1
+dev,dog_kennels,2,3,Owners|Dogs|Treatments,INNER|INNER,chain,hard,complex,2,2,0,1,1,0,SUM,33,"SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1"
+dev,dog_kennels,2,3,Owners|Dogs|Treatments,INNER|INNER,chain,hard,complex,2,2,0,1,1,0,SUM,33,"SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.professional_id ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,23,"SELECT T1.professional_id ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,hard,complex,0,0,1,0,1,1,AVG,22,"SELECT DISTINCT T1.first_name ,  T1.last_name FROM Professionals AS T1 JOIN Treatments AS T2 WHERE cost_of_treatment  <  ( SELECT avg(cost_of_treatment) FROM Treatments )"
+dev,dog_kennels,1,2,Professionals|Treatments,INNER,binary,hard,complex,0,0,1,0,1,1,AVG,22,"SELECT DISTINCT T1.first_name ,  T1.last_name FROM Professionals AS T1 JOIN Treatments AS T2 WHERE cost_of_treatment  <  ( SELECT avg(cost_of_treatment) FROM Treatments )"
+dev,dog_kennels,1,2,Treatments|Professionals,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.date_of_treatment ,  T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id  =  T2.professional_id"
+dev,dog_kennels,1,2,Treatments|Professionals,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.date_of_treatment ,  T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id  =  T2.professional_id"
+dev,dog_kennels,1,2,Treatments|treatment_types,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.cost_of_treatment ,  T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code"
+dev,dog_kennels,1,2,Treatments|treatment_types,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.cost_of_treatment ,  T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code"
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,medium,moderate,1,1,0,0,0,0,,18,"SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id"
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,medium,moderate,1,1,0,0,0,0,,18,"SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id"
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id"
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id"
+dev,dog_kennels,1,2,Dogs|Treatments,INNER,binary,extra hard,complex,1,1,1,1,1,1,COUNT,34,"SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )"
+dev,dog_kennels,1,2,Dogs|Treatments,INNER,binary,extra hard,complex,1,1,1,1,1,1,COUNT,34,"SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )"
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,medium,moderate,1,1,0,0,0,1,,20,"SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.state  =  'Virginia'"
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,medium,moderate,1,1,0,0,0,1,,20,"SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.state  =  'Virginia'"
+dev,dog_kennels,1,2,Dogs|Treatments,INNER,binary,medium,moderate,1,1,0,0,0,0,,17,"SELECT DISTINCT T1.date_arrived ,  T1.date_departed FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id"
+dev,dog_kennels,1,2,Dogs|Treatments,INNER,binary,medium,moderate,1,1,0,0,0,0,,17,"SELECT DISTINCT T1.date_arrived ,  T1.date_departed FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id"
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,hard,complex,1,1,1,0,1,1,MAX,23,SELECT T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T2.age  =  ( SELECT max(age) FROM Dogs )
+dev,dog_kennels,1,2,Owners|Dogs,INNER,binary,hard,complex,1,1,1,0,1,1,MAX,23,SELECT T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T2.age  =  ( SELECT max(age) FROM Dogs )
+dev,dog_kennels,0,1,Professionals,,single,easy,simple,0,0,0,0,0,1,,12,SELECT email_address FROM Professionals WHERE state  =  'Hawaii' OR state  =  'Wisconsin'
+dev,dog_kennels,0,1,Professionals,,single,easy,simple,0,0,0,0,0,1,,12,SELECT email_address FROM Professionals WHERE state  =  'Hawaii' OR state  =  'Wisconsin'
+dev,dog_kennels,0,1,Dogs,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT date_arrived ,  date_departed FROM Dogs"
+dev,dog_kennels,0,1,Dogs,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT date_arrived ,  date_departed FROM Dogs"
+dev,dog_kennels,0,1,Treatments,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT dog_id) FROM Treatments
+dev,dog_kennels,0,1,Treatments,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT dog_id) FROM Treatments
+dev,dog_kennels,0,1,Treatments,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT professional_id) FROM Treatments
+dev,dog_kennels,0,1,Treatments,,single,medium,simple,0,0,0,0,1,0,COUNT,5,SELECT count(DISTINCT professional_id) FROM Treatments
+dev,dog_kennels,0,1,professionals,,single,easy,simple,0,0,0,0,0,1,,14,"SELECT role_code ,  street ,  city ,  state FROM professionals WHERE city LIKE '%West%'"
+dev,dog_kennels,0,1,professionals,,single,easy,simple,0,0,0,0,0,1,,14,"SELECT role_code ,  street ,  city ,  state FROM professionals WHERE city LIKE '%West%'"
+dev,dog_kennels,0,1,Owners,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT first_name ,  last_name ,  email_address FROM Owners WHERE state LIKE '%North%'"
+dev,dog_kennels,0,1,Owners,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT first_name ,  last_name ,  email_address FROM Owners WHERE state LIKE '%North%'"
+dev,dog_kennels,0,1,Dogs,,single,hard,moderate,0,0,1,0,1,1,COUNT|AVG,13,SELECT count(*) FROM Dogs WHERE age  <  ( SELECT avg(age) FROM Dogs )
+dev,dog_kennels,0,1,Dogs,,single,hard,moderate,0,0,1,0,1,1,COUNT|AVG,13,SELECT count(*) FROM Dogs WHERE age  <  ( SELECT avg(age) FROM Dogs )
+dev,dog_kennels,0,1,Treatments,,single,easy,simple,0,0,0,0,0,0,,10,SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1
+dev,dog_kennels,0,1,Treatments,,single,easy,simple,0,0,0,0,0,0,,10,SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1
+dev,dog_kennels,0,2,Dogs|Treatments,,binary,hard,moderate,0,0,1,0,1,1,COUNT,14,SELECT count(*) FROM Dogs WHERE dog_id NOT IN ( SELECT dog_id FROM Treatments )
+dev,dog_kennels,0,2,dogs|treatments,,binary,hard,moderate,0,0,1,0,1,1,COUNT,14,select count(*) from dogs where dog_id not in ( select dog_id from treatments )
+dev,dog_kennels,0,2,Owners|Dogs,,binary,hard,moderate,0,0,1,0,1,1,COUNT,14,SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs )
+dev,dog_kennels,0,2,Owners|Dogs,,binary,hard,moderate,0,0,1,0,1,1,COUNT,14,SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs )
+dev,dog_kennels,0,2,Professionals|Treatments,,binary,hard,moderate,0,0,1,0,1,1,COUNT,14,SELECT count(*) FROM Professionals WHERE professional_id NOT IN ( SELECT professional_id FROM Treatments )
+dev,dog_kennels,0,2,Professionals|Treatments,,binary,hard,moderate,0,0,1,0,1,1,COUNT,14,SELECT count(*) FROM Professionals WHERE professional_id NOT IN ( SELECT professional_id FROM Treatments )
+dev,dog_kennels,0,1,Dogs,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT name ,  age ,  weight FROM Dogs WHERE abandoned_yn  =  1"
+dev,dog_kennels,0,1,Dogs,,single,easy,simple,0,0,0,0,0,1,,12,"SELECT name ,  age ,  weight FROM Dogs WHERE abandoned_yn  =  1"
+dev,dog_kennels,0,1,Dogs,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(age) FROM Dogs
+dev,dog_kennels,0,1,Dogs,,single,medium,simple,0,0,0,0,1,0,AVG,4,SELECT avg(age) FROM Dogs
+dev,dog_kennels,0,1,Dogs,,single,medium,simple,0,0,0,0,1,0,MAX,4,SELECT max(age) FROM Dogs
+dev,dog_kennels,0,1,Dogs,,single,medium,simple,0,0,0,0,1,0,MAX,4,SELECT max(age) FROM Dogs
+dev,dog_kennels,0,1,Charges,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT charge_type ,  charge_amount FROM Charges"
+dev,dog_kennels,0,1,Charges,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT charge_type ,  charge_amount FROM Charges"
+dev,dog_kennels,0,1,Charges,,single,medium,simple,0,0,0,0,1,0,MAX,4,SELECT max(charge_amount) FROM Charges
+dev,dog_kennels,0,1,Charges,,single,medium,simple,0,0,0,0,1,0,MAX,4,SELECT max(charge_amount) FROM Charges
+dev,dog_kennels,0,1,professionals,,single,easy,simple,0,0,0,0,0,0,,8,"SELECT email_address ,  cell_number ,  home_phone FROM professionals"
+dev,dog_kennels,0,1,professionals,,single,easy,simple,0,0,0,0,0,0,,8,"SELECT email_address ,  cell_number ,  home_phone FROM professionals"
+dev,dog_kennels,0,1,dogs,,single,easy,simple,0,0,0,0,0,0,,7,"SELECT DISTINCT breed_code ,  size_code FROM dogs"
+dev,dog_kennels,0,1,dogs,,single,easy,simple,0,0,0,0,0,0,,7,"SELECT DISTINCT breed_code ,  size_code FROM dogs"
+dev,dog_kennels,2,3,professionals|Treatments|Treatment_types,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,25,"SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code"
+dev,dog_kennels,2,3,professionals|Treatments|Treatment_types,INNER|INNER,chain,hard,complex,2,2,0,0,0,0,,25,"SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code"
+dev,singer,0,1,singer,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM singer
+dev,singer,0,1,singer,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM singer
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,8,SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Birth_Year ,  Citizenship FROM singer"
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,6,"SELECT Birth_Year ,  Citizenship FROM singer"
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Name FROM singer WHERE Citizenship != ""France"""
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,8,"SELECT Name FROM singer WHERE Citizenship != ""France"""
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,12,SELECT Name FROM singer WHERE Birth_Year  =  1948 OR Birth_Year  =  1949
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,1,,12,SELECT Name FROM singer WHERE Birth_Year  =  1948 OR Birth_Year  =  1949
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+dev,singer,0,1,singer,,single,easy,simple,0,0,0,0,0,0,,10,SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+dev,singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Citizenship ,  COUNT(*) FROM singer GROUP BY Citizenship"
+dev,singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,COUNT,9,"SELECT Citizenship ,  COUNT(*) FROM singer GROUP BY Citizenship"
+dev,singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,SELECT Citizenship FROM singer GROUP BY Citizenship ORDER BY COUNT(*) DESC LIMIT 1
+dev,singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,COUNT,13,select citizenship from singer group by citizenship order by count(*) desc limit 1
+dev,singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,MAX,9,"SELECT Citizenship ,  max(Net_Worth_Millions) FROM singer GROUP BY Citizenship"
+dev,singer,0,1,singer,,single,medium,moderate,0,0,0,1,1,0,MAX,9,"SELECT Citizenship ,  max(Net_Worth_Millions) FROM singer GROUP BY Citizenship"
+dev,singer,1,2,singer|song,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T2.Title ,  T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID"
+dev,singer,1,2,singer|song,INNER,binary,medium,moderate,1,1,0,0,0,0,,16,"SELECT T2.Title ,  T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID"
+dev,singer,1,2,singer|song,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,SELECT DISTINCT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID WHERE T2.Sales  >  300000
+dev,singer,1,2,singer|song,INNER,binary,medium,moderate,1,1,0,0,0,1,,19,SELECT DISTINCT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID WHERE T2.Sales  >  300000
+dev,singer,1,2,singer|song,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name HAVING COUNT(*)  >  1
+dev,singer,1,2,singer|song,INNER,binary,medium,complex,1,1,0,1,1,0,COUNT,21,SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name HAVING COUNT(*)  >  1
+dev,singer,1,2,singer|song,INNER,binary,medium,complex,1,1,0,1,1,0,SUM,19,"SELECT T1.Name ,  sum(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name"
+dev,singer,1,2,singer|song,INNER,binary,medium,complex,1,1,0,1,1,0,SUM,19,"SELECT T1.Name ,  sum(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name"
+dev,singer,0,2,singer|song,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Name FROM singer WHERE Singer_ID NOT IN (SELECT Singer_ID FROM song)
+dev,singer,0,2,singer|song,,binary,hard,moderate,0,0,1,0,0,1,,12,SELECT Name FROM singer WHERE Singer_ID NOT IN (SELECT Singer_ID FROM song)
+dev,singer,0,1,singer,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT Citizenship FROM singer WHERE Birth_Year  <  1945 INTERSECT SELECT Citizenship FROM singer WHERE Birth_Year  >  1955
+dev,singer,0,1,singer,,single,extra hard,complex,0,0,1,0,0,1,,17,SELECT Citizenship FROM singer WHERE Birth_Year  <  1945 INTERSECT SELECT Citizenship FROM singer WHERE Birth_Year  >  1955
+dev,real_estate_properties,0,1,Other_Available_Features,,single,medium,simple,0,0,0,0,1,0,COUNT,4,SELECT count(*) FROM Other_Available_Features
+dev,real_estate_properties,1,2,Other_Available_Features|Ref_Feature_Types,INNER,binary,medium,moderate,1,1,0,0,0,1,,18,"SELECT T2.feature_type_name FROM Other_Available_Features AS T1 JOIN Ref_Feature_Types AS T2 ON T1.feature_type_code  =  T2.feature_type_code WHERE T1.feature_name  =  ""AirCon"""
+dev,real_estate_properties,1,2,Properties|Ref_Property_Types,INNER,binary,medium,complex,1,1,0,1,0,0,,17,SELECT T2.property_type_description FROM Properties AS T1 JOIN Ref_Property_Types AS T2 ON T1.property_type_code  =  T2.property_type_code GROUP BY T1.property_type_code
+dev,real_estate_properties,0,1,Properties,,single,extra hard,complex,0,0,1,0,0,1,,21,"SELECT property_name FROM Properties WHERE property_type_code  =  ""House"" UNION SELECT property_name FROM Properties WHERE property_type_code  =  ""Apartment"" AND room_count  >  1"
