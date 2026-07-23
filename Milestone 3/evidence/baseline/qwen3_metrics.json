@@ -1,0 +1,57 @@
+{
+  "attention": "sdpa",
+  "canonical_exact_match_count": 82,
+  "canonical_exact_match_pct": 7.93,
+  "complexity_breakdown": {
+    "complex": {
+      "examples": 105,
+      "execution_accuracy_pct": 50.476,
+      "normalized_exact_match_pct": 0.0,
+      "syntax_valid_pct": 100.0
+    },
+    "moderate": {
+      "examples": 336,
+      "execution_accuracy_pct": 61.905,
+      "normalized_exact_match_pct": 4.464,
+      "syntax_valid_pct": 100.0
+    },
+    "simple": {
+      "examples": 593,
+      "execution_accuracy_pct": 82.125,
+      "normalized_exact_match_pct": 8.6,
+      "syntax_valid_pct": 100.0
+    }
+  },
+  "cuda_peak": {
+    "allocated_gib": 7.5,
+    "max_allocated_gib": 9.134,
+    "max_reserved_gib": 13.088,
+    "reserved_gib": 13.088
+  },
+  "dtype": "torch.bfloat16",
+  "evaluation_seconds": 631.067,
+  "examples": 1034,
+  "execution_match_count": 748,
+  "execution_match_pct": 72.34,
+  "final_batch_size": 8,
+  "format_compliant_count": 1033,
+  "format_compliant_pct": 99.903,
+  "input_truncated_count": 0,
+  "input_truncated_pct": 0.0,
+  "load_seconds": 50.134,
+  "mean_generation_ms_per_example": 596.252,
+  "normalized_exact_match_count": 66,
+  "normalized_exact_match_pct": 6.383,
+  "prediction_execution_status": {
+    "error": 35,
+    "ok": 999
+  },
+  "raw_exact_match_count": 0,
+  "raw_exact_match_pct": 0.0,
+  "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "slug": "qwen3-4b-instruct-2507",
+  "syntax_valid_count": 1034,
+  "syntax_valid_pct": 100.0,
+  "tier": "strong"
+}

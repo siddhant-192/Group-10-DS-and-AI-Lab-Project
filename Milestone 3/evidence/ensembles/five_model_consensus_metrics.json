@@ -1,0 +1,86 @@
+{
+  "complexity": {
+    "complex": {
+      "count": 60,
+      "examples": 105,
+      "pct": 57.143
+    },
+    "moderate": {
+      "count": 261,
+      "examples": 336,
+      "pct": 77.679
+    },
+    "simple": {
+      "count": 524,
+      "examples": 593,
+      "pct": 88.364
+    }
+  },
+  "consensus_vote_counts": {
+    "0": 5,
+    "1": 23,
+    "2": 82,
+    "3": 170,
+    "4": 210,
+    "5": 544
+  },
+  "ensemble": {
+    "count": 845,
+    "pct": 81.721
+  },
+  "examples": 1034,
+  "individual_models": {
+    "deepseek-1.3b-sft": {
+      "count": 699,
+      "pct": 67.602
+    },
+    "qwen2.5-1.5b-sft": {
+      "count": 678,
+      "pct": 65.571
+    },
+    "qwen3-base-sft-ddl": {
+      "count": 795,
+      "pct": 76.886
+    },
+    "qwen3-base-sft-mschema": {
+      "count": 813,
+      "pct": 78.627
+    },
+    "xiyan-mschema-3b": {
+      "count": 811,
+      "pct": 78.433
+    }
+  },
+  "model_oracle": {
+    "count": 926,
+    "pct": 89.555
+  },
+  "paired_vs_priority": {
+    "corrected": 52,
+    "exact_mcnemar_p": 0.00020771603022674048,
+    "net": 32,
+    "net_percentage_points": 3.095,
+    "priority_label": "qwen3-base-sft-mschema",
+    "regressed": 20
+  },
+  "priority_order": [
+    "qwen3-base-sft-mschema",
+    "xiyan-mschema-3b",
+    "qwen3-base-sft-ddl",
+    "deepseek-1.3b-sft",
+    "qwen2.5-1.5b-sft"
+  ],
+  "selection_counts": {
+    "deepseek-1.3b-sft": 2,
+    "qwen3-base-sft-ddl": 21,
+    "qwen3-base-sft-mschema": 933,
+    "xiyan-mschema-3b": 78
+  },
+  "sources": {
+    "deepseek-1.3b-sft": "artifacts/zero-shot-eval/runs/20260721-102939-60712/downloaded/results/deepseek-coder-1.3b-instruct-base-sft/predictions.jsonl",
+    "qwen2.5-1.5b-sft": "artifacts/zero-shot-eval/runs/20260721-093619-26197/downloaded/results/qwen2.5-coder-1.5b-instruct-base-sft/predictions.jsonl",
+    "qwen3-base-sft-ddl": "artifacts/zero-shot-eval/runs/20260721-073105/downloaded/results/qwen3-base-sft/predictions.jsonl",
+    "qwen3-base-sft-mschema": "artifacts/zero-shot-eval/runs/20260721-155144-67150/downloaded/results/qwen3-base-sft-mschema/predictions.jsonl",
+    "xiyan-mschema-3b": "artifacts/zero-shot-eval/runs/20260721-111750-91573/downloaded/results/xiyansql-qwencoder-3b-2504/predictions.jsonl"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "counts": {
+    "combined_train": 11997,
+    "deduplicated_accepted": 67831,
+    "execution_accepted": 67836,
+    "selected_synthetic": 5000,
+    "source_rows": 100000,
+    "spider_base": 6997,
+    "validation": 1034,
+    "validation_question_rejections": 3
+  },
+  "filter": {
+    "balanced_round_robin_by_source_complexity": true,
+    "exact_normalized_question_isolation_against_spider_train_and_validation": true,
+    "query_timeout_seconds": 0.5,
+    "read_only_targets_only": true,
+    "schema_reconstructed_from_sqlite_catalog": true,
+    "sqlite_context_and_target_execution_required": true
+  },
+  "generated_at_utc": "2026-07-21T16:11:51.273366+00:00",
+  "outcomes": {
+    "accepted": 67836,
+    "context_execution_error": 2529,
+    "not_read_only_or_missing": 10243,
+    "target_execution_error": 19392
+  },
+  "package": "spider_gretel_exec_v1",
+  "seed": 29,
+  "selected_complexity": {
+    "aggregation": 715,
+    "basic SQL": 715,
+    "multiple_joins": 714,
+    "set operations": 714,
+    "single join": 714,
+    "subqueries": 714,
+    "window functions": 714
+  },
+  "selected_domains": 100,
+  "sources": {
+    "gretel_parquet": {
+      "path": "data/raw/gretel/gretel-synthetic-text2sql-train.parquet",
+      "sha256": "2bee9ac07cf5057d36b5ea30fb47d948697e882f42bd1cc661185396287c0180"
+    },
+    "spider_base_train": {
+      "path": "data/finetuning/spider_sft_v1/train_base.jsonl",
+      "sha256": "0965358e425aee4fc43ac6671ea5750f307390b5cc7fb861b54efddb84143ee8"
+    },
+    "spider_validation": {
+      "path": "data/finetuning/spider_sft_v1/validation.jsonl",
+      "sha256": "4d88bd5d240375e14db542f099daa5f491dd1b1e93724b89004a334fddf3e9f9"
+    }
+  }
+}

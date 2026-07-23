@@ -1,0 +1,61 @@
+{
+  "database_dir": "milestone3/database",
+  "dataset": "Spider 1.0",
+  "generated_at_utc": "2026-07-20T07:35:59.759240+00:00",
+  "license": "CC-BY-SA-4.0",
+  "outputs": {
+    "EDA.md": {
+      "bytes": 1793,
+      "path": "data/processed/spider/EDA.md",
+      "sha256": "b081a2d09d70d683a75c2abadbf02d0420b5841212d1d9c493ef46e1b870e949"
+    },
+    "eda_report.json": {
+      "bytes": 5261,
+      "path": "data/processed/spider/eda_report.json",
+      "sha256": "82d9a0849efc225de3487cbfb671edacbe0b7f683aef9fee8db55190bcd008d5"
+    },
+    "schemas.json": {
+      "bytes": 1733742,
+      "path": "data/processed/spider/schemas.json",
+      "sha256": "959baddb570e6c76a51c67a8f1c2ec6b820f283cae362e04588cf8a26b806226"
+    },
+    "train.jsonl": {
+      "bytes": 33993421,
+      "path": "data/processed/spider/train.jsonl",
+      "sha256": "37eb49700718cb0f9689a89a2c7976f06f6336f107a69b0a0dcf7dc383b97e51"
+    },
+    "validation.jsonl": {
+      "bytes": 3949170,
+      "path": "data/processed/spider/validation.jsonl",
+      "sha256": "649394695ac0548f917b5391bc97f6e2a8f26421288fd05c83339f5a6441bcf7"
+    },
+    "validation_failures.jsonl": {
+      "bytes": 1666,
+      "path": "data/processed/spider/validation_failures.jsonl",
+      "sha256": "da6a56e0ce1ad5ef0e27675c8b6bc48c549a93e6b27f72acc57d602d4c6ea653"
+    }
+  },
+  "python": "3.12.4 (v3.12.4:8e8a4baf65, Jun  6 2024, 17:33:18) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "source_files": {
+    "train": {
+      "path": "data/raw/spider/train.parquet",
+      "rows": 7000,
+      "sha256": "cb4b681558f6f8f428e516fb94c5a1cb19c5a0a0c153c0618c8cc4a28115d4cb",
+      "url": "https://huggingface.co/api/datasets/xlangai/spider/parquet/spider/train/0.parquet"
+    },
+    "validation": {
+      "path": "data/raw/spider/validation.parquet",
+      "rows": 1034,
+      "sha256": "c3e2a46303899a2d4afe3f6a3a62e59f8d589f241b3cbfb52356479b1f054888",
+      "url": "https://huggingface.co/api/datasets/xlangai/spider/parquet/spider/validation/0.parquet"
+    }
+  },
+  "summary": {
+    "database_overlap": 0,
+    "source_train_examples": 7000,
+    "source_validation_examples": 1034,
+    "usable_train_examples": 6997,
+    "usable_validation_examples": 1034,
+    "validation_failures": 3
+  }
+}

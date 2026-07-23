@@ -1,0 +1,40 @@
+model,feature,label,support,correct,execution_accuracy_pct
+qwen3-4b-instruct-2507,aggregate,Aggregate,551,385,69.873
+qwen3-4b-instruct-2507,where,WHERE,493,354,71.805
+qwen3-4b-instruct-2507,join,Any join,408,255,62.5
+qwen3-4b-instruct-2507,multi_join,2+ joins,88,47,53.409
+qwen3-4b-instruct-2507,group_by,GROUP BY,277,160,57.762
+qwen3-4b-instruct-2507,having,HAVING,79,49,62.025
+qwen3-4b-instruct-2507,order_by,ORDER BY,237,163,68.776
+qwen3-4b-instruct-2507,limit,LIMIT,189,126,66.667
+qwen3-4b-instruct-2507,distinct,DISTINCT,87,52,59.77
+qwen3-4b-instruct-2507,subquery,Subquery,159,93,58.491
+qwen3-4b-instruct-2507,set_operation,Set operation,80,46,57.5
+qwen3-4b-instruct-2507,join_and_subquery,Join + subquery,77,34,44.156
+qwen3-4b-instruct-2507,complex,Complex proxy,105,53,50.476
+qwen2.5-coder-1.5b-instruct,aggregate,Aggregate,551,342,62.069
+qwen2.5-coder-1.5b-instruct,where,WHERE,493,263,53.347
+qwen2.5-coder-1.5b-instruct,join,Any join,408,185,45.343
+qwen2.5-coder-1.5b-instruct,multi_join,2+ joins,88,17,19.318
+qwen2.5-coder-1.5b-instruct,group_by,GROUP BY,277,145,52.347
+qwen2.5-coder-1.5b-instruct,having,HAVING,79,39,49.367
+qwen2.5-coder-1.5b-instruct,order_by,ORDER BY,237,128,54.008
+qwen2.5-coder-1.5b-instruct,limit,LIMIT,189,95,50.265
+qwen2.5-coder-1.5b-instruct,distinct,DISTINCT,87,38,43.678
+qwen2.5-coder-1.5b-instruct,subquery,Subquery,159,51,32.075
+qwen2.5-coder-1.5b-instruct,set_operation,Set operation,80,19,23.75
+qwen2.5-coder-1.5b-instruct,join_and_subquery,Join + subquery,77,16,20.779
+qwen2.5-coder-1.5b-instruct,complex,Complex proxy,105,19,18.095
+deepseek-coder-1.3b-instruct,aggregate,Aggregate,551,252,45.735
+deepseek-coder-1.3b-instruct,where,WHERE,493,247,50.101
+deepseek-coder-1.3b-instruct,join,Any join,408,142,34.804
+deepseek-coder-1.3b-instruct,multi_join,2+ joins,88,17,19.318
+deepseek-coder-1.3b-instruct,group_by,GROUP BY,277,78,28.159
+deepseek-coder-1.3b-instruct,having,HAVING,79,26,32.911
+deepseek-coder-1.3b-instruct,order_by,ORDER BY,237,75,31.646
+deepseek-coder-1.3b-instruct,limit,LIMIT,189,49,25.926
+deepseek-coder-1.3b-instruct,distinct,DISTINCT,87,34,39.08
+deepseek-coder-1.3b-instruct,subquery,Subquery,159,46,28.931
+deepseek-coder-1.3b-instruct,set_operation,Set operation,80,19,23.75
+deepseek-coder-1.3b-instruct,join_and_subquery,Join + subquery,77,10,12.987
+deepseek-coder-1.3b-instruct,complex,Complex proxy,105,20,19.048

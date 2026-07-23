@@ -1,0 +1,58 @@
+{
+  "attention": "sdpa",
+  "canonical_exact_match_count": 92,
+  "canonical_exact_match_pct": 8.897,
+  "complexity_breakdown": {
+    "complex": {
+      "examples": 105,
+      "execution_accuracy_pct": 19.048,
+      "normalized_exact_match_pct": 0.0,
+      "syntax_valid_pct": 99.048
+    },
+    "moderate": {
+      "examples": 336,
+      "execution_accuracy_pct": 31.25,
+      "normalized_exact_match_pct": 2.083,
+      "syntax_valid_pct": 97.917
+    },
+    "simple": {
+      "examples": 593,
+      "execution_accuracy_pct": 61.383,
+      "normalized_exact_match_pct": 10.961,
+      "syntax_valid_pct": 97.976
+    }
+  },
+  "cuda_peak": {
+    "allocated_gib": 2.519,
+    "max_allocated_gib": 4.997,
+    "max_reserved_gib": 15.023,
+    "reserved_gib": 15.023
+  },
+  "dtype": "torch.bfloat16",
+  "evaluation_seconds": 863.614,
+  "examples": 1034,
+  "execution_match_count": 489,
+  "execution_match_pct": 47.292,
+  "final_batch_size": 8,
+  "format_compliant_count": 398,
+  "format_compliant_pct": 38.491,
+  "input_truncated_count": 0,
+  "input_truncated_pct": 0.0,
+  "load_seconds": 16.121,
+  "mean_generation_ms_per_example": 817.707,
+  "normalized_exact_match_count": 72,
+  "normalized_exact_match_pct": 6.963,
+  "prediction_execution_status": {
+    "error": 89,
+    "ok": 930,
+    "unsafe": 15
+  },
+  "raw_exact_match_count": 0,
+  "raw_exact_match_pct": 0.0,
+  "repo_id": "deepseek-ai/deepseek-coder-1.3b-instruct",
+  "revision": "e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+  "slug": "deepseek-coder-1.3b-instruct",
+  "syntax_valid_count": 1014,
+  "syntax_valid_pct": 98.066,
+  "tier": "weak-old"
+}

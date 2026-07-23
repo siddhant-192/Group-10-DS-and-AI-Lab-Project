@@ -1,0 +1,174 @@
+[
+  {
+    "attention": "sdpa",
+    "canonical_exact_match_count": 82,
+    "canonical_exact_match_pct": 7.93,
+    "complexity_breakdown": {
+      "complex": {
+        "examples": 105,
+        "execution_accuracy_pct": 50.476,
+        "normalized_exact_match_pct": 0.0,
+        "syntax_valid_pct": 100.0
+      },
+      "moderate": {
+        "examples": 336,
+        "execution_accuracy_pct": 61.905,
+        "normalized_exact_match_pct": 4.464,
+        "syntax_valid_pct": 100.0
+      },
+      "simple": {
+        "examples": 593,
+        "execution_accuracy_pct": 82.125,
+        "normalized_exact_match_pct": 8.6,
+        "syntax_valid_pct": 100.0
+      }
+    },
+    "cuda_peak": {
+      "allocated_gib": 7.5,
+      "max_allocated_gib": 9.134,
+      "max_reserved_gib": 13.088,
+      "reserved_gib": 13.088
+    },
+    "dtype": "torch.bfloat16",
+    "evaluation_seconds": 631.067,
+    "examples": 1034,
+    "execution_match_count": 748,
+    "execution_match_pct": 72.34,
+    "final_batch_size": 8,
+    "format_compliant_count": 1033,
+    "format_compliant_pct": 99.903,
+    "input_truncated_count": 0,
+    "input_truncated_pct": 0.0,
+    "load_seconds": 50.134,
+    "mean_generation_ms_per_example": 596.252,
+    "normalized_exact_match_count": 66,
+    "normalized_exact_match_pct": 6.383,
+    "prediction_execution_status": {
+      "error": 35,
+      "ok": 999
+    },
+    "raw_exact_match_count": 0,
+    "raw_exact_match_pct": 0.0,
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "slug": "qwen3-4b-instruct-2507",
+    "syntax_valid_count": 1034,
+    "syntax_valid_pct": 100.0,
+    "tier": "strong"
+  },
+  {
+    "attention": "sdpa",
+    "canonical_exact_match_count": 258,
+    "canonical_exact_match_pct": 24.952,
+    "complexity_breakdown": {
+      "complex": {
+        "examples": 105,
+        "execution_accuracy_pct": 18.095,
+        "normalized_exact_match_pct": 0.952,
+        "syntax_valid_pct": 99.048
+      },
+      "moderate": {
+        "examples": 336,
+        "execution_accuracy_pct": 50.595,
+        "normalized_exact_match_pct": 11.607,
+        "syntax_valid_pct": 100.0
+      },
+      "simple": {
+        "examples": 593,
+        "execution_accuracy_pct": 66.779,
+        "normalized_exact_match_pct": 26.644,
+        "syntax_valid_pct": 100.0
+      }
+    },
+    "cuda_peak": {
+      "allocated_gib": 2.885,
+      "max_allocated_gib": 4.248,
+      "max_reserved_gib": 13.379,
+      "reserved_gib": 13.379
+    },
+    "dtype": "torch.bfloat16",
+    "evaluation_seconds": 218.099,
+    "examples": 1034,
+    "execution_match_count": 585,
+    "execution_match_pct": 56.576,
+    "final_batch_size": 16,
+    "format_compliant_count": 1034,
+    "format_compliant_pct": 100.0,
+    "input_truncated_count": 0,
+    "input_truncated_pct": 0.0,
+    "load_seconds": 15.587,
+    "mean_generation_ms_per_example": 197.728,
+    "normalized_exact_match_count": 198,
+    "normalized_exact_match_pct": 19.149,
+    "prediction_execution_status": {
+      "error": 231,
+      "ok": 803
+    },
+    "raw_exact_match_count": 71,
+    "raw_exact_match_pct": 6.867,
+    "repo_id": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+    "slug": "qwen2.5-coder-1.5b-instruct",
+    "syntax_valid_count": 1033,
+    "syntax_valid_pct": 99.903,
+    "tier": "middle"
+  },
+  {
+    "attention": "sdpa",
+    "canonical_exact_match_count": 92,
+    "canonical_exact_match_pct": 8.897,
+    "complexity_breakdown": {
+      "complex": {
+        "examples": 105,
+        "execution_accuracy_pct": 19.048,
+        "normalized_exact_match_pct": 0.0,
+        "syntax_valid_pct": 99.048
+      },
+      "moderate": {
+        "examples": 336,
+        "execution_accuracy_pct": 31.25,
+        "normalized_exact_match_pct": 2.083,
+        "syntax_valid_pct": 97.917
+      },
+      "simple": {
+        "examples": 593,
+        "execution_accuracy_pct": 61.383,
+        "normalized_exact_match_pct": 10.961,
+        "syntax_valid_pct": 97.976
+      }
+    },
+    "cuda_peak": {
+      "allocated_gib": 2.519,
+      "max_allocated_gib": 4.997,
+      "max_reserved_gib": 15.023,
+      "reserved_gib": 15.023
+    },
+    "dtype": "torch.bfloat16",
+    "evaluation_seconds": 863.614,
+    "examples": 1034,
+    "execution_match_count": 489,
+    "execution_match_pct": 47.292,
+    "final_batch_size": 8,
+    "format_compliant_count": 398,
+    "format_compliant_pct": 38.491,
+    "input_truncated_count": 0,
+    "input_truncated_pct": 0.0,
+    "load_seconds": 16.121,
+    "mean_generation_ms_per_example": 817.707,
+    "normalized_exact_match_count": 72,
+    "normalized_exact_match_pct": 6.963,
+    "prediction_execution_status": {
+      "error": 89,
+      "ok": 930,
+      "unsafe": 15
+    },
+    "raw_exact_match_count": 0,
+    "raw_exact_match_pct": 0.0,
+    "repo_id": "deepseek-ai/deepseek-coder-1.3b-instruct",
+    "revision": "e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+    "slug": "deepseek-coder-1.3b-instruct",
+    "syntax_valid_count": 1014,
+    "syntax_valid_pct": 98.066,
+    "tier": "weak-old"
+  }
+]

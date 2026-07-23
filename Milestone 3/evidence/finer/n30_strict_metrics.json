@@ -1,0 +1,53 @@
+{
+  "candidate_oracle_match_count": 933,
+  "candidate_oracle_match_pct": 90.232,
+  "candidate_selection": "finer-published-vav",
+  "canonical_exact_match_count": 236,
+  "canonical_exact_match_pct": 22.824,
+  "complexity_breakdown": {
+    "complex": {
+      "examples": 105,
+      "execution_accuracy_pct": 59.048,
+      "normalized_exact_match_pct": 2.857,
+      "syntax_valid_pct": 100.0
+    },
+    "moderate": {
+      "examples": 336,
+      "execution_accuracy_pct": 70.536,
+      "normalized_exact_match_pct": 14.881,
+      "syntax_valid_pct": 100.0
+    },
+    "simple": {
+      "examples": 593,
+      "execution_accuracy_pct": 87.352,
+      "normalized_exact_match_pct": 19.73,
+      "syntax_valid_pct": 100.0
+    }
+  },
+  "examples": 1034,
+  "execution_match_count": 817,
+  "execution_match_pct": 79.014,
+  "format_compliant_count": 0,
+  "format_compliant_pct": 0.0,
+  "input_truncated_count": 0,
+  "input_truncated_pct": 0.0,
+  "mean_generation_ms_per_example": 4178.969,
+  "normalized_exact_match_count": 170,
+  "normalized_exact_match_pct": 16.441,
+  "paired_vs_input_selector": {
+    "corrected": 1,
+    "exact_mcnemar_p": 1.0,
+    "net": 1,
+    "net_percentage_points": 0.097,
+    "regressed": 0
+  },
+  "prediction_execution_status": {
+    "error": 2,
+    "ok": 1032
+  },
+  "raw_exact_match_count": 0,
+  "raw_exact_match_pct": 0.0,
+  "source": "artifacts/zero-shot-eval/runs/20260721-233648-66023/downloaded/results/finer-sql-3b-spider/predictions.jsonl",
+  "syntax_valid_count": 1034,
+  "syntax_valid_pct": 100.0
+}

@@ -1,0 +1,72 @@
+{
+  "format_version": 1,
+  "release_id": "talk-to-your-database-qwen3-4b-spider-qlora-v1",
+  "architecture": "PEFT LoRA adapter over a decoder-only causal language model",
+  "distribution": "adapter_external_base_from_huggingface",
+  "adapter_download_url": "https://drive.google.com/drive/folders/1gXXcYMg5Ejlmh-UpG9yDKNScoTieGYcD?usp=sharing",
+  "base_model": {
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "parameters": 4022468096,
+    "trust_remote_code": false
+  },
+  "adapter": {
+    "selected_training_run": "20260720-213353",
+    "source_dataset": "data/finetuning/spider_sft_v1/train_base.jsonl",
+    "source_examples": 6997,
+    "optimizer_steps": 438,
+    "epochs": 1,
+    "validation_loss": 0.25596,
+    "trainable_parameters": 33030144,
+    "trainable_parameter_pct": 0.821141,
+    "weight_file": "adapter_model.safetensors",
+    "weight_bytes": 132187888,
+    "weight_sha256": "5274d4c15179b195443940d92f8caacf10f99bdfca106ee24324cd44a2fbe9bb",
+    "peft": {
+      "type": "LORA",
+      "r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "bias": "none",
+      "target_modules": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ],
+      "task_type": "CAUSAL_LM"
+    },
+    "expected_files": [
+      {"path": "README.md", "bytes": 5208},
+      {"path": "adapter_config.json", "bytes": 1144},
+      {"path": "adapter_model.safetensors", "bytes": 132187888},
+      {"path": "added_tokens.json", "bytes": 707},
+      {"path": "chat_template.jinja", "bytes": 2630},
+      {"path": "merges.txt", "bytes": 1671853},
+      {"path": "special_tokens_map.json", "bytes": 613},
+      {"path": "tokenizer.json", "bytes": 11422654},
+      {"path": "tokenizer_config.json", "bytes": 5405},
+      {"path": "training_args.bin", "bytes": 5905},
+      {"path": "vocab.json", "bytes": 2776833}
+    ]
+  },
+  "inference": {
+    "dialect": "SQLite",
+    "prompt_variant": "xiyan_official_mschema_english",
+    "mschema_example_num": 3,
+    "decoding": "greedy",
+    "read_only": true
+  },
+  "selected_metrics": {
+    "benchmark": "Spider 1.0 validation",
+    "examples": 1034,
+    "strict_execution_correct": 813,
+    "strict_execution_pct": 78.627,
+    "compatible_execution_correct": 860,
+    "compatible_execution_pct": 83.172,
+    "syntax_valid_pct": 100.0
+  }
+}

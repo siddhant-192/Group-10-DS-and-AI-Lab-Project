@@ -1,0 +1,50 @@
+{
+  "complexity": {
+    "complex": {
+      "count": 61,
+      "examples": 105,
+      "pct": 58.095
+    },
+    "moderate": {
+      "count": 270,
+      "examples": 336,
+      "pct": 80.357
+    },
+    "simple": {
+      "count": 528,
+      "examples": 593,
+      "pct": 89.039
+    }
+  },
+  "core": {
+    "count": 856,
+    "pct": 82.785
+  },
+  "examples": 1034,
+  "fallback_opportunities": 5,
+  "fallback_selected": 3,
+  "gold_blind_routing": true,
+  "paired_vs_core": {
+    "corrected": 3,
+    "exact_mcnemar_p": 0.25,
+    "net": 3,
+    "net_percentage_points": 0.29,
+    "regressed": 0
+  },
+  "result": {
+    "count": 859,
+    "pct": 83.075
+  },
+  "routing_rule": "select fallback iff core execution_consensus_votes == 0 and fallback execution status is ok",
+  "selection_counts": {
+    "deepseek-1.3b-sft-mschema": 9,
+    "finer-3b-official-greedy": 3,
+    "qwen2.5-1.5b-sft": 1,
+    "qwen3-base-sft-mschema": 91,
+    "xiyan-mschema-3b": 930
+  },
+  "sources": {
+    "core": "artifacts/zero-shot-eval/four-model-deepseek-mschema-ensemble-20260721/ensemble_predictions.jsonl",
+    "fallback": "artifacts/zero-shot-eval/runs/20260721-183453-72534/downloaded/results/finer-sql-3b-spider/predictions.jsonl"
+  }
+}

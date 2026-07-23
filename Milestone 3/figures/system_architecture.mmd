@@ -1,0 +1,19 @@
+flowchart TD
+    U[User question + database] --> API[Request validation]
+    API --> RET[Schema and value retrieval]
+    DB[(Read-only database)] --> RET
+    RET --> PROMPT[M-Schema prompt assembly]
+    PROMPT --> MODEL[Qwen3-4B + project QLoRA adapter]
+    MODEL --> PARSE[SQL extraction + sqlglot parse]
+    PARSE --> SAFE{Single read-only query?}
+    SAFE -->|No| ERROR[Safe error / bounded correction]
+    SAFE -->|Yes| EXEC[Immutable SQLite execution]
+    DB --> EXEC
+    EXEC -->|Failure| ERROR
+    EXEC -->|Success| RESULT[Rows + SQL + metadata]
+    RESULT --> SUMMARY[Deterministic or model summary]
+    RESULT --> CHART[Rule-based chart selection]
+    SUMMARY --> OUT[Transparent answer]
+    CHART --> OUT
+    OUT --> U
+

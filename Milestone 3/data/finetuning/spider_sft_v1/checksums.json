@@ -1,0 +1,9 @@
+{
+  "README.md": "d8f47671ab5be608e1b0ef3450bcbd164b82a1bf1a04675f4d84529f2360f05f",
+  "manifest.json": "458646abebe1e6fb05fed1efc7c906d99f0805e895ea2d06f83a4685f29a8481",
+  "sampling_weights.jsonl": "08634d6acee4485123f9846188a6be7d9439d5b0764328b4c77cf6ba36e1bffb",
+  "tokenization_report.json": "a5e12aaa15edd318a8f533d090b5c66f52789065e2ea7ac23615f13e3fc92d6e",
+  "train_base.jsonl": "0965358e425aee4fc43ac6671ea5750f307390b5cc7fb861b54efddb84143ee8",
+  "train_curriculum.jsonl": "e7bcdac53a891c8910beb8ee5b0955ec57b3b42c6ee8e102c154091b978f0e36",
+  "validation.jsonl": "4d88bd5d240375e14db542f099daa5f491dd1b1e93724b89004a334fddf3e9f9"
+}

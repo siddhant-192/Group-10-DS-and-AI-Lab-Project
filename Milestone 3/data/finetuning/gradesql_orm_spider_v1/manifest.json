@@ -1,0 +1,45 @@
+{
+  "checksums": {
+    "train_base.jsonl": "700554e0868f110e6e659b58fb8827eaca41dc331c5580c207707502ab67f8ee",
+    "train_curriculum.jsonl": "700554e0868f110e6e659b58fb8827eaca41dc331c5580c207707502ab67f8ee",
+    "validation.jsonl": "cc7883fb8977b0824b3627497b03d774c602590b427f655f8bf53101158ebaa0"
+  },
+  "exact_duplicates_removed": 10155,
+  "format_version": 1,
+  "group_overlap": 0,
+  "label_contract": {
+    "0": "incorrect/No",
+    "1": "correct/Yes"
+  },
+  "long_schema_groups_removed": 16,
+  "long_schema_rows_removed": 82,
+  "max_prompt_characters": 11500,
+  "question_schema_groups": 1562,
+  "source": {
+    "path": "data/raw/gradesql/spider-balanced.parquet",
+    "repo_id": "sisinflab-ai/GradeSQL-training-dataset-spider-balanced",
+    "revision": "44cbee9732352a98cc2088005acd0839c3c266aa",
+    "rows": 17834,
+    "sha256": "9a162085076295a284e9093d89894c16fb71037bf5772ee720559cc0290b9343"
+  },
+  "split_method": "deterministic SHA-256 question+schema group split",
+  "task": "autoregressive_outcome_reward_model",
+  "train": {
+    "answers": {
+      "No": 3668,
+      "Yes": 3223
+    },
+    "groups": 1416,
+    "rows": 6891
+  },
+  "unique_rows": 7597,
+  "validation": {
+    "answers": {
+      "No": 354,
+      "Yes": 352
+    },
+    "groups": 146,
+    "rows": 706
+  },
+  "validation_percent_requested": 10
+}

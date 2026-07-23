@@ -1,0 +1,56 @@
+# Secrets and local authentication
+.env
+.env.*
+!.env.example
+*credentials*.json
+*service-account*.json
+client_secret*.json
+application_default_credentials.json
+.config/rclone/
+
+# Python and editor state
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+.idea/
+.vscode/
+
+# Large model/training objects
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.tar
+*.tar.gz
+*.zip
+models/text2sql-eval/*/
+!models/text2sql-eval/download_manifest.json
+artifacts/
+release/final_adapter/
+
+# Generated or upstream data payloads
+*.sqlite
+*.sqlite3
+*.db
+*.parquet
+data/raw/**/*.jsonl
+data/processed/**/*.jsonl
+data/finetuning/**/*.jsonl
+data/finetuning/**/sampling_weights.jsonl
+milestone3/database/
+
+# Runtime state and logs
+*.log
+*.pid
+events.out.tfevents.*
+predictions*.jsonl
+orchestrator-pid.txt
+session-name.txt
+session-status.txt
+

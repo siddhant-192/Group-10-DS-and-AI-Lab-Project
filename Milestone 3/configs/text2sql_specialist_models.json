@@ -1,0 +1,37 @@
+{
+  "models": [
+        {
+            "slug": "xiyansql-qwencoder-3b-2504",
+            "tier": "sql-specialist",
+            "repo_id": "XGenerationLab/XiYanSQL-QwenCoder-3B-2504",
+            "revision": "b883e58ed83f74bab037d6a7b90c4b8706d357d7",
+            "base_parameter_count": 3085938688,
+            "trust_remote_code": false,
+            "sequential_download": true,
+            "candidate_selection": "value-aware-voting",
+            "batch_size": 8,
+            "sft_max_seq_length": 4096
+        },
+        {
+            "slug": "finer-sql-3b-spider",
+            "tier": "sql-specialist-grpo",
+            "repo_id": "griffith-bigdata/FINER-SQL-3B-Spider",
+            "revision": "e3b7cd2054920cf346ad4b7aedd57d8d4b949e9d",
+            "base_parameter_count": 3085938688,
+            "trust_remote_code": false,
+            "batch_size": 8,
+            "sft_max_seq_length": 4096
+        },
+        {
+            "slug": "qwen3-4b-sql-writer",
+            "tier": "sql-specialist-sft",
+            "repo_id": "griffith-bigdata/Qwen3-4B-SQL-Writer",
+            "revision": "a44db07c04eedcf745308e46e9bd61ce08e03f17",
+            "base_parameter_count": 4022468096,
+            "trust_remote_code": false,
+            "sequential_download": true,
+            "batch_size": 8,
+            "sft_max_seq_length": 4096
+        }
+  ]
+}

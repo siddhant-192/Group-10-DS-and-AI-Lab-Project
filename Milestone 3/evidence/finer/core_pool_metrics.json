@@ -1,0 +1,161 @@
+{
+  "combined_candidate_oracle": {
+    "count": 965,
+    "pct": 93.327
+  },
+  "combined_macsql_candidate_oracle": {
+    "count": 988,
+    "pct": 95.551
+  },
+  "examples": 1034,
+  "global_best_exploratory": {
+    "count": 837,
+    "pct": 80.948,
+    "weight": 8
+  },
+  "global_best_macsql_exploratory": {
+    "count": 894,
+    "pct": 86.46,
+    "weight": 8
+  },
+  "leave_one_database_out": {
+    "count": 830,
+    "pct": 80.271,
+    "selected_weights": {
+      "battle_death": 8,
+      "car_1": 9,
+      "concert_singer": 8,
+      "course_teach": 8,
+      "cre_Doc_Template_Mgt": 8,
+      "dog_kennels": 8,
+      "employee_hire_evaluation": 8,
+      "flight_2": 8,
+      "museum_visit": 8,
+      "network_1": 9,
+      "orchestra": 8,
+      "pets_1": 8,
+      "poker_player": 8,
+      "real_estate_properties": 8,
+      "singer": 8,
+      "student_transcripts_tracking": 6,
+      "tvshow": 8,
+      "voter_1": 8,
+      "world_1": 12,
+      "wta_1": 8
+    }
+  },
+  "leave_one_database_out_macsql": {
+    "count": 887,
+    "pct": 85.783,
+    "selected_weights": {
+      "battle_death": 8,
+      "car_1": 9,
+      "concert_singer": 8,
+      "course_teach": 8,
+      "cre_Doc_Template_Mgt": 8,
+      "dog_kennels": 8,
+      "employee_hire_evaluation": 8,
+      "flight_2": 8,
+      "museum_visit": 8,
+      "network_1": 9,
+      "orchestra": 8,
+      "pets_1": 8,
+      "poker_player": 8,
+      "real_estate_properties": 8,
+      "singer": 8,
+      "student_transcripts_tracking": 6,
+      "tvshow": 8,
+      "voter_1": 8,
+      "world_1": 12,
+      "wta_1": 8
+    }
+  },
+  "signature_mode": "published",
+  "sources": {
+    "deepseek": "artifacts/zero-shot-eval/runs/20260721-171802-22318/downloaded/results/deepseek-coder-1.3b-sft-mschema/predictions.jsonl",
+    "finer": "artifacts/zero-shot-eval/runs/20260721-233648-66023/downloaded/results/finer-sql-3b-spider/predictions.jsonl",
+    "qwen25": "artifacts/zero-shot-eval/runs/20260721-093619-26197/downloaded/results/qwen2.5-coder-1.5b-instruct-base-sft/predictions.jsonl",
+    "qwen3": "artifacts/zero-shot-eval/runs/20260721-155144-67150/downloaded/results/qwen3-base-sft-mschema/predictions.jsonl",
+    "xiyansql": "artifacts/zero-shot-eval/runs/20260721-111750-91573/downloaded/results/xiyansql-qwencoder-3b-2504/predictions.jsonl"
+  },
+  "weights": {
+    "0": {
+      "macsql_count": 871,
+      "macsql_pct": 84.236,
+      "strict_count": 817,
+      "strict_pct": 79.014
+    },
+    "1": {
+      "macsql_count": 881,
+      "macsql_pct": 85.203,
+      "strict_count": 826,
+      "strict_pct": 79.884
+    },
+    "10": {
+      "macsql_count": 892,
+      "macsql_pct": 86.267,
+      "strict_count": 835,
+      "strict_pct": 80.754
+    },
+    "11": {
+      "macsql_count": 892,
+      "macsql_pct": 86.267,
+      "strict_count": 835,
+      "strict_pct": 80.754
+    },
+    "12": {
+      "macsql_count": 892,
+      "macsql_pct": 86.267,
+      "strict_count": 835,
+      "strict_pct": 80.754
+    },
+    "2": {
+      "macsql_count": 879,
+      "macsql_pct": 85.01,
+      "strict_count": 826,
+      "strict_pct": 79.884
+    },
+    "3": {
+      "macsql_count": 885,
+      "macsql_pct": 85.59,
+      "strict_count": 831,
+      "strict_pct": 80.368
+    },
+    "4": {
+      "macsql_count": 886,
+      "macsql_pct": 85.687,
+      "strict_count": 831,
+      "strict_pct": 80.368
+    },
+    "5": {
+      "macsql_count": 887,
+      "macsql_pct": 85.783,
+      "strict_count": 832,
+      "strict_pct": 80.464
+    },
+    "6": {
+      "macsql_count": 892,
+      "macsql_pct": 86.267,
+      "strict_count": 836,
+      "strict_pct": 80.851
+    },
+    "7": {
+      "macsql_count": 893,
+      "macsql_pct": 86.364,
+      "strict_count": 836,
+      "strict_pct": 80.851
+    },
+    "8": {
+      "macsql_count": 894,
+      "macsql_pct": 86.46,
+      "strict_count": 837,
+      "strict_pct": 80.948
+    },
+    "9": {
+      "macsql_count": 894,
+      "macsql_pct": 86.46,
+      "strict_count": 837,
+      "strict_pct": 80.948
+    }
+  }
+}

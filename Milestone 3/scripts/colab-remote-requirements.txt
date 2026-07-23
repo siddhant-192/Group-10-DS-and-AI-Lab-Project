@@ -1,0 +1,15 @@
+# Installed inside the temporary Linux Colab runtime, not on the local machine.
+# These are the practical packages needed for small-model LoRA/QLoRA text-to-SQL
+# work. Versions remain unfrozen until the base model is selected; the eventual
+# training pipeline should lock a tested set for reproducibility.
+accelerate
+bitsandbytes
+datasets
+evaluate
+peft
+safetensors
+sentencepiece
+sqlglot
+transformers
+trl
+

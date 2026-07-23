@@ -1,0 +1,37 @@
+{
+  "counts": {
+    "train_base.jsonl": {
+      "databases": 140,
+      "ddl_fallback_databases": [
+        "baseball_1"
+      ],
+      "ddl_fallback_rows": 82,
+      "rows": 6997
+    },
+    "train_curriculum.jsonl": {
+      "databases": 140,
+      "ddl_fallback_databases": [
+        "baseball_1"
+      ],
+      "ddl_fallback_rows": 110,
+      "rows": 9796
+    },
+    "validation.jsonl": {
+      "databases": 20,
+      "ddl_fallback_databases": [],
+      "ddl_fallback_rows": 0,
+      "rows": 1034
+    }
+  },
+  "format_version": 1,
+  "max_mschema_chars": 10000,
+  "mschema_example_num": 3,
+  "package": "spider_mschema_sft_v1",
+  "prompt_variant": "xiyan_official_mschema_english",
+  "source_checksums": {
+    "train_base.jsonl": "0965358e425aee4fc43ac6671ea5750f307390b5cc7fb861b54efddb84143ee8",
+    "train_curriculum.jsonl": "e7bcdac53a891c8910beb8ee5b0955ec57b3b42c6ee8e102c154091b978f0e36",
+    "validation.jsonl": "4d88bd5d240375e14db542f099daa5f491dd1b1e93724b89004a334fddf3e9f9"
+  },
+  "source_package": "data/finetuning/spider_sft_v1"
+}

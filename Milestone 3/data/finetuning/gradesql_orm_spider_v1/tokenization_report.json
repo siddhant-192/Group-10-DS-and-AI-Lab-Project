@@ -1,0 +1,102 @@
+{
+  "data_dir": "data/finetuning/gradesql_orm_spider_v1",
+  "max_seq_length_override": null,
+  "models": {
+    "qwen2.5-coder-1.5b-instruct": {
+      "max_seq_length": 4096,
+      "splits": {
+        "train_base": {
+          "examples": 6891,
+          "full_sequence_tokens": {
+            "max": 3908,
+            "median": 583,
+            "min": 180,
+            "p95": 1986,
+            "p99": 2897,
+            "total": 5551558
+          },
+          "longest_example_id": "gradesql-7183e302b268752ff278",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 3905,
+            "median": 580,
+            "min": 177,
+            "p95": 1983,
+            "p99": 2894,
+            "total": 5530885
+          },
+          "target_tokens": {
+            "max": 1,
+            "median": 1,
+            "min": 1,
+            "p95": 1,
+            "p99": 1,
+            "total": 6891
+          }
+        },
+        "train_curriculum": {
+          "examples": 6891,
+          "full_sequence_tokens": {
+            "max": 3908,
+            "median": 583,
+            "min": 180,
+            "p95": 1986,
+            "p99": 2897,
+            "total": 5551558
+          },
+          "longest_example_id": "gradesql-7183e302b268752ff278",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 3905,
+            "median": 580,
+            "min": 177,
+            "p95": 1983,
+            "p99": 2894,
+            "total": 5530885
+          },
+          "target_tokens": {
+            "max": 1,
+            "median": 1,
+            "min": 1,
+            "p95": 1,
+            "p99": 1,
+            "total": 6891
+          }
+        },
+        "validation": {
+          "examples": 706,
+          "full_sequence_tokens": {
+            "max": 3930,
+            "median": 570,
+            "min": 184,
+            "p95": 1968,
+            "p99": 3343,
+            "total": 558867
+          },
+          "longest_example_id": "gradesql-1386fa63ecf26dbe5b89",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 3927,
+            "median": 567,
+            "min": 181,
+            "p95": 1965,
+            "p99": 3340,
+            "total": 556749
+          },
+          "target_tokens": {
+            "max": 1,
+            "median": 1,
+            "min": 1,
+            "p95": 1,
+            "p99": 1,
+            "total": 706
+          }
+        }
+      },
+      "tokenizer": "models/text2sql-eval/qwen2.5-coder-1.5b-instruct"
+    }
+  }
+}

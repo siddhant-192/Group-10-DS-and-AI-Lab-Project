@@ -1,0 +1,28 @@
+{
+  "description": "Feature-aware Spider SFT curriculum derived from the three-model zero-shot error analysis. Every usable training row is retained once; a deterministic, template-capped hard supplement is appended.",
+  "policy_version": "spider-sft-v1",
+  "seed": 17,
+  "supplement_fraction": 0.4,
+  "max_supplement_per_normalized_sql": 1,
+  "combine_rule": "maximum",
+  "feature_multipliers": {
+    "aggregate": 2.0,
+    "complex": 2.5,
+    "distinct": 2.5,
+    "group_by": 2.5,
+    "having": 2.0,
+    "join": 2.0,
+    "join_and_subquery": 3.0,
+    "limit": 2.0,
+    "multi_join": 2.5,
+    "order_by": 2.0,
+    "set_operation": 2.5,
+    "subquery": 2.5,
+    "where": 1.5
+  },
+  "provenance": {
+    "baseline_run": "artifacts/zero-shot-eval/runs/20260720-012118",
+    "error_analysis": "artifacts/zero-shot-eval/runs/20260720-012118/downloaded/results/error-analysis/analysis.json",
+    "priority_table": "artifacts/zero-shot-eval/runs/20260720-012118/downloaded/results/error-analysis/fine_tuning_priorities.csv"
+  }
+}

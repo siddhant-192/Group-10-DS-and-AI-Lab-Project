@@ -1,0 +1,181 @@
+{
+  "format_version": 1,
+  "models": [
+    {
+      "slug": "qwen3-4b-instruct-2507",
+      "tier": "strong",
+      "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+      "trust_remote_code": false,
+      "batch_size": 8,
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "local_dir": "models/text2sql-eval/qwen3-4b-instruct-2507",
+      "bytes": 8060915998,
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11343,
+          "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+        },
+        {
+          "path": "README.md",
+          "bytes": 8168,
+          "sha256": "8e3dd0c3b5b11897cc71092ccfe517bb7a9783479baa3665aad73c8d1a2041cd"
+        },
+        {
+          "path": "config.json",
+          "bytes": 727,
+          "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+        },
+        {
+          "path": "generation_config.json",
+          "bytes": 238,
+          "sha256": "835fffe355c9438e7a25be099b3fccaa98350b83451f9fd2d99512e74f1ade48"
+        },
+        {
+          "path": "merges.txt",
+          "bytes": 1671839,
+          "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+        },
+        {
+          "path": "model-00001-of-00003.safetensors",
+          "bytes": 3957900840,
+          "sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6"
+        },
+        {
+          "path": "model-00002-of-00003.safetensors",
+          "bytes": 3987450520,
+          "sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1"
+        },
+        {
+          "path": "model-00003-of-00003.safetensors",
+          "bytes": 99630640,
+          "sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d"
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "bytes": 32819,
+          "sha256": "d6c42883a895dfef5b0080ed2116a1bcd764f558406b98923d675978a1abf29c"
+        },
+        {
+          "path": "tokenizer.json",
+          "bytes": 11422654,
+          "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "bytes": 9377,
+          "sha256": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+        },
+        {
+          "path": "vocab.json",
+          "bytes": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        }
+      ]
+    },
+    {
+      "slug": "qwen2.5-coder-1.5b-instruct",
+      "tier": "middle",
+      "repo_id": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "trust_remote_code": false,
+      "batch_size": 16,
+      "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+      "local_dir": "models/text2sql-eval/qwen2.5-coder-1.5b-instruct",
+      "bytes": 3098972269,
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 11343,
+          "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+        },
+        {
+          "path": "README.md",
+          "bytes": 5258,
+          "sha256": "a8504fd3e1247c90e4fe640d84df963237134bf29db02b0de7d502eed6c93c33"
+        },
+        {
+          "path": "config.json",
+          "bytes": 660,
+          "sha256": "88f9a17863c05fb313515d2ff74b1098e0c35579f99068e32beda00618508ae0"
+        },
+        {
+          "path": "generation_config.json",
+          "bytes": 242,
+          "sha256": "1a628a5775bc69cde01c6749a531150ca4d3189652c618a174f7077923acf3b1"
+        },
+        {
+          "path": "merges.txt",
+          "bytes": 1671839,
+          "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+        },
+        {
+          "path": "model.safetensors",
+          "bytes": 3087467144,
+          "sha256": "c1b9b30e907950516ba3c646bdf570d8084c25a6410a0cdca80cf04b11bc13a8"
+        },
+        {
+          "path": "tokenizer.json",
+          "bytes": 7031645,
+          "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "bytes": 7305,
+          "sha256": "959e7f1d9a1b7641a6d6ce05ca97b75c7894fcb66cbe5a040406458fb1128ee4"
+        },
+        {
+          "path": "vocab.json",
+          "bytes": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        }
+      ]
+    },
+    {
+      "slug": "deepseek-coder-1.3b-instruct",
+      "tier": "weak-old",
+      "repo_id": "deepseek-ai/deepseek-coder-1.3b-instruct",
+      "trust_remote_code": true,
+      "batch_size": 8,
+      "revision": "e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+      "local_dir": "models/text2sql-eval/deepseek-coder-1.3b-instruct",
+      "bytes": 2694357040,
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 13760,
+          "sha256": "a3a0e9449cb691a12f4de1d03725fd41326614fdeaf5d80b28c51187da0bed0e"
+        },
+        {
+          "path": "README.md",
+          "bytes": 3572,
+          "sha256": "b1739d38e8fe147611ccacb8f8b27ebedcde1acbe25002fbd67ee79c5dac1a17"
+        },
+        {
+          "path": "config.json",
+          "bytes": 631,
+          "sha256": "5e81a9fd94e640b412725ff4c6eef90b8862e526c93ca4f4c5179244bcf20550"
+        },
+        {
+          "path": "generation_config.json",
+          "bytes": 119,
+          "sha256": "186a63b420f66a03e95a035c488373361bb04833a9b83f4bdbaba70c5c816002"
+        },
+        {
+          "path": "model.safetensors",
+          "bytes": 2692969128,
+          "sha256": "4ff570bf9a558d23c5cb4171bad00daf663be8282150cdb5769e0f6975b0007a"
+        },
+        {
+          "path": "tokenizer.json",
+          "bytes": 1367962,
+          "sha256": "ef48ebdc8546c2d8092349d321f1d162de804a1c8900df2b615c7dc8b02ce141"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "bytes": 1868,
+          "sha256": "775f116ff1130a5b5bfc3cfdb594f9fcb5a5dc61d5a11ba92b2a7c078d66b7b7"
+        }
+      ]
+    }
+  ]
+}

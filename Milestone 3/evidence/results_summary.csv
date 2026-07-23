@@ -1,0 +1,11 @@
+system,parameters_b,training_or_mode,prompt,strict_execution_pct,compatible_execution_pct,decision
+Qwen3-4B-Instruct-2507,4.0,zero-shot,DDL,72.340,,strongest original baseline
+Qwen2.5-Coder-1.5B-Instruct,1.5,zero-shot,DDL,56.576,,efficiency baseline
+DeepSeek-Coder-1.3B-Instruct,1.3,zero-shot,DDL,47.292,,older weak baseline
+Qwen3-4B-Instruct-2507,4.0,natural Spider QLoRA,DDL,76.886,,selected adapter
+Qwen3-4B-Instruct-2507,4.0,natural Spider QLoRA,M-Schema,78.627,83.172,primary architecture
+XiYanSQL-QwenCoder-3B-2504,3.1,off-the-shelf specialist,M-Schema,78.433,83.269,specialist comparison
+FINER-SQL-3B-Spider,3.1,30-candidate sampling,enriched,79.014,84.236,slow sampling comparison
+Five-model consensus,,execution voting,mixed,82.785,87.331,optional accuracy mode
+Strict FINER fallback,,execution fallback,mixed,83.075,87.331,best measured deployable selector
+

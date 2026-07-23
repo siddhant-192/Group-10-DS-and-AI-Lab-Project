@@ -1,0 +1,7 @@
+{
+  "manifest.json": "fd0ab2307632e22c63ae04f5957fa2bbca9d4ec3c50ea643205adfa6cd56b1a8",
+  "tokenization_report.json": "111a753a3a464475ff77824dcb00832b4f8679183ae9e3eb26974607db570b2f",
+  "train_base.jsonl": "1c58e2c1bc8e7698d11d16283cb54bcc867f1bdeb2853323a1b6bc86f4f080dc",
+  "train_curriculum.jsonl": "1c58e2c1bc8e7698d11d16283cb54bcc867f1bdeb2853323a1b6bc86f4f080dc",
+  "validation.jsonl": "4d88bd5d240375e14db542f099daa5f491dd1b1e93724b89004a334fddf3e9f9"
+}

@@ -1,0 +1,34 @@
+{
+  "models": [
+    {
+      "slug": "qwen3-4b-instruct-2507",
+      "tier": "strong",
+      "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "base_parameter_count": 4022468096,
+      "trust_remote_code": false,
+      "batch_size": 8,
+      "sft_max_seq_length": 4096
+    },
+    {
+      "slug": "qwen2.5-coder-1.5b-instruct",
+      "tier": "middle",
+      "repo_id": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+      "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+      "base_parameter_count": 1543714304,
+      "trust_remote_code": false,
+      "batch_size": 16,
+      "sft_max_seq_length": 4096
+    },
+    {
+      "slug": "deepseek-coder-1.3b-instruct",
+      "tier": "weak-old",
+      "repo_id": "deepseek-ai/deepseek-coder-1.3b-instruct",
+      "revision": "e063262dac8366fc1f28a4da0ff3c50ea66259ca",
+      "base_parameter_count": 1346471936,
+      "trust_remote_code": true,
+      "batch_size": 8,
+      "sft_max_seq_length": 5120
+    }
+  ]
+}

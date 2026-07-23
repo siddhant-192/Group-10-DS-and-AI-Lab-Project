@@ -1,0 +1,80 @@
+{
+  "format_version": 1,
+  "benchmark": {
+    "name": "Spider 1.0 validation",
+    "examples": 1034,
+    "databases": 20,
+    "note": "Validation-set results; no claim is made for the hidden Spider test set."
+  },
+  "selected_model": {
+    "base": "Qwen/Qwen3-4B-Instruct-2507",
+    "base_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "training_run": "20260720-213353",
+    "dataset": "spider_sft_v1/train_base.jsonl",
+    "training_examples": 6997,
+    "optimizer_steps": 438,
+    "epochs": 1,
+    "validation_loss": 0.25596,
+    "adapter_bytes": 132187888,
+    "adapter_sha256": "5274d4c15179b195443940d92f8caacf10f99bdfca106ee24324cd44a2fbe9bb",
+    "trainable_parameters": 33030144,
+    "trainable_parameter_pct": 0.821141,
+    "peak_allocated_vram_gib": 10.638,
+    "prompt": "M-Schema with bounded sample values",
+    "strict_execution": {
+      "correct": 813,
+      "total": 1034,
+      "pct": 78.627
+    },
+    "compatible_execution": {
+      "correct": 860,
+      "total": 1034,
+      "pct": 83.172
+    },
+    "syntax_valid_pct": 100.0
+  },
+  "ablations": [
+    {
+      "name": "Qwen3 zero-shot DDL",
+      "strict_execution_pct": 72.34
+    },
+    {
+      "name": "Qwen3 natural-distribution QLoRA DDL",
+      "strict_execution_pct": 76.886
+    },
+    {
+      "name": "Qwen3 hard-example curriculum QLoRA DDL",
+      "strict_execution_pct": 74.371,
+      "decision": "rejected"
+    },
+    {
+      "name": "Qwen3 Gretel-augmented QLoRA DDL",
+      "strict_execution_pct": 74.468,
+      "decision": "rejected"
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "XiYanSQL 3B M-Schema",
+      "strict_execution_pct": 78.433,
+      "compatible_execution_pct": 83.269
+    },
+    {
+      "name": "FINER-SQL 3B 30-candidate",
+      "strict_execution_pct": 79.014,
+      "compatible_execution_pct": 84.236,
+      "candidate_oracle_pct": 90.232
+    },
+    {
+      "name": "Five-model execution consensus",
+      "strict_execution_pct": 82.785,
+      "compatible_execution_pct": 87.331
+    },
+    {
+      "name": "Strict FINER fallback",
+      "strict_execution_pct": 83.075,
+      "compatible_execution_pct": 87.331
+    }
+  ]
+}
+

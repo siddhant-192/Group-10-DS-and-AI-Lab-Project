@@ -1,0 +1,78 @@
+{
+  "format_version": 1,
+  "method": "QLoRA",
+  "quantization": {
+    "load_in_4bit": true,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "bfloat16",
+    "bnb_4bit_use_double_quant": true
+  },
+  "lora": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "bias": "none",
+    "target_modules": "all-linear",
+    "task_type": "CAUSAL_LM"
+  },
+  "optimization": {
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0,
+    "max_grad_norm": 0.3,
+    "lr_scheduler_type": "cosine",
+    "warmup_ratio": 0.03,
+    "num_train_epochs": 1.0,
+    "optim": "paged_adamw_8bit",
+    "seed": 17,
+    "bf16": true,
+    "tf32": true,
+    "gradient_checkpointing": true,
+    "gradient_checkpointing_use_reentrant": false,
+    "pad_to_multiple_of": 8
+  },
+  "smoke": {
+    "train_limit": 64,
+    "validation_limit": 16,
+    "max_steps": 4,
+    "resume_phase_one_steps": 2,
+    "per_device_train_batch_size": 1,
+    "per_device_eval_batch_size": 1,
+    "gradient_accumulation_steps": 2,
+    "logging_steps": 1,
+    "eval_steps": 2,
+    "save_steps": 2,
+    "save_total_limit": 2,
+    "eval_strategy": "steps",
+    "save_strategy": "steps"
+  },
+  "full": {
+    "train_limit": null,
+    "validation_limit": null,
+    "max_steps": -1,
+    "logging_steps": 10,
+    "save_steps": 100,
+    "save_total_limit": 2,
+    "eval_strategy": "epoch",
+    "save_strategy": "steps"
+  },
+  "models": {
+    "qwen3-4b-instruct-2507": {
+      "max_seq_length": 4096,
+      "per_device_train_batch_size": 1,
+      "per_device_eval_batch_size": 1,
+      "gradient_accumulation_steps": 16
+    },
+    "qwen2.5-coder-1.5b-instruct": {
+      "max_seq_length": 4096,
+      "per_device_train_batch_size": 2,
+      "per_device_eval_batch_size": 2,
+      "gradient_accumulation_steps": 8
+    },
+    "deepseek-coder-1.3b-instruct": {
+      "max_seq_length": 5120,
+      "per_device_train_batch_size": 1,
+      "per_device_eval_batch_size": 1,
+      "gradient_accumulation_steps": 16
+    }
+  }
+}

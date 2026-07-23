@@ -1,0 +1,45 @@
+{
+  "finer_n30": {
+    "by_complexity": {
+      "complex": {
+        "examples": 105,
+        "macsql": 63,
+        "macsql_pct": 60.0,
+        "strict": 62,
+        "strict_pct": 59.048
+      },
+      "moderate": {
+        "examples": 336,
+        "macsql": 257,
+        "macsql_pct": 76.488,
+        "strict": 237,
+        "strict_pct": 70.536
+      },
+      "simple": {
+        "examples": 593,
+        "macsql": 551,
+        "macsql_pct": 92.917,
+        "strict": 518,
+        "strict_pct": 87.352
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 59,
+      "pct": 5.706
+    },
+    "examples": 1034,
+    "macsql_execution": {
+      "count": 871,
+      "pct": 84.236
+    },
+    "prediction_statuses": {
+      "error": 2,
+      "ok": 1032
+    },
+    "source": "artifacts/zero-shot-eval/finer-n30-full-published-20260722/predictions.jsonl",
+    "strict_execution": {
+      "count": 817,
+      "pct": 79.014
+    }
+  }
+}

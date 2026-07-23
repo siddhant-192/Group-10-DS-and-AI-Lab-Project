@@ -1,0 +1,208 @@
+{
+  "complexity_slices": [
+    {
+      "after_correct": 508,
+      "after_pct": 85.666,
+      "before_correct": 501,
+      "before_pct": 84.486,
+      "delta_pp": 1.18,
+      "examples": 593,
+      "slice": "simple"
+    },
+    {
+      "after_correct": 244,
+      "after_pct": 72.619,
+      "before_correct": 239,
+      "before_pct": 71.131,
+      "delta_pp": 1.488,
+      "examples": 336,
+      "slice": "moderate"
+    },
+    {
+      "after_correct": 61,
+      "after_pct": 58.095,
+      "before_correct": 55,
+      "before_pct": 52.381,
+      "delta_pp": 5.714,
+      "examples": 105,
+      "slice": "complex"
+    }
+  ],
+  "labels": {
+    "after": "qwen3-base-sft-mschema",
+    "before": "qwen3-base-sft-ddl"
+  },
+  "metrics": {
+    "after": {
+      "canonical_exact_match": {
+        "count": 516,
+        "pct": 49.903
+      },
+      "examples": 1034,
+      "execution_match": {
+        "count": 813,
+        "pct": 78.627
+      },
+      "execution_status": {
+        "error": 39,
+        "ok": 995
+      },
+      "format_compliant": {
+        "count": 0,
+        "pct": 0.0
+      },
+      "normalized_exact_match": {
+        "count": 504,
+        "pct": 48.743
+      },
+      "syntax_valid": {
+        "count": 1034,
+        "pct": 100.0
+      }
+    },
+    "before": {
+      "canonical_exact_match": {
+        "count": 530,
+        "pct": 51.257
+      },
+      "examples": 1034,
+      "execution_match": {
+        "count": 795,
+        "pct": 76.886
+      },
+      "execution_status": {
+        "error": 38,
+        "ok": 996
+      },
+      "format_compliant": {
+        "count": 1034,
+        "pct": 100.0
+      },
+      "normalized_exact_match": {
+        "count": 519,
+        "pct": 50.193
+      },
+      "syntax_valid": {
+        "count": 1034,
+        "pct": 100.0
+      }
+    }
+  },
+  "paired_execution": {
+    "corrected": 59,
+    "corrected_ids": [
+      "spider-validation-00006",
+      "spider-validation-00040",
+      "spider-validation-00049",
+      "spider-validation-00061",
+      "spider-validation-00071",
+      "spider-validation-00072",
+      "spider-validation-00073",
+      "spider-validation-00074",
+      "spider-validation-00083",
+      "spider-validation-00084",
+      "spider-validation-00095",
+      "spider-validation-00096",
+      "spider-validation-00097",
+      "spider-validation-00098",
+      "spider-validation-00103",
+      "spider-validation-00104",
+      "spider-validation-00113",
+      "spider-validation-00115",
+      "spider-validation-00116",
+      "spider-validation-00129",
+      "spider-validation-00130",
+      "spider-validation-00133",
+      "spider-validation-00134",
+      "spider-validation-00148",
+      "spider-validation-00165",
+      "spider-validation-00166",
+      "spider-validation-00225",
+      "spider-validation-00227",
+      "spider-validation-00302",
+      "spider-validation-00308",
+      "spider-validation-00324",
+      "spider-validation-00335",
+      "spider-validation-00336",
+      "spider-validation-00353",
+      "spider-validation-00361",
+      "spider-validation-00403",
+      "spider-validation-00440",
+      "spider-validation-00458",
+      "spider-validation-00485",
+      "spider-validation-00511",
+      "spider-validation-00576",
+      "spider-validation-00610",
+      "spider-validation-00631",
+      "spider-validation-00632",
+      "spider-validation-00643",
+      "spider-validation-00644",
+      "spider-validation-00682",
+      "spider-validation-00707",
+      "spider-validation-00713",
+      "spider-validation-00749",
+      "spider-validation-00901",
+      "spider-validation-00907",
+      "spider-validation-00908",
+      "spider-validation-00922",
+      "spider-validation-00923",
+      "spider-validation-00955",
+      "spider-validation-00976",
+      "spider-validation-01007",
+      "spider-validation-01031"
+    ],
+    "discordant": 100,
+    "exact_mcnemar_p": 0.08862608011406758,
+    "net": 18,
+    "net_percentage_points": 1.741,
+    "regressed": 41,
+    "regressed_ids": [
+      "spider-validation-00012",
+      "spider-validation-00013",
+      "spider-validation-00033",
+      "spider-validation-00043",
+      "spider-validation-00079",
+      "spider-validation-00108",
+      "spider-validation-00131",
+      "spider-validation-00157",
+      "spider-validation-00161",
+      "spider-validation-00162",
+      "spider-validation-00167",
+      "spider-validation-00243",
+      "spider-validation-00483",
+      "spider-validation-00484",
+      "spider-validation-00489",
+      "spider-validation-00494",
+      "spider-validation-00517",
+      "spider-validation-00540",
+      "spider-validation-00557",
+      "spider-validation-00575",
+      "spider-validation-00581",
+      "spider-validation-00614",
+      "spider-validation-00646",
+      "spider-validation-00688",
+      "spider-validation-00722",
+      "spider-validation-00723",
+      "spider-validation-00724",
+      "spider-validation-00736",
+      "spider-validation-00766",
+      "spider-validation-00767",
+      "spider-validation-00783",
+      "spider-validation-00791",
+      "spider-validation-00877",
+      "spider-validation-00884",
+      "spider-validation-00885",
+      "spider-validation-00886",
+      "spider-validation-00889",
+      "spider-validation-00892",
+      "spider-validation-00898",
+      "spider-validation-00947",
+      "spider-validation-00966"
+    ]
+  },
+  "sources": {
+    "after": "artifacts/zero-shot-eval/runs/20260721-155144-67150/downloaded/results/qwen3-base-sft-mschema/predictions.jsonl",
+    "before": "artifacts/zero-shot-eval/runs/20260721-073105/downloaded/results/qwen3-base-sft/predictions.jsonl"
+  },
+  "title": "Qwen3 base SFT: DDL versus M-Schema prompt"
+}

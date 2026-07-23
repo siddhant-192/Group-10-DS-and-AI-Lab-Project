@@ -1,0 +1,260 @@
+{
+  "finer-greedy": {
+    "by_complexity": {
+      "complex": {
+        "examples": 105,
+        "macsql": 50,
+        "macsql_pct": 47.619,
+        "strict": 51,
+        "strict_pct": 48.571
+      },
+      "moderate": {
+        "examples": 336,
+        "macsql": 258,
+        "macsql_pct": 76.786,
+        "strict": 241,
+        "strict_pct": 71.726
+      },
+      "simple": {
+        "examples": 593,
+        "macsql": 534,
+        "macsql_pct": 90.051,
+        "strict": 501,
+        "strict_pct": 84.486
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 57,
+      "pct": 5.513
+    },
+    "examples": 1034,
+    "macsql_execution": {
+      "count": 842,
+      "pct": 81.431
+    },
+    "prediction_statuses": {
+      "error": 14,
+      "ok": 1020
+    },
+    "source": "artifacts/zero-shot-eval/runs/20260721-183453-72534/downloaded/results/finer-sql-3b-spider/predictions.jsonl",
+    "strict_execution": {
+      "count": 793,
+      "pct": 76.692
+    }
+  },
+  "five-model-consensus": {
+    "by_complexity": {
+      "complex": {
+        "examples": 105,
+        "macsql": 66,
+        "macsql_pct": 62.857,
+        "strict": 62,
+        "strict_pct": 59.048
+      },
+      "moderate": {
+        "examples": 336,
+        "macsql": 286,
+        "macsql_pct": 85.119,
+        "strict": 269,
+        "strict_pct": 80.06
+      },
+      "simple": {
+        "examples": 593,
+        "macsql": 551,
+        "macsql_pct": 92.917,
+        "strict": 525,
+        "strict_pct": 88.533
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 49,
+      "pct": 4.739
+    },
+    "examples": 1034,
+    "macsql_execution": {
+      "count": 903,
+      "pct": 87.331
+    },
+    "prediction_statuses": {
+      "error": 2,
+      "ok": 1032
+    },
+    "source": "artifacts/zero-shot-eval/five-model-finer-official-greedy-ensemble-20260721/ensemble_predictions.jsonl",
+    "strict_execution": {
+      "count": 856,
+      "pct": 82.785
+    }
+  },
+  "four-model-core": {
+    "by_complexity": {
+      "complex": {
+        "examples": 105,
+        "macsql": 65,
+        "macsql_pct": 61.905,
+        "strict": 61,
+        "strict_pct": 58.095
+      },
+      "moderate": {
+        "examples": 336,
+        "macsql": 283,
+        "macsql_pct": 84.226,
+        "strict": 267,
+        "strict_pct": 79.464
+      },
+      "simple": {
+        "examples": 593,
+        "macsql": 552,
+        "macsql_pct": 93.086,
+        "strict": 528,
+        "strict_pct": 89.039
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 46,
+      "pct": 4.449
+    },
+    "examples": 1034,
+    "macsql_execution": {
+      "count": 900,
+      "pct": 87.041
+    },
+    "prediction_statuses": {
+      "error": 5,
+      "ok": 1029
+    },
+    "source": "artifacts/zero-shot-eval/four-model-deepseek-mschema-ensemble-20260721/ensemble_predictions.jsonl",
+    "strict_execution": {
+      "count": 856,
+      "pct": 82.785
+    }
+  },
+  "qwen3-4b-sft-mschema": {
+    "by_complexity": {
+      "complex": {
+        "examples": 105,
+        "macsql": 65,
+        "macsql_pct": 61.905,
+        "strict": 61,
+        "strict_pct": 58.095
+      },
+      "moderate": {
+        "examples": 336,
+        "macsql": 259,
+        "macsql_pct": 77.083,
+        "strict": 244,
+        "strict_pct": 72.619
+      },
+      "simple": {
+        "examples": 593,
+        "macsql": 536,
+        "macsql_pct": 90.388,
+        "strict": 508,
+        "strict_pct": 85.666
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 48,
+      "pct": 4.642
+    },
+    "examples": 1034,
+    "macsql_execution": {
+      "count": 860,
+      "pct": 83.172
+    },
+    "prediction_statuses": {
+      "error": 39,
+      "ok": 995
+    },
+    "source": "artifacts/zero-shot-eval/runs/20260721-155144-67150/downloaded/results/qwen3-base-sft-mschema/predictions.jsonl",
+    "strict_execution": {
+      "count": 813,
+      "pct": 78.627
+    }
+  },
+  "strict-fallback": {
+    "by_complexity": {
+      "complex": {
+        "examples": 105,
+        "macsql": 65,
+        "macsql_pct": 61.905,
+        "strict": 61,
+        "strict_pct": 58.095
+      },
+      "moderate": {
+        "examples": 336,
+        "macsql": 286,
+        "macsql_pct": 85.119,
+        "strict": 270,
+        "strict_pct": 80.357
+      },
+      "simple": {
+        "examples": 593,
+        "macsql": 552,
+        "macsql_pct": 93.086,
+        "strict": 528,
+        "strict_pct": 89.039
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 46,
+      "pct": 4.449
+    },
+    "examples": 1034,
+    "macsql_execution": {
+      "count": 903,
+      "pct": 87.331
+    },
+    "prediction_statuses": {
+      "error": 2,
+      "ok": 1032
+    },
+    "source": "artifacts/zero-shot-eval/four-model-with-finer-official-fallback-20260721/fallback_predictions.jsonl",
+    "strict_execution": {
+      "count": 859,
+      "pct": 83.075
+    }
+  },
+  "xiyan-3b": {
+    "by_complexity": {
+      "complex": {
+        "examples": 105,
+        "macsql": 64,
+        "macsql_pct": 60.952,
+        "strict": 60,
+        "strict_pct": 57.143
+      },
+      "moderate": {
+        "examples": 336,
+        "macsql": 270,
+        "macsql_pct": 80.357,
+        "strict": 254,
+        "strict_pct": 75.595
+      },
+      "simple": {
+        "examples": 593,
+        "macsql": 527,
+        "macsql_pct": 88.87,
+        "strict": 497,
+        "strict_pct": 83.811
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 52,
+      "pct": 5.029
+    },
+    "examples": 1034,
+    "macsql_execution": {
+      "count": 861,
+      "pct": 83.269
+    },
+    "prediction_statuses": {
+      "error": 28,
+      "ok": 1006
+    },
+    "source": "artifacts/zero-shot-eval/runs/20260721-111750-91573/downloaded/results/xiyansql-qwencoder-3b-2504/predictions.jsonl",
+    "strict_execution": {
+      "count": 811,
+      "pct": 78.433
+    }
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "counts": {
+    "base_train": 6997,
+    "curriculum_train": 9796,
+    "hard_supplement": 2799,
+    "sampling_weights": 6997,
+    "validation": 1034
+  },
+  "distributions": {
+    "base_train": {
+      "complexity": {
+        "complex": 760,
+        "moderate": 2242,
+        "simple": 3995
+      },
+      "databases": 140,
+      "examples": 6997,
+      "feature_counts": {
+        "aggregate": 3268,
+        "complex": 760,
+        "distinct": 721,
+        "group_by": 1773,
+        "having": 427,
+        "join": 2770,
+        "join_and_subquery": 399,
+        "limit": 1104,
+        "multi_join": 826,
+        "order_by": 1625,
+        "set_operation": 524,
+        "subquery": 1017,
+        "where": 3502
+      },
+      "feature_pct": {
+        "aggregate": 46.706,
+        "complex": 10.862,
+        "distinct": 10.304,
+        "group_by": 25.339,
+        "having": 6.103,
+        "join": 39.588,
+        "join_and_subquery": 5.702,
+        "limit": 15.778,
+        "multi_join": 11.805,
+        "order_by": 23.224,
+        "set_operation": 7.489,
+        "subquery": 14.535,
+        "where": 50.05
+      },
+      "max_occurrences_per_normalized_sql": 13,
+      "max_occurrences_per_source_id": 1,
+      "unique_normalized_sql": 3939,
+      "unique_source_ids": 6997
+    },
+    "curriculum_train": {
+      "complexity": {
+        "complex": 1133,
+        "moderate": 3268,
+        "simple": 5395
+      },
+      "databases": 140,
+      "examples": 9796,
+      "feature_counts": {
+        "aggregate": 4702,
+        "complex": 1133,
+        "distinct": 1051,
+        "group_by": 2602,
+        "having": 628,
+        "join": 3983,
+        "join_and_subquery": 603,
+        "limit": 1585,
+        "multi_join": 1228,
+        "order_by": 2324,
+        "set_operation": 785,
+        "subquery": 1511,
+        "where": 4869
+      },
+      "feature_pct": {
+        "aggregate": 47.999,
+        "complex": 11.566,
+        "distinct": 10.729,
+        "group_by": 26.562,
+        "having": 6.411,
+        "join": 40.659,
+        "join_and_subquery": 6.156,
+        "limit": 16.18,
+        "multi_join": 12.536,
+        "order_by": 23.724,
+        "set_operation": 8.013,
+        "subquery": 15.425,
+        "where": 49.704
+      },
+      "max_occurrences_per_normalized_sql": 14,
+      "max_occurrences_per_source_id": 2,
+      "unique_normalized_sql": 3939,
+      "unique_source_ids": 6997
+    },
+    "validation": {
+      "complexity": {
+        "complex": 105,
+        "moderate": 336,
+        "simple": 593
+      },
+      "databases": 20,
+      "examples": 1034,
+      "feature_counts": {
+        "aggregate": 551,
+        "complex": 105,
+        "distinct": 87,
+        "group_by": 277,
+        "having": 79,
+        "join": 408,
+        "join_and_subquery": 77,
+        "limit": 189,
+        "multi_join": 88,
+        "order_by": 237,
+        "set_operation": 80,
+        "subquery": 159,
+        "where": 493
+      },
+      "feature_pct": {
+        "aggregate": 53.288,
+        "complex": 10.155,
+        "distinct": 8.414,
+        "group_by": 26.789,
+        "having": 7.64,
+        "join": 39.458,
+        "join_and_subquery": 7.447,
+        "limit": 18.279,
+        "multi_join": 8.511,
+        "order_by": 22.921,
+        "set_operation": 7.737,
+        "subquery": 15.377,
+        "where": 47.679
+      },
+      "max_occurrences_per_normalized_sql": 4,
+      "max_occurrences_per_source_id": 1,
+      "unique_normalized_sql": 550,
+      "unique_source_ids": 1034
+    }
+  },
+  "generated_at_utc": "2026-07-20T15:01:47.385101+00:00",
+  "leakage_checks": {
+    "database_overlap_count": 0,
+    "exact_db_question_sql_overlap_count": 0,
+    "normalized_question_overlap_count": 6,
+    "source_id_overlap_count": 0,
+    "train_databases": 140,
+    "validation_databases": 20
+  },
+  "package": "spider_sft_v1",
+  "policy": {
+    "combine_rule": "maximum",
+    "description": "Feature-aware Spider SFT curriculum derived from the three-model zero-shot error analysis. Every usable training row is retained once; a deterministic, template-capped hard supplement is appended.",
+    "feature_multipliers": {
+      "aggregate": 2.0,
+      "complex": 2.5,
+      "distinct": 2.5,
+      "group_by": 2.5,
+      "having": 2.0,
+      "join": 2.0,
+      "join_and_subquery": 3.0,
+      "limit": 2.0,
+      "multi_join": 2.5,
+      "order_by": 2.0,
+      "set_operation": 2.5,
+      "subquery": 2.5,
+      "where": 1.5
+    },
+    "max_supplement_per_normalized_sql": 1,
+    "policy_version": "spider-sft-v1",
+    "provenance": {
+      "baseline_run": "artifacts/zero-shot-eval/runs/20260720-012118",
+      "error_analysis": "artifacts/zero-shot-eval/runs/20260720-012118/downloaded/results/error-analysis/analysis.json",
+      "priority_table": "artifacts/zero-shot-eval/runs/20260720-012118/downloaded/results/error-analysis/fine_tuning_priorities.csv"
+    },
+    "seed": 17,
+    "supplement_fraction": 0.4
+  },
+  "sources": {
+    "policy": {
+      "path": "configs/text2sql_sft_sampling.json",
+      "sha256": "8dcd68a64a576acc804742894cd6b0ef869fd17447af796d181ddf2865d9d3b7"
+    },
+    "train": {
+      "path": "data/processed/spider/train.jsonl",
+      "rows": 6997,
+      "sha256": "37eb49700718cb0f9689a89a2c7976f06f6336f107a69b0a0dcf7dc383b97e51"
+    },
+    "validation": {
+      "path": "data/processed/spider/validation.jsonl",
+      "rows": 1034,
+      "sha256": "649394695ac0548f917b5391bc97f6e2a8f26421288fd05c83339f5a6441bcf7"
+    }
+  }
+}

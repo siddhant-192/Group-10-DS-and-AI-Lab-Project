@@ -1,0 +1,14 @@
+feature,label,validation_support,strong_correct,strong_failures,strong_execution_accuracy_pct,training_examples,suggested_max_sampling_multiplier,impact_score
+aggregate,Aggregate,551,385,166,69.873,3268,2.0,1512.02
+join,Any join,408,255,153,62.5,2770,2.0,1327.42
+where,WHERE,493,354,139,71.805,3502,1.5,1243.82
+group_by,GROUP BY,277,160,117,57.762,1773,2.5,949.92
+order_by,ORDER BY,237,163,74,68.776,1625,2.0,584.22
+subquery,Subquery,159,93,66,58.491,1017,2.5,483.25
+limit,LIMIT,189,126,63,66.667,1104,2.0,476.9
+complex,Complex proxy,105,53,52,50.476,760,2.5,349.85
+join_and_subquery,Join + subquery,77,34,43,44.156,399,3.0,270.27
+multi_join,2+ joins,88,47,41,53.409,826,2.5,265.51
+distinct,DISTINCT,87,52,35,59.77,721,2.5,226.08
+set_operation,Set operation,80,46,34,57.5,524,2.5,215.55
+having,HAVING,79,49,30,62.025,427,2.0,189.66

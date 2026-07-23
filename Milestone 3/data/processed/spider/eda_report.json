@@ -1,0 +1,235 @@
+{
+  "configuration": {
+    "query_execution_enabled": true,
+    "query_timeout_seconds": 2.0,
+    "schema_serializer": "SQLite DDL from live PRAGMA metadata",
+    "system_prompt": "You convert natural-language questions into one read-only SQLite query. Use only the supplied database schema. Return SQL only, with no Markdown fence, explanation, or alternative query."
+  },
+  "database_summary": {
+    "column_count": 4497,
+    "columns_per_database": {
+      "count": 166,
+      "max": 352,
+      "median": 19.5,
+      "min": 6,
+      "p95": 64.0
+    },
+    "database_count": 166,
+    "foreign_key_count": 800,
+    "largest_schemas_by_columns": [
+      {
+        "columns": 352,
+        "db_id": "baseball_1",
+        "foreign_keys": 20,
+        "tables": 26
+      },
+      {
+        "columns": 99,
+        "db_id": "cre_Drama_Workshop_Groups",
+        "foreign_keys": 25,
+        "tables": 18
+      },
+      {
+        "columns": 94,
+        "db_id": "formula_1",
+        "foreign_keys": 17,
+        "tables": 13
+      },
+      {
+        "columns": 89,
+        "db_id": "sakila_1",
+        "foreign_keys": 21,
+        "tables": 16
+      },
+      {
+        "columns": 84,
+        "db_id": "soccer_1",
+        "foreign_keys": 5,
+        "tables": 6
+      },
+      {
+        "columns": 68,
+        "db_id": "hospital_1",
+        "foreign_keys": 25,
+        "tables": 15
+      },
+      {
+        "columns": 66,
+        "db_id": "imdb",
+        "foreign_keys": 12,
+        "tables": 16
+      },
+      {
+        "columns": 64,
+        "db_id": "assets_maintenance",
+        "foreign_keys": 18,
+        "tables": 14
+      },
+      {
+        "columns": 64,
+        "db_id": "behavior_monitoring",
+        "foreign_keys": 13,
+        "tables": 11
+      },
+      {
+        "columns": 64,
+        "db_id": "chinook_1",
+        "foreign_keys": 11,
+        "tables": 11
+      }
+    ],
+    "quick_check_ok": 166,
+    "table_count": 873,
+    "tables_per_database": {
+      "count": 166,
+      "max": 26,
+      "median": 4.0,
+      "min": 2,
+      "p95": 13.75
+    }
+  },
+  "dataset": "Spider 1.0",
+  "generated_at_utc": "2026-07-20T07:35:59.725949+00:00",
+  "leakage_checks": {
+    "database_overlap": [],
+    "database_overlap_count": 0,
+    "exact_pair_overlap_count": 0,
+    "normalized_question_overlap_count": 6,
+    "unused_local_databases": [
+      "academic",
+      "geo",
+      "imdb",
+      "restaurants",
+      "scholar",
+      "yelp"
+    ]
+  },
+  "rejected_examples": {
+    "train": 3,
+    "validation": 0
+  },
+  "splits": {
+    "train": {
+      "clauses": {
+        "with_aggregate": 3270,
+        "with_group_by": 1775,
+        "with_having": 427,
+        "with_join": 2771,
+        "with_order_by": 1628,
+        "with_set_operation": 526,
+        "with_subquery": 1019
+      },
+      "complexity_proxy": {
+        "complex": 762,
+        "moderate": 2243,
+        "simple": 3995
+      },
+      "databases": 140,
+      "duplicate_sql_rows": 3040,
+      "examples": 7000,
+      "execution_latency_ms": {
+        "count": 7000,
+        "max": 724.932,
+        "median": 0.01,
+        "min": 0.003,
+        "p95": 0.171
+      },
+      "execution_status": {
+        "error": 3,
+        "ok": 6997
+      },
+      "prompt_estimated_tokens": {
+        "count": 7000,
+        "max": 2215,
+        "median": 313.0,
+        "min": 136,
+        "p95": 1111.0
+      },
+      "question_words": {
+        "count": 7000,
+        "max": 39,
+        "median": 12.0,
+        "min": 3,
+        "p95": 20.0
+      },
+      "schema_characters": {
+        "count": 7000,
+        "max": 8437,
+        "median": 970.0,
+        "min": 277,
+        "p95": 4093.0
+      },
+      "sql_tokens": {
+        "count": 7000,
+        "max": 87,
+        "median": 13.0,
+        "min": 4,
+        "p95": 32.0
+      },
+      "unique_normalized_sql": 3960,
+      "unique_questions": 6960,
+      "usable_examples": 6997
+    },
+    "validation": {
+      "clauses": {
+        "with_aggregate": 551,
+        "with_group_by": 277,
+        "with_having": 79,
+        "with_join": 408,
+        "with_order_by": 237,
+        "with_set_operation": 80,
+        "with_subquery": 159
+      },
+      "complexity_proxy": {
+        "complex": 105,
+        "moderate": 336,
+        "simple": 593
+      },
+      "databases": 20,
+      "duplicate_sql_rows": 471,
+      "examples": 1034,
+      "execution_latency_ms": {
+        "count": 1034,
+        "max": 310.533,
+        "median": 0.011,
+        "min": 0.003,
+        "p95": 0.179
+      },
+      "execution_status": {
+        "ok": 1034
+      },
+      "prompt_estimated_tokens": {
+        "count": 1034,
+        "max": 885,
+        "median": 314.5,
+        "min": 152,
+        "p95": 862.0
+      },
+      "question_words": {
+        "count": 1034,
+        "max": 28,
+        "median": 12.0,
+        "min": 4,
+        "p95": 20.0
+      },
+      "schema_characters": {
+        "count": 1034,
+        "max": 3146,
+        "median": 986.0,
+        "min": 338,
+        "p95": 3146.0
+      },
+      "sql_tokens": {
+        "count": 1034,
+        "max": 58,
+        "median": 13.0,
+        "min": 4,
+        "p95": 33.0
+      },
+      "unique_normalized_sql": 563,
+      "unique_questions": 1034,
+      "usable_examples": 1034
+    }
+  },
+  "validation_failure_count": 3
+}

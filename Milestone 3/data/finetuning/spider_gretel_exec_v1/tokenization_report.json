@@ -1,0 +1,294 @@
+{
+  "data_dir": "data/finetuning/spider_gretel_exec_v1",
+  "max_seq_length_override": null,
+  "models": {
+    "deepseek-coder-1.3b-instruct": {
+      "max_seq_length": 5120,
+      "splits": {
+        "train_base": {
+          "examples": 11997,
+          "full_sequence_tokens": {
+            "max": 4609,
+            "median": 316,
+            "min": 97,
+            "p95": 1525,
+            "p99": 2517,
+            "total": 6162343
+          },
+          "longest_example_id": "spider-train-03698",
+          "over_4096_tokens": 82,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 4444,
+            "median": 283,
+            "min": 86,
+            "p95": 1470,
+            "p99": 2476,
+            "total": 5611050
+          },
+          "target_tokens": {
+            "max": 276,
+            "median": 38,
+            "min": 4,
+            "p95": 93,
+            "p99": 130,
+            "total": 515302
+          }
+        },
+        "train_curriculum": {
+          "examples": 11997,
+          "full_sequence_tokens": {
+            "max": 4609,
+            "median": 316,
+            "min": 97,
+            "p95": 1525,
+            "p99": 2517,
+            "total": 6162343
+          },
+          "longest_example_id": "spider-train-03698",
+          "over_4096_tokens": 82,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 4444,
+            "median": 283,
+            "min": 86,
+            "p95": 1470,
+            "p99": 2476,
+            "total": 5611050
+          },
+          "target_tokens": {
+            "max": 276,
+            "median": 38,
+            "min": 4,
+            "p95": 93,
+            "p99": 130,
+            "total": 515302
+          }
+        },
+        "validation": {
+          "examples": 1034,
+          "full_sequence_tokens": {
+            "max": 1457,
+            "median": 474,
+            "min": 232,
+            "p95": 1342,
+            "p99": 1416,
+            "total": 576625
+          },
+          "longest_example_id": "spider-validation-00576",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 1342,
+            "median": 442,
+            "min": 223,
+            "p95": 1320,
+            "p99": 1328,
+            "total": 536231
+          },
+          "target_tokens": {
+            "max": 154,
+            "median": 25,
+            "min": 4,
+            "p95": 84,
+            "p99": 119,
+            "total": 37292
+          }
+        }
+      },
+      "tokenizer": "models/text2sql-eval/deepseek-coder-1.3b-instruct"
+    },
+    "qwen2.5-coder-1.5b-instruct": {
+      "max_seq_length": 4096,
+      "splits": {
+        "train_base": {
+          "examples": 11997,
+          "full_sequence_tokens": {
+            "max": 3173,
+            "median": 248,
+            "min": 85,
+            "p95": 1074,
+            "p99": 1864,
+            "total": 4665364
+          },
+          "longest_example_id": "spider-train-03698",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 3043,
+            "median": 218,
+            "min": 77,
+            "p95": 1022,
+            "p99": 1831,
+            "total": 4222102
+          },
+          "target_tokens": {
+            "max": 209,
+            "median": 31,
+            "min": 4,
+            "p95": 75,
+            "p99": 104,
+            "total": 419268
+          }
+        },
+        "train_curriculum": {
+          "examples": 11997,
+          "full_sequence_tokens": {
+            "max": 3173,
+            "median": 248,
+            "min": 85,
+            "p95": 1074,
+            "p99": 1864,
+            "total": 4665364
+          },
+          "longest_example_id": "spider-train-03698",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 3043,
+            "median": 218,
+            "min": 77,
+            "p95": 1022,
+            "p99": 1831,
+            "total": 4222102
+          },
+          "target_tokens": {
+            "max": 209,
+            "median": 31,
+            "min": 4,
+            "p95": 75,
+            "p99": 104,
+            "total": 419268
+          }
+        },
+        "validation": {
+          "examples": 1034,
+          "full_sequence_tokens": {
+            "max": 1046,
+            "median": 362,
+            "min": 181,
+            "p95": 956,
+            "p99": 1021,
+            "total": 439286
+          },
+          "longest_example_id": "spider-validation-00576",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 963,
+            "median": 338,
+            "min": 174,
+            "p95": 941,
+            "p99": 950,
+            "total": 405604
+          },
+          "target_tokens": {
+            "max": 130,
+            "median": 22,
+            "min": 4,
+            "p95": 75,
+            "p99": 98,
+            "total": 31614
+          }
+        }
+      },
+      "tokenizer": "models/text2sql-eval/qwen2.5-coder-1.5b-instruct"
+    },
+    "qwen3-4b-instruct-2507": {
+      "max_seq_length": 4096,
+      "splits": {
+        "train_base": {
+          "examples": 11997,
+          "full_sequence_tokens": {
+            "max": 3173,
+            "median": 248,
+            "min": 85,
+            "p95": 1074,
+            "p99": 1864,
+            "total": 4665364
+          },
+          "longest_example_id": "spider-train-03698",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 3043,
+            "median": 218,
+            "min": 77,
+            "p95": 1022,
+            "p99": 1831,
+            "total": 4222102
+          },
+          "target_tokens": {
+            "max": 209,
+            "median": 31,
+            "min": 4,
+            "p95": 75,
+            "p99": 104,
+            "total": 419268
+          }
+        },
+        "train_curriculum": {
+          "examples": 11997,
+          "full_sequence_tokens": {
+            "max": 3173,
+            "median": 248,
+            "min": 85,
+            "p95": 1074,
+            "p99": 1864,
+            "total": 4665364
+          },
+          "longest_example_id": "spider-train-03698",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 3043,
+            "median": 218,
+            "min": 77,
+            "p95": 1022,
+            "p99": 1831,
+            "total": 4222102
+          },
+          "target_tokens": {
+            "max": 209,
+            "median": 31,
+            "min": 4,
+            "p95": 75,
+            "p99": 104,
+            "total": 419268
+          }
+        },
+        "validation": {
+          "examples": 1034,
+          "full_sequence_tokens": {
+            "max": 1046,
+            "median": 362,
+            "min": 181,
+            "p95": 956,
+            "p99": 1021,
+            "total": 439286
+          },
+          "longest_example_id": "spider-validation-00576",
+          "over_4096_tokens": 0,
+          "over_max_seq_length": 0,
+          "prompt_tokens": {
+            "max": 963,
+            "median": 338,
+            "min": 174,
+            "p95": 941,
+            "p99": 950,
+            "total": 405604
+          },
+          "target_tokens": {
+            "max": 130,
+            "median": 22,
+            "min": 4,
+            "p95": 75,
+            "p99": 98,
+            "total": 31614
+          }
+        }
+      },
+      "tokenizer": "models/text2sql-eval/qwen3-4b-instruct-2507"
+    }
+  }
+}

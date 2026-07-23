@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant Local as Local launcher
+    participant Colab as Colab L4
+    participant HF as Hugging Face
+    participant GPU as Model process
+
+    Local->>Local: Build checksummed code/data bundle
+    Local->>Colab: Create L4 session and upload bundle
+    Colab->>HF: Fetch exact pinned base revision
+    Colab->>GPU: Run smoke/evaluation/training
+    loop At every complete checkpoint
+        GPU->>Colab: Atomically archive checkpoint
+        Colab->>Local: Download and verify checkpoint
+    end
+    GPU->>Colab: Write metrics, logs, and final adapter
+    Colab->>Local: Download result archive
+    Local->>Local: Validate hashes and required files
+    Local->>Colab: Stop session in cleanup trap
+

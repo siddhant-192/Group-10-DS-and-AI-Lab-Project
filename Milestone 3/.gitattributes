@@ -1,0 +1,11 @@
+*.json text eol=lf
+*.jsonl text eol=lf
+*.md text eol=lf
+*.mmd text eol=lf
+*.py text eol=lf
+*.sh text eol=lf
+*.csv text eol=lf
+*.safetensors binary
+*.sqlite binary
+*.parquet binary
+

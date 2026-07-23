@@ -1,0 +1,24 @@
+{
+  "dataset": "xlangai/spider",
+  "dataset_url": "https://huggingface.co/datasets/xlangai/spider",
+  "files": [
+    {
+      "expected_rows": 7000,
+      "filename": "train.parquet",
+      "sha256": "cb4b681558f6f8f428e516fb94c5a1cb19c5a0a0c153c0618c8cc4a28115d4cb",
+      "size_bytes": 831359,
+      "split": "train",
+      "url": "https://huggingface.co/api/datasets/xlangai/spider/parquet/spider/train/0.parquet"
+    },
+    {
+      "expected_rows": 1034,
+      "filename": "validation.parquet",
+      "sha256": "c3e2a46303899a2d4afe3f6a3a62e59f8d589f241b3cbfb52356479b1f054888",
+      "size_bytes": 125887,
+      "split": "validation",
+      "url": "https://huggingface.co/api/datasets/xlangai/spider/parquet/spider/validation/0.parquet"
+    }
+  ],
+  "license": "CC-BY-SA-4.0",
+  "retrieved_at_utc": "2026-07-20T07:33:04.320150+00:00"
+}

@@ -1,0 +1,57 @@
+{
+  "attention": "sdpa",
+  "canonical_exact_match_count": 258,
+  "canonical_exact_match_pct": 24.952,
+  "complexity_breakdown": {
+    "complex": {
+      "examples": 105,
+      "execution_accuracy_pct": 18.095,
+      "normalized_exact_match_pct": 0.952,
+      "syntax_valid_pct": 99.048
+    },
+    "moderate": {
+      "examples": 336,
+      "execution_accuracy_pct": 50.595,
+      "normalized_exact_match_pct": 11.607,
+      "syntax_valid_pct": 100.0
+    },
+    "simple": {
+      "examples": 593,
+      "execution_accuracy_pct": 66.779,
+      "normalized_exact_match_pct": 26.644,
+      "syntax_valid_pct": 100.0
+    }
+  },
+  "cuda_peak": {
+    "allocated_gib": 2.885,
+    "max_allocated_gib": 4.248,
+    "max_reserved_gib": 13.379,
+    "reserved_gib": 13.379
+  },
+  "dtype": "torch.bfloat16",
+  "evaluation_seconds": 218.099,
+  "examples": 1034,
+  "execution_match_count": 585,
+  "execution_match_pct": 56.576,
+  "final_batch_size": 16,
+  "format_compliant_count": 1034,
+  "format_compliant_pct": 100.0,
+  "input_truncated_count": 0,
+  "input_truncated_pct": 0.0,
+  "load_seconds": 15.587,
+  "mean_generation_ms_per_example": 197.728,
+  "normalized_exact_match_count": 198,
+  "normalized_exact_match_pct": 19.149,
+  "prediction_execution_status": {
+    "error": 231,
+    "ok": 803
+  },
+  "raw_exact_match_count": 71,
+  "raw_exact_match_pct": 6.867,
+  "repo_id": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+  "revision": "2e1fd397ee46e1388853d2af2c993145b0f1098a",
+  "slug": "qwen2.5-coder-1.5b-instruct",
+  "syntax_valid_count": 1033,
+  "syntax_valid_pct": 99.903,
+  "tier": "middle"
+}
