@@ -1,0 +1,46 @@
+{
+  "format_version": 1,
+  "milestone": 4,
+  "release_role": "predeclared full-data release adapter",
+  "architecture": "PEFT LoRA adapter over a decoder-only causal language model",
+  "distribution": "adapter_binary_not_committed_base_downloaded_from_huggingface",
+  "base_model": {
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "logical_parameters": 4022468096
+  },
+  "training": {
+    "method": "QLoRA",
+    "config": "configs/hparam/qwen3/selected-full5996.json",
+    "training_examples": 5996,
+    "training_databases": 120,
+    "tuning_examples": 1001,
+    "tuning_databases": 20,
+    "optimizer_steps": 375,
+    "epochs": 1,
+    "learning_rate": 0.0003,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": "all-linear",
+    "effective_batch_size": 16,
+    "scheduler": "cosine",
+    "warmup_ratio": 0.03,
+    "seed": 17,
+    "final_eval_loss": 0.22249360382556915
+  },
+  "adapter": {
+    "checkpoint": 375,
+    "trainable_parameters": 33030144,
+    "trainable_parameter_pct": 0.821141,
+    "weight_file": "adapter_model.safetensors",
+    "weight_bytes": 132187888,
+    "weight_sha256": "63a51ff491a163c1433dd4ac56d936d969337de67279f852ea1ef966ac335e5c"
+  },
+  "internal_tuning_metrics": {
+    "strict_execution_pct": 85.514,
+    "compatible_execution_pct": 89.011,
+    "syntax_valid_pct": 100.0
+  },
+  "selection_note": "The 2,048-row screening adapter scored 86.513% strict, but checkpoint 375 is the predeclared full-data release artifact. Official Spider validation was not used for this HPO selection."
+}

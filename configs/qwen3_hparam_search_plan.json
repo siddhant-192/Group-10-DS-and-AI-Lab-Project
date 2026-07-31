@@ -1,0 +1,67 @@
+{
+  "format_version": 1,
+  "model": "qwen3-4b-instruct-2507",
+  "dataset": "qwen3_hparam_mschema_v1",
+  "selection_metric": "strict_execution_accuracy",
+  "secondary_metrics": [
+    "macsql_compatible_execution_accuracy",
+    "syntax_validity",
+    "complexity_slice_execution_accuracy",
+    "inference_latency"
+  ],
+  "requested_parallel_session_cap": 6,
+  "observed_parallel_l4_limit": 2,
+  "parallelism_note": "The user-authorized cap is six, but live allocation tests on this Colab account allowed two simultaneous L4 sessions; jobs therefore run in two-session waves.",
+  "base_weights_policy": "download pinned Hugging Face base directly in each ephemeral Colab session",
+  "local_artifact_policy": "retain adapters, configs, metrics, predictions, and logs; omit base weights and optimizer checkpoints for screening trials",
+  "budgeting": {
+    "method": "successive halving",
+    "screening_train_examples": 2048,
+    "screening_validation_examples": 1001,
+    "full_train_examples_for_finalists": 5996,
+    "reason": "full M-Schema trials were projected to consume hours per configuration after measured live step timing"
+  },
+  "screening_batching": {
+    "per_device_train_batch_size": 2,
+    "gradient_accumulation_steps": 8,
+    "effective_batch_size": 16,
+    "note": "same effective batch as the baseline, with greater L4 utilization; verified by a live screening trial before the wave"
+  },
+  "waves": [
+    {
+      "name": "learning_rate",
+      "fixed": {"rank": 16, "alpha": 32, "dropout": 0.05, "epochs": 1.0, "scheduler": "cosine", "warmup_ratio": 0.03, "seed": 17, "target_profile": "all-linear"},
+      "values": {"learning_rate": [0.00005, 0.0001, 0.0002, 0.0003]}
+    },
+    {
+      "name": "adapter_capacity_and_regularization",
+      "depends_on": "best learning rate",
+      "values": {
+        "rank_alpha": [[8, 16], [16, 32], [32, 64]],
+        "dropout": [0.0, 0.05, 0.1],
+        "target_profile": ["all-linear", "attention-only"]
+      }
+    },
+    {
+      "name": "optimization_and_stability",
+      "depends_on": "best capacity configuration",
+      "values": {
+        "scheduler": ["cosine", "linear"],
+        "warmup_ratio": [0.03, 0.1],
+        "epochs": [1.0, 2.0],
+        "seed": [17, 29, 41]
+      }
+    },
+    {
+      "name": "decoding",
+      "depends_on": "top adapters",
+      "note": "Greedy decoding is the primary deterministic baseline. Temperature applies only to multi-candidate sampling.",
+      "values": {
+        "num_candidates": [1, 4],
+        "temperature_for_four_candidates": [0.2, 0.5, 0.8, 1.0],
+        "top_p": [0.95],
+        "selection": ["execution-consensus", "value-aware-voting"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "manifest.json": "d0e2492a1b6d1c2be94f548e45929ca35242126842c1a6f1d46b2d9a633054be",
+  "train_base.jsonl": "b597a64b91c8161ebe07bf4686a74807da1c27c82fb752b4ae2d5117a6579f65",
+  "train_curriculum.jsonl": "b597a64b91c8161ebe07bf4686a74807da1c27c82fb752b4ae2d5117a6579f65",
+  "validation.jsonl": "c4ddf2d8ab131200af869c6eeb9a817e4095be640a92964f44b3f532a921f986"
+}

@@ -1,0 +1,45 @@
+{
+  "q3hp-stability-seed29": {
+    "by_complexity": {
+      "complex": {
+        "examples": 108,
+        "macsql": 83,
+        "macsql_pct": 76.852,
+        "strict": 81,
+        "strict_pct": 75.0
+      },
+      "moderate": {
+        "examples": 321,
+        "macsql": 278,
+        "macsql_pct": 86.604,
+        "strict": 266,
+        "strict_pct": 82.866
+      },
+      "simple": {
+        "examples": 572,
+        "macsql": 536,
+        "macsql_pct": 93.706,
+        "strict": 516,
+        "strict_pct": 90.21
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 34,
+      "pct": 3.397
+    },
+    "examples": 1001,
+    "macsql_execution": {
+      "count": 897,
+      "pct": 89.61
+    },
+    "prediction_statuses": {
+      "error": 16,
+      "ok": 985
+    },
+    "source": "artifacts/zero-shot-eval/runs/20260726-211915-84507/downloaded/results/q3hp-stability-seed29/predictions.jsonl",
+    "strict_execution": {
+      "count": 863,
+      "pct": 86.214
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "t08vav": {
+    "by_complexity": {
+      "complex": {
+        "examples": 32,
+        "macsql": 24,
+        "macsql_pct": 75.0,
+        "strict": 25,
+        "strict_pct": 78.125
+      },
+      "moderate": {
+        "examples": 96,
+        "macsql": 82,
+        "macsql_pct": 85.417,
+        "strict": 81,
+        "strict_pct": 84.375
+      },
+      "simple": {
+        "examples": 172,
+        "macsql": 161,
+        "macsql_pct": 93.605,
+        "strict": 153,
+        "strict_pct": 88.953
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 9,
+      "pct": 3.0
+    },
+    "examples": 300,
+    "macsql_execution": {
+      "count": 267,
+      "pct": 89.0
+    },
+    "prediction_statuses": {
+      "ok": 300
+    },
+    "source": "artifacts/qlora-hparam/decoding/t08-screen300/value-aware/predictions.jsonl",
+    "strict_execution": {
+      "count": 259,
+      "pct": 86.333
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "by_complexity": {
+    "complex": {
+      "examples": 108,
+      "macsql": 79,
+      "macsql_pct": 73.148,
+      "strict": 78,
+      "strict_pct": 72.222
+    },
+    "moderate": {
+      "examples": 321,
+      "macsql": 280,
+      "macsql_pct": 87.227,
+      "strict": 274,
+      "strict_pct": 85.358
+    },
+    "simple": {
+      "examples": 572,
+      "macsql": 535,
+      "macsql_pct": 93.531,
+      "strict": 512,
+      "strict_pct": 89.51
+    }
+  },
+  "column_permutation_or_distinct_promotions": {
+    "count": 30,
+    "pct": 2.997
+  },
+  "examples": 1001,
+  "macsql_execution": {
+    "count": 894,
+    "pct": 89.311
+  },
+  "prediction_statuses": {
+    "error": 16,
+    "ok": 985
+  },
+  "source": "artifacts/zero-shot-eval/runs/20260726-191559-5515/downloaded/results/q3hp-opt-linear-w03-e1/predictions.jsonl",
+  "strict_execution": {
+    "count": 864,
+    "pct": 86.314
+  }
+}

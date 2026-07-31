@@ -1,0 +1,85 @@
+{
+  "format_version": 1,
+  "full": {
+    "eval_strategy": "no",
+    "logging_steps": 10,
+    "max_steps": -1,
+    "save_steps": 100,
+    "save_strategy": "no",
+    "save_total_limit": 2,
+    "train_limit": null,
+    "validation_limit": null
+  },
+  "lora": {
+    "bias": "none",
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "r": 16,
+    "target_modules": "all-linear",
+    "task_type": "CAUSAL_LM"
+  },
+  "method": "QLoRA",
+  "models": {
+    "deepseek-coder-1.3b-instruct": {
+      "gradient_accumulation_steps": 16,
+      "max_seq_length": 5120,
+      "per_device_eval_batch_size": 1,
+      "per_device_train_batch_size": 1
+    },
+    "qwen2.5-coder-1.5b-instruct": {
+      "gradient_accumulation_steps": 8,
+      "max_seq_length": 4096,
+      "per_device_eval_batch_size": 2,
+      "per_device_train_batch_size": 2
+    },
+    "qwen3-4b-instruct-2507": {
+      "gradient_accumulation_steps": 8,
+      "max_seq_length": 4096,
+      "per_device_eval_batch_size": 2,
+      "per_device_train_batch_size": 2
+    }
+  },
+  "optimization": {
+    "bf16": true,
+    "gradient_checkpointing": true,
+    "gradient_checkpointing_use_reentrant": false,
+    "learning_rate": 0.0003,
+    "lr_scheduler_type": "linear",
+    "max_grad_norm": 0.3,
+    "num_train_epochs": 1.0,
+    "optim": "paged_adamw_8bit",
+    "pad_to_multiple_of": 8,
+    "seed": 17,
+    "skip_final_loss_eval": true,
+    "skip_resume_checkpoints": true,
+    "tf32": true,
+    "warmup_ratio": 0.03,
+    "weight_decay": 0.0
+  },
+  "quantization": {
+    "bnb_4bit_compute_dtype": "bfloat16",
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_use_double_quant": true,
+    "load_in_4bit": true
+  },
+  "search_metadata": {
+    "base_config": "configs/text2sql_qlora_training.json",
+    "label": "opt-linear-w03-e1",
+    "selection_dataset": "qwen3_hparam_mschema_v1"
+  },
+  "smoke": {
+    "eval_steps": 2,
+    "eval_strategy": "steps",
+    "gradient_accumulation_steps": 2,
+    "logging_steps": 1,
+    "max_steps": 4,
+    "per_device_eval_batch_size": 1,
+    "per_device_train_batch_size": 1,
+    "resume_phase_one_steps": 2,
+    "save_steps": 2,
+    "save_strategy": "steps",
+    "save_total_limit": 2,
+    "train_limit": 64,
+    "validation_limit": 16
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "max_seq_length": 4096,
+  "train_examples": 5996,
+  "train_id_sha256": "289ea0ea83d482e5084b331a32bbe6b516d66919407db8a2c1775490db116e65",
+  "train_max_tokens": 3173,
+  "train_min_tokens": 255,
+  "train_target_tokens": 200343,
+  "truncated_examples": 0,
+  "validation_examples": 1001,
+  "validation_id_sha256": "56e128b0a80463d589007a69ee1d42726feb109b57626039a881a307987aae34",
+  "validation_max_tokens": 1476,
+  "validation_min_tokens": 291,
+  "validation_target_tokens": 32633
+}

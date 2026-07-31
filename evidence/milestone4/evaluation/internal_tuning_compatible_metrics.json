@@ -1,0 +1,45 @@
+{
+  "q3-full5996-greedy": {
+    "by_complexity": {
+      "complex": {
+        "examples": 108,
+        "macsql": 82,
+        "macsql_pct": 75.926,
+        "strict": 82,
+        "strict_pct": 75.926
+      },
+      "moderate": {
+        "examples": 321,
+        "macsql": 281,
+        "macsql_pct": 87.539,
+        "strict": 270,
+        "strict_pct": 84.112
+      },
+      "simple": {
+        "examples": 572,
+        "macsql": 528,
+        "macsql_pct": 92.308,
+        "strict": 504,
+        "strict_pct": 88.112
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 36,
+      "pct": 3.596
+    },
+    "examples": 1001,
+    "macsql_execution": {
+      "count": 891,
+      "pct": 89.011
+    },
+    "prediction_statuses": {
+      "error": 11,
+      "ok": 990
+    },
+    "source": "artifacts/zero-shot-eval/runs/20260727-092353-48716/downloaded/results/q3-full5996-greedy/predictions.jsonl",
+    "strict_execution": {
+      "count": 856,
+      "pct": 85.514
+    }
+  }
+}

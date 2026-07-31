@@ -1,0 +1,66 @@
+{
+  "adapter_dir": "/content/text2sql_eval/adapter",
+  "adapter_label": "q3-full5996-greedy",
+  "attention": "sdpa",
+  "base_slug": "qwen3-4b-instruct-2507",
+  "candidate_oracle_match_count": 856,
+  "candidate_oracle_match_pct": 85.514,
+  "candidate_selection": "greedy",
+  "canonical_exact_match_count": 518,
+  "canonical_exact_match_pct": 51.748,
+  "complexity_breakdown": {
+    "complex": {
+      "examples": 108,
+      "execution_accuracy_pct": 75.926,
+      "normalized_exact_match_pct": 24.074,
+      "syntax_valid_pct": 100.0
+    },
+    "moderate": {
+      "examples": 321,
+      "execution_accuracy_pct": 84.112,
+      "normalized_exact_match_pct": 35.514,
+      "syntax_valid_pct": 100.0
+    },
+    "simple": {
+      "examples": 572,
+      "execution_accuracy_pct": 88.112,
+      "normalized_exact_match_pct": 65.385,
+      "syntax_valid_pct": 100.0
+    }
+  },
+  "cuda_peak": {
+    "allocated_gib": 7.623,
+    "max_allocated_gib": 10.698,
+    "max_reserved_gib": 21.682,
+    "reserved_gib": 11.898
+  },
+  "dtype": "torch.bfloat16",
+  "evaluation_seconds": 1054.167,
+  "examples": 1001,
+  "execution_match_count": 856,
+  "execution_match_pct": 85.514,
+  "final_batch_size": 8,
+  "format_compliant_count": 1001,
+  "format_compliant_pct": 100.0,
+  "input_truncated_count": 0,
+  "input_truncated_pct": 0.0,
+  "load_seconds": 51.838,
+  "mean_generation_ms_per_example": 1047.422,
+  "normalized_exact_match_count": 514,
+  "normalized_exact_match_pct": 51.349,
+  "num_candidates": 1,
+  "prediction_execution_status": {
+    "error": 11,
+    "ok": 990
+  },
+  "raw_exact_match_count": 198,
+  "raw_exact_match_pct": 19.78,
+  "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "slug": "q3-full5996-greedy",
+  "syntax_valid_count": 1001,
+  "syntax_valid_pct": 100.0,
+  "temperature": null,
+  "tier": "strong",
+  "top_p": null
+}

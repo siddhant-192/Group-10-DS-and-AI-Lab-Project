@@ -1,0 +1,45 @@
+{
+  "t05full": {
+    "by_complexity": {
+      "complex": {
+        "examples": 108,
+        "macsql": 84,
+        "macsql_pct": 77.778,
+        "strict": 83,
+        "strict_pct": 76.852
+      },
+      "moderate": {
+        "examples": 321,
+        "macsql": 283,
+        "macsql_pct": 88.162,
+        "strict": 277,
+        "strict_pct": 86.293
+      },
+      "simple": {
+        "examples": 572,
+        "macsql": 534,
+        "macsql_pct": 93.357,
+        "strict": 516,
+        "strict_pct": 90.21
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 26,
+      "pct": 2.597
+    },
+    "examples": 1001,
+    "macsql_execution": {
+      "count": 901,
+      "pct": 90.01
+    },
+    "prediction_statuses": {
+      "error": 4,
+      "ok": 997
+    },
+    "source": "artifacts/zero-shot-eval/runs/20260726-223234-33509/downloaded/results/q3hp-decode-t05-n4-full/predictions.jsonl",
+    "strict_execution": {
+      "count": 876,
+      "pct": 87.512
+    }
+  }
+}

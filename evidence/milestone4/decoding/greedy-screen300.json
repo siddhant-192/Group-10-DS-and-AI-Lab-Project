@@ -1,0 +1,45 @@
+{
+  "greedy": {
+    "by_complexity": {
+      "complex": {
+        "examples": 32,
+        "macsql": 26,
+        "macsql_pct": 81.25,
+        "strict": 26,
+        "strict_pct": 81.25
+      },
+      "moderate": {
+        "examples": 96,
+        "macsql": 81,
+        "macsql_pct": 84.375,
+        "strict": 80,
+        "strict_pct": 83.333
+      },
+      "simple": {
+        "examples": 172,
+        "macsql": 160,
+        "macsql_pct": 93.023,
+        "strict": 152,
+        "strict_pct": 88.372
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 9,
+      "pct": 3.0
+    },
+    "examples": 300,
+    "macsql_execution": {
+      "count": 267,
+      "pct": 89.0
+    },
+    "prediction_statuses": {
+      "error": 5,
+      "ok": 295
+    },
+    "source": "artifacts/qlora-hparam/decoding/greedy-screen300/predictions.jsonl",
+    "strict_execution": {
+      "count": 258,
+      "pct": 86.0
+    }
+  }
+}

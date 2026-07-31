@@ -424,11 +424,13 @@ def main() -> int:
         effective_max_steps = int(
             args.max_steps if args.max_steps is not None else training.get("max_steps", -1)
         )
+        skip_final_loss_eval = bool(training.get("skip_final_loss_eval", False))
+        skip_resume_checkpoints = bool(training.get("skip_resume_checkpoints", False))
         training_arguments = TrainingArguments(
             output_dir=str(output_dir),
             overwrite_output_dir=False,
             do_train=True,
-            do_eval=True,
+            do_eval=not skip_final_loss_eval,
             eval_strategy=str(training["eval_strategy"]),
             save_strategy=str(training["save_strategy"]),
             per_device_train_batch_size=int(training["per_device_train_batch_size"]),
@@ -554,20 +556,23 @@ def main() -> int:
         phase_started = time.monotonic()
         train_result = trainer.train(resume_from_checkpoint=str(checkpoint) if checkpoint else None)
         train_metrics = dict(train_result.metrics)
-        # Step-based saving does not guarantee that the last optimizer step is a
-        # save boundary. With the pinned Transformers API, explicitly materialize
-        # a complete final checkpoint so downloaded state always matches the
-        # final adapter and is genuinely resumable.
-        final_checkpoint = output_dir / f"checkpoint-{trainer.state.global_step}"
-        required_final_state = ("optimizer.pt", "scheduler.pt", "rng_state.pth", "trainer_state.json")
-        if not all((final_checkpoint / name).exists() for name in required_final_state):
-            trainer._save_checkpoint(trainer.model, trial=None)
-        export_resume_checkpoint(output_dir, final_checkpoint, status_path, args.phase_label)
+        # Full/finalist runs retain genuinely resumable optimizer state. Compact
+        # screening runs intentionally save only the adapter and metrics.
+        if not skip_resume_checkpoints:
+            final_checkpoint = output_dir / f"checkpoint-{trainer.state.global_step}"
+            required_final_state = ("optimizer.pt", "scheduler.pt", "rng_state.pth", "trainer_state.json")
+            if not all((final_checkpoint / name).exists() for name in required_final_state):
+                trainer._save_checkpoint(trainer.model, trial=None)
+            export_resume_checkpoint(output_dir, final_checkpoint, status_path, args.phase_label)
         trainer.save_metrics("train", train_metrics)
         trainer.save_state()
-        update_status(status_path, phase="evaluating_loss", step=trainer.state.global_step, cuda=cuda_memory())
-        eval_metrics = dict(trainer.evaluate())
-        trainer.save_metrics("eval", eval_metrics)
+        if skip_final_loss_eval:
+            eval_metrics = {"eval_skipped_for_generation_hpo": True}
+            update_status(status_path, phase="loss_eval_skipped", step=trainer.state.global_step, cuda=cuda_memory())
+        else:
+            update_status(status_path, phase="evaluating_loss", step=trainer.state.global_step, cuda=cuda_memory())
+            eval_metrics = dict(trainer.evaluate())
+            trainer.save_metrics("eval", eval_metrics)
         final_adapter = output_dir / "final_adapter"
         trainer.save_model(str(final_adapter))
         tokenizer.save_pretrained(final_adapter)
@@ -628,6 +633,8 @@ def main() -> int:
             ),
             "phase_count": len(all_phases),
             "resume_verified": any(phase.get("resumed_from_checkpoint") for phase in all_phases),
+            "skip_final_loss_eval": skip_final_loss_eval,
+            "skip_resume_checkpoints": skip_resume_checkpoints,
             "overall_cuda_peak": overall_cuda_peak,
             "last_phase": phase_record,
         }

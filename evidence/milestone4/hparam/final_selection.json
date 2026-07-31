@@ -1,0 +1,120 @@
+{
+  "format_version": 2,
+  "selected_at_utc": "2026-07-27T17:15:08Z",
+  "selection_policy": {
+    "primary_metric": "strict_execution_accuracy",
+    "selection_split": "database-disjoint internal tuning set",
+    "selection_examples": 1001,
+    "official_spider_validation_used_for_selection": false
+  },
+  "model": {
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "logical_parameters": 4022468096,
+    "base_weights_local": false,
+    "base_weight_policy": "download pinned public weights directly into ephemeral Colab storage"
+  },
+  "training": {
+    "method": "QLoRA",
+    "config": "configs/hparam/qwen3/selected-full5996.json",
+    "screening_adapter": "artifacts/qlora-hparam/runs/20260726-120811-lr3e4-25878/downloaded/output/final_adapter",
+    "production_adapter": "artifacts/qlora-training/runs/20260727-083554-qwen3-4b-instruct-2507-18108/downloaded/output/final_adapter",
+    "full_training_examples": 5996,
+    "full_training_databases": 120,
+    "learning_rate": 0.0003,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": "all-linear",
+    "optimizer": "paged_adamw_8bit",
+    "scheduler": "cosine",
+    "warmup_ratio": 0.03,
+    "epochs": 1.0,
+    "micro_batch_size": 2,
+    "gradient_accumulation_steps": 8,
+    "effective_batch_size": 16,
+    "max_sequence_length": 4096,
+    "seed": 17,
+    "quantization": {
+      "storage": "NF4 4-bit with double quantization",
+      "compute_dtype": "bfloat16"
+    },
+    "trainable_parameters": 33030144,
+    "trainable_parameter_pct": 0.821141,
+    "adapter_bytes": 132187888,
+    "adapter_sha256": "63a51ff491a163c1433dd4ac56d936d969337de67279f852ea1ef966ac335e5c",
+    "final_eval_loss": 0.22249360382556915,
+    "final_global_step": 375
+  },
+  "greedy_tuning_metrics": {
+    "strict_execution_pct": 86.513,
+    "compatible_execution_pct": 89.111,
+    "syntax_valid_pct": 100.0,
+    "normalized_exact_match_pct": 49.55,
+    "mean_generation_ms_per_example": 990.308
+  },
+  "full_data_internal_confirmation": {
+    "examples": 1001,
+    "databases": 20,
+    "strict_execution_pct": 85.514,
+    "compatible_execution_pct": 89.011,
+    "syntax_valid_pct": 100.0,
+    "normalized_exact_match_pct": 51.349,
+    "simple_compatible_execution_pct": 92.308,
+    "moderate_compatible_execution_pct": 87.539,
+    "complex_compatible_execution_pct": 75.926,
+    "predictions": "artifacts/zero-shot-eval/runs/20260727-092353-48716/downloaded/results/q3-full5996-greedy/predictions.jsonl",
+    "compatible_metrics": "artifacts/zero-shot-eval/runs/20260727-092353-48716/compatible-scoring/metrics.json"
+  },
+  "official_spider_final_evaluation": {
+    "used_for_this_hpo_selection": false,
+    "used_for_gradient_training": false,
+    "globally_untouched": false,
+    "prior_use": "Milestone 3 architecture, prompt, specialist, and ensemble development",
+    "decoding": "greedy",
+    "examples": 1034,
+    "databases": 20,
+    "strict_execution_pct": 77.853,
+    "compatible_execution_pct": 81.238,
+    "syntax_valid_pct": 99.903,
+    "normalized_exact_match_pct": 50.387,
+    "simple_compatible_execution_pct": 88.702,
+    "moderate_compatible_execution_pct": 72.917,
+    "complex_compatible_execution_pct": 65.714,
+    "predictions": "artifacts/zero-shot-eval/runs/20260727-095012-65804/downloaded/results/q3-full5996-official-greedy/predictions.jsonl",
+    "compatible_metrics": "artifacts/zero-shot-eval/runs/20260727-095012-65804/compatible-scoring/metrics.json"
+  },
+  "seed_stability": {
+    "seeds": [17, 29, 41],
+    "strict_execution_mean_pct": 86.080333,
+    "strict_execution_population_std_pct_points": 0.418649,
+    "strict_execution_range_pct_points": 0.999,
+    "compatible_execution_mean_pct": 89.144,
+    "compatible_execution_population_std_pct_points": 0.367756
+  },
+  "accuracy_decoding": {
+    "strategy": "sample_and_execute_consensus",
+    "num_candidates": 4,
+    "temperature": 0.5,
+    "top_p": 0.95,
+    "candidate_selection": "execution-consensus",
+    "strict_execution_pct": 87.512,
+    "compatible_execution_pct": 90.01,
+    "candidate_oracle_pct": 90.11,
+    "syntax_valid_pct": 100.0,
+    "normalized_exact_match_pct": 47.952,
+    "mean_generation_ms_per_example": 2495.252,
+    "peak_allocated_vram_gib": 13.776,
+    "predictions": "artifacts/zero-shot-eval/runs/20260726-223234-33509/downloaded/results/q3hp-decode-t05-n4-full/predictions.jsonl",
+    "metrics": "artifacts/zero-shot-eval/runs/20260726-223234-33509/downloaded/results/q3hp-decode-t05-n4-full/metrics.json",
+    "compatible_metrics": "artifacts/qlora-hparam/decoding/t05-full/scored/metrics.json"
+  },
+  "deployment_recommendation": {
+    "default": "greedy",
+    "optional_accuracy_mode": "four candidates, temperature 0.5, top-p 0.95, execution consensus",
+    "strict_gain_pct_points": 0.999,
+    "compatible_gain_pct_points": 0.899,
+    "observed_latency_multiplier": 2.519684
+  },
+  "next_step": "Freeze this adapter and evaluation record; perform future error analysis without retuning against official Spider validation."
+}

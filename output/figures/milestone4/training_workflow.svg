@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 28px Arial, sans-serif; fill: #172554; }
+      .label { font: 600 18px Arial, sans-serif; fill: #0f172a; }
+      .small { font: 400 15px Arial, sans-serif; fill: #334155; }
+      .box { stroke-width: 2.1; rx: 13; }
+      .arrow { stroke: #334155; stroke-width: 2.3; fill: none; marker-end: url(#arrow); }
+      .retry { stroke: #dc2626; stroke-width: 2.2; fill: none; marker-end: url(#arrow); stroke-dasharray: 8 6; }
+    </style>
+  </defs>
+  <rect width="1200" height="520" fill="#ffffff"/>
+  <text x="600" y="38" text-anchor="middle" class="title">End-to-End Training and Evaluation Workflow</text>
+
+  <rect x="55" y="80" width="235" height="88" class="box" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="172" y="113" text-anchor="middle" class="label">Checksummed JSONL</text>
+  <text x="172" y="140" text-anchor="middle" class="small">Train + tuning partitions</text>
+
+  <rect x="385" y="80" width="205" height="88" class="box" fill="#f8fafc" stroke="#64748b"/>
+  <text x="487" y="113" text-anchor="middle" class="label">Preflight</text>
+  <text x="487" y="140" text-anchor="middle" class="small">Tokens, IDs, revisions</text>
+
+  <rect x="685" y="80" width="205" height="88" class="box" fill="#f5f3ff" stroke="#7c3aed"/>
+  <text x="787" y="113" text-anchor="middle" class="label">Create L4</text>
+  <text x="787" y="140" text-anchor="middle" class="small">Install pinned packages</text>
+
+  <rect x="985" y="80" width="165" height="88" class="box" fill="#eef2ff" stroke="#4f46e5"/>
+  <text x="1067" y="113" text-anchor="middle" class="label">Load Model</text>
+  <text x="1067" y="140" text-anchor="middle" class="small">NF4 + LoRA</text>
+
+  <path d="M290 124 H385" class="arrow"/>
+  <path d="M590 124 H685" class="arrow"/>
+  <path d="M890 124 H985" class="arrow"/>
+
+  <rect x="875" y="232" width="275" height="92" class="box" fill="#fff7ed" stroke="#ea580c"/>
+  <text x="1012" y="267" text-anchor="middle" class="label">Supervised QLoRA Training</text>
+  <text x="1012" y="295" text-anchor="middle" class="small">Loss, LR, gradients, VRAM</text>
+
+  <rect x="490" y="232" width="260" height="92" class="box" fill="#ecfeff" stroke="#0891b2"/>
+  <text x="620" y="267" text-anchor="middle" class="label">Verified Checkpoint</text>
+  <text x="620" y="295" text-anchor="middle" class="small">Weights + optimizer + RNG</text>
+
+  <rect x="55" y="232" width="300" height="92" class="box" fill="#ecfdf5" stroke="#059669"/>
+  <text x="205" y="267" text-anchor="middle" class="label">Final Validation Loss</text>
+  <text x="205" y="295" text-anchor="middle" class="small">Only after completed epoch</text>
+
+  <path d="M1067 168 V232" class="arrow"/>
+  <path d="M875 278 H750" class="arrow"/>
+  <path d="M490 278 H355" class="arrow"/>
+  <path d="M620 232 V200 H787 V168" class="retry"/>
+  <text x="695" y="194" text-anchor="middle" class="small" fill="#dc2626">Runtime reset → resume</text>
+
+  <rect x="55" y="400" width="250" height="82" class="box" fill="#f8fafc" stroke="#64748b"/>
+  <text x="180" y="432" text-anchor="middle" class="label">SQL Generation</text>
+  <text x="180" y="458" text-anchor="middle" class="small">Fixed tuning set</text>
+
+  <rect x="380" y="400" width="270" height="82" class="box" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="515" y="432" text-anchor="middle" class="label">Read-only Execution</text>
+  <text x="515" y="458" text-anchor="middle" class="small">Strict + compatible scoring</text>
+
+  <rect x="725" y="400" width="210" height="82" class="box" fill="#ecfdf5" stroke="#059669"/>
+  <text x="830" y="432" text-anchor="middle" class="label">Collect Artifacts</text>
+  <text x="830" y="458" text-anchor="middle" class="small">Predictions + metrics</text>
+
+  <rect x="1010" y="400" width="140" height="82" class="box" fill="#fef2f2" stroke="#dc2626"/>
+  <text x="1080" y="432" text-anchor="middle" class="label">Stop L4</text>
+  <text x="1080" y="458" text-anchor="middle" class="small">No idle cost</text>
+
+  <path d="M205 324 V400" class="arrow"/>
+  <path d="M305 441 H380" class="arrow"/>
+  <path d="M650 441 H725" class="arrow"/>
+  <path d="M935 441 H1010" class="arrow"/>
+</svg>

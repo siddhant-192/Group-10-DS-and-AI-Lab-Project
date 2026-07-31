@@ -1,0 +1,123 @@
+{
+  "attention": "sdpa",
+  "dataset_variant": "base",
+  "explicit_assistant_only_labels": true,
+  "gpu": "NVIDIA L4",
+  "gpu_total_gib": 22.034,
+  "last_phase": {
+    "adapter_bytes": 148080840,
+    "cuda_peak": {
+      "allocated_gib": 3.412,
+      "max_allocated_gib": 16.98,
+      "max_reserved_gib": 20.48,
+      "reserved_gib": 20.48
+    },
+    "elapsed_seconds": 2330.324,
+    "eval_metrics": {
+      "epoch": 1.0,
+      "eval_loss": 0.22249360382556915,
+      "eval_runtime": 272.338,
+      "eval_samples_per_second": 3.676,
+      "eval_steps_per_second": 1.84
+    },
+    "finished_at_utc": "2026-07-27T16:21:52.979826+00:00",
+    "global_step": 375,
+    "max_steps": 375,
+    "phase_label": "main",
+    "resumed_from_checkpoint": "/content/text2sql_sft/output/checkpoint-300",
+    "started_at_utc": "2026-07-27T15:39:46.848718+00:00",
+    "train_metrics": {
+      "epoch": 1.0,
+      "total_flos": 1.2053619226017792e+17,
+      "train_loss": 0.01946887747446696,
+      "train_runtime": 2047.3876,
+      "train_samples_per_second": 2.929,
+      "train_steps_per_second": 0.183
+    }
+  },
+  "logical_base_parameters": 4022468096,
+  "lora": {
+    "bias": "none",
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "r": 16,
+    "target_modules": "all-linear",
+    "task_type": "CAUSAL_LM"
+  },
+  "method": "QLoRA",
+  "model": {
+    "base_parameter_count": 4022468096,
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "slug": "qwen3-4b-instruct-2507",
+    "tier": "strong",
+    "trust_remote_code": false
+  },
+  "overall_cuda_peak": {
+    "max_allocated_gib": 16.98,
+    "max_reserved_gib": 20.48
+  },
+  "packages": {
+    "accelerate": "1.14.0",
+    "bitsandbytes": "0.49.2",
+    "datasets": "5.0.0",
+    "peft": "0.19.1",
+    "tensorboard": "2.20.0",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6"
+  },
+  "phase_count": 1,
+  "quantization": {
+    "bnb_4bit_compute_dtype": "bfloat16",
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_use_double_quant": true,
+    "load_in_4bit": true
+  },
+  "quantized_storage_parameter_numel": 2238840320,
+  "resume_verified": true,
+  "run_name": "qwen3-4b-instruct-2507-base-full-20260727-083554",
+  "skip_final_loss_eval": false,
+  "skip_resume_checkpoints": false,
+  "train_data": {
+    "path": "/content/text2sql_sft/data/train.jsonl",
+    "selected_examples": 5996,
+    "selected_id_sha256": "289ea0ea83d482e5084b331a32bbe6b516d66919407db8a2c1775490db116e65",
+    "sha256": "b597a64b91c8161ebe07bf4686a74807da1c27c82fb752b4ae2d5117a6579f65"
+  },
+  "trainable_parameter_pct_of_logical_base": 0.821141,
+  "trainable_parameters": 33030144,
+  "training": {
+    "bf16": true,
+    "eval_strategy": "epoch",
+    "gradient_accumulation_steps": 8,
+    "gradient_checkpointing": true,
+    "gradient_checkpointing_use_reentrant": false,
+    "learning_rate": 0.0003,
+    "logging_steps": 10,
+    "lr_scheduler_type": "cosine",
+    "max_grad_norm": 0.3,
+    "max_seq_length": 4096,
+    "max_steps": -1,
+    "num_train_epochs": 1.0,
+    "optim": "paged_adamw_8bit",
+    "pad_to_multiple_of": 8,
+    "per_device_eval_batch_size": 2,
+    "per_device_train_batch_size": 2,
+    "save_steps": 50,
+    "save_strategy": "steps",
+    "save_total_limit": 2,
+    "seed": 17,
+    "tf32": true,
+    "train_limit": null,
+    "validation_limit": null,
+    "warmup_ratio": 0.03,
+    "weight_decay": 0.0
+  },
+  "truncated_examples": 0,
+  "validation_data": {
+    "path": "/content/text2sql_sft/data/validation.jsonl",
+    "selected_examples": 1001,
+    "selected_id_sha256": "56e128b0a80463d589007a69ee1d42726feb109b57626039a881a307987aae34",
+    "sha256": "c4ddf2d8ab131200af869c6eeb9a817e4095be640a92964f44b3f532a921f986"
+  }
+}

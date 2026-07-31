@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 COLAB_BIN="$PROJECT_ROOT/.venv-colab-cli/bin/colab"
 BUILD_PYTHON="$PROJECT_ROOT/.venv-model-eval/bin/python"
 MODEL_MANIFEST="$PROJECT_ROOT/models/text2sql-eval/download_manifest.json"
@@ -36,13 +36,14 @@ ADAPTER_LABEL=""
 RESUME_PREDICTIONS=""
 RUN_DIR=""
 BUNDLE_PART_DIR=""
+COMPACT_LOCAL=0
 
 usage() {
   cat <<'EOF'
 Run the three pinned base models sequentially on Spider validation using one L4.
 
 Usage:
-  bash scripts/run_colab_zero_shot_eval.sh [options]
+  bash src/scripts/run_colab_zero_shot_eval.sh [options]
 
 Options:
   --session NAME       Override the generated Colab session name.
@@ -65,6 +66,7 @@ Options:
   --resume-predictions PATH
                        Seed one model's saved predictions and run only missing IDs.
   --keep-session       Do not stop the L4 automatically after results download.
+  --compact-local      Delete generated transfer bundles after verified upload/download.
   --yes                Skip the compute-allocation confirmation.
   -h, --help           Show this help.
 
@@ -76,10 +78,10 @@ SQLite databases, status, logs, and results still use Colab CLI upload/download.
 
 Examples:
   # Recommended 12-example end-to-end pilot.
-  bash scripts/run_colab_zero_shot_eval.sh --limit 12
+  bash src/scripts/run_colab_zero_shot_eval.sh --limit 12
 
   # Full 1,034-example, three-model evaluation.
-  bash scripts/run_colab_zero_shot_eval.sh
+  bash src/scripts/run_colab_zero_shot_eval.sh
 EOF
 }
 
@@ -288,6 +290,10 @@ while (( $# > 0 )); do
       KEEP_SESSION=1
       shift
       ;;
+    --compact-local)
+      COMPACT_LOCAL=1
+      shift
+      ;;
     --yes)
       ASSUME_YES=1
       shift
@@ -310,9 +316,9 @@ if [[ "$ENGINE" == "vllm" ]]; then
 fi
 
 [[ "$SESSION_NAME" =~ ^[A-Za-z0-9][A-Za-z0-9_-]*$ ]] || die "Invalid session name: $SESSION_NAME"
-[[ -x "$COLAB_BIN" ]] || die "Missing Colab CLI: run scripts/setup_colab_cli.sh first."
-[[ -x "$BUILD_PYTHON" ]] || die "Missing model-eval environment: run scripts/download_eval_models.sh first."
-[[ -f "$MODEL_MANIFEST" ]] || die "Missing pinned weights/manifest: run scripts/download_eval_models.sh first."
+[[ -x "$COLAB_BIN" ]] || die "Missing Colab CLI: run src/scripts/setup_colab_cli.sh first."
+[[ -x "$BUILD_PYTHON" ]] || die "Missing model-eval environment: run src/scripts/download_eval_models.sh first."
+[[ -f "$MODEL_MANIFEST" ]] || die "Missing pinned weights/manifest: run src/scripts/download_eval_models.sh first."
 [[ -f "$MODEL_CONFIG" ]] || die "Missing model configuration: $MODEL_CONFIG"
 [[ -f "$DATA_PATH" ]] || die "Missing evaluation data: $DATA_PATH"
 [[ -f "$REMOTE_REQUIREMENTS" && -f "$PREPARE_SCRIPT" && -f "$LAUNCH_SCRIPT" && -f "$PACK_SCRIPT" && -f "$STATUS_VALIDATOR" && -f "$PREDICTION_VALIDATOR" ]] || die "Evaluation scripts are incomplete."
@@ -372,7 +378,7 @@ BUNDLE_PART_DIR="$RUN_DIR/bundle-upload-parts"
 mkdir -p "$BUNDLE_PART_DIR"
 split -b 32m -d -a 3 "$RUN_DIR/eval_bundle.tar.gz" "$BUNDLE_PART_DIR/part-"
 info "Run artifacts: $RUN_DIR"
-info "Monitor from another terminal: bash scripts/monitor_colab_eval.sh '$RUN_DIR'"
+info "Monitor from another terminal: bash src/scripts/monitor_colab_eval.sh '$RUN_DIR'"
 confirm
 
 info "Creating Colab session '$SESSION_NAME' with an L4."
@@ -394,6 +400,11 @@ for part in "$BUNDLE_PART_DIR"/part-*; do
   upload_with_retry "$part" "$remote_part" || die "Could not upload evaluation bundle part $part_index."
   part_index=$((part_index + 1))
 done
+if (( COMPACT_LOCAL )); then
+  rm -f "$RUN_DIR/eval_bundle.tar.gz"
+  rm -rf "$BUNDLE_PART_DIR"
+  BUNDLE_PART_DIR=""
+fi
 
 info "Verifying the L4 and uploaded bundle."
 colab_cmd exec -s "$SESSION_NAME" -f "$PREPARE_SCRIPT" --timeout 600 2>&1 | tee -a "$RUN_DIR/orchestrator.log"
@@ -447,6 +458,9 @@ colab_cmd download -s "$SESSION_NAME" "/content/text2sql_eval/status.json" "$RUN
 "$BUILD_PYTHON" "$STATUS_VALIDATOR" "$RUN_DIR/final-status.json"
 
 collect_results
+if (( COMPACT_LOCAL )); then
+  rm -f "$RUN_DIR/results-transfer.tar.gz"
+fi
 colab_cmd log -s "$SESSION_NAME" -o "$RUN_DIR/session-log.ipynb"
 stop_session
 

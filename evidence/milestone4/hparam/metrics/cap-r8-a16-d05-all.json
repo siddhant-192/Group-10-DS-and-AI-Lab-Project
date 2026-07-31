@@ -1,0 +1,43 @@
+{
+  "by_complexity": {
+    "complex": {
+      "examples": 108,
+      "macsql": 82,
+      "macsql_pct": 75.926,
+      "strict": 81,
+      "strict_pct": 75.0
+    },
+    "moderate": {
+      "examples": 321,
+      "macsql": 275,
+      "macsql_pct": 85.67,
+      "strict": 269,
+      "strict_pct": 83.801
+    },
+    "simple": {
+      "examples": 572,
+      "macsql": 532,
+      "macsql_pct": 93.007,
+      "strict": 512,
+      "strict_pct": 89.51
+    }
+  },
+  "column_permutation_or_distinct_promotions": {
+    "count": 27,
+    "pct": 2.697
+  },
+  "examples": 1001,
+  "macsql_execution": {
+    "count": 889,
+    "pct": 88.811
+  },
+  "prediction_statuses": {
+    "error": 17,
+    "ok": 984
+  },
+  "source": "artifacts/zero-shot-eval/runs/20260726-164910-10367/downloaded/results/q3hp-cap-r8-a16-d05-all/predictions.jsonl",
+  "strict_execution": {
+    "count": 862,
+    "pct": 86.114
+  }
+}
