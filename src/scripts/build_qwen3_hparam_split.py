@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Build a deterministic database-disjoint QLoRA tuning split from Spider train."""
 
+# CODE REVIEW MAP
+# HPO does not tune on official Spider validation. This script takes Spider's
+# training portion, groups examples by db_id, and assigns whole databases to an
+# internal training or tuning side. It searches deterministic candidate splits
+# for one whose row count and complexity distribution resemble the source.
+# The final overlap assertion proves that no tuning schema was seen in training.
+
 from __future__ import annotations
 
 import argparse
@@ -68,6 +75,7 @@ def main() -> int:
     source = args.source.resolve()
     output = args.output.resolve()
     rows = read_jsonl(source / "train_base.jsonl")
+    # Group first, then split groups: random row splitting would leak schemas.
     by_database: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         by_database[str(row["db_id"])].append(row)
@@ -95,6 +103,8 @@ def main() -> int:
 
     rng = random.Random(args.seed)
     best: tuple[float, tuple[str, ...]] | None = None
+    # Search only affects which database-disjoint split best matches the desired
+    # size/complexity distribution; it never mixes examples across databases.
     for _ in range(args.search_trials):
         selected = tuple(sorted(rng.sample(database_ids, args.validation_databases)))
         score = objective(selected)

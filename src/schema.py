@@ -1,5 +1,12 @@
 """Deterministic SQLite schema introspection and prompt serialization."""
 
+# CODE REVIEW MAP
+# 1. inspect_database() reads tables, columns, primary keys, and foreign keys
+#    directly from SQLite PRAGMA metadata; no LLM creates or guesses the schema.
+# 2. DatabaseSchema.to_ddl() serializes that metadata into prompt-ready DDL.
+# 3. Every database is opened with mode=ro&immutable=1, so introspection cannot
+#    modify the source Spider database.
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass

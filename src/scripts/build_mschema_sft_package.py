@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Render an existing Spider SFT package with the deployment M-Schema prompt."""
 
+# CODE REVIEW MAP
+# This is deterministic prompt conversion, not another model call. For every SFT
+# row it renders database metadata as M-Schema (tables, columns, keys, and bounded
+# representative values), then preserves the original question and target SQL.
+# If the richer serialization exceeds its cap, the renderer falls back to DDL.
+
 from __future__ import annotations
 
 import argparse

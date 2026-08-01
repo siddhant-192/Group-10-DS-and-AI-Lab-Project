@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 """Sequential, resumable evaluation for configured text-to-SQL models."""
 
+# CODE REVIEW MAP
+# For each model/adapter, this script renders the same schema-question prompt,
+# generates candidate SQL, extracts/canonicalizes it with SQLGlot, executes it in
+# guarded read-only SQLite, and compares results with the gold query.
+# Strict execution requires the normal result comparison; compatible execution
+# additionally tolerates evaluator-safe representational differences. Multi-
+# candidate modes select by execution consensus, never by access to the gold SQL.
+# Models run sequentially and are released between runs to control GPU memory.
+
 from __future__ import annotations
 
 import argparse
@@ -237,6 +246,8 @@ def normalize_sql(sql: str) -> str:
 
 
 def extract_sql(raw: str) -> str:
+    # Remove chat prose/Markdown wrappers so only a single SQL statement reaches
+    # parsing and guarded execution.
     text = raw.strip()
     if "</think>" in text:
         text = text.rsplit("</think>", 1)[1].strip()
@@ -301,6 +312,8 @@ def json_cell(value: Any) -> Any:
 
 
 def execute_query(path: Path, sql: str, timeout_seconds: float, order_sensitive: bool) -> QueryResult:
+    # Generated SQL is never executed on a writable connection. The context
+    # manager installs the SQLite authorizer and timeout progress handler.
     started = time.monotonic()
     if not READ_ONLY_PREFIX.match(sql):
         return QueryResult("unsafe", None, None, 0.0, "query does not begin with SELECT or WITH")

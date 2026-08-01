@@ -1,5 +1,12 @@
 """Reproducible preparation pipeline for Spider 1.0."""
 
+# CODE REVIEW MAP
+# prepare_spider() is the end-to-end data entry point:
+# annotations -> discover real SQLite DBs -> deterministic schema extraction ->
+# read-only gold-SQL validation -> leakage check -> JSONL, manifests, and EDA.
+# Entire databases remain isolated between official train and validation splits;
+# examples that fail execution validation are recorded and excluded.
+
 from __future__ import annotations
 
 from collections import Counter, defaultdict
@@ -605,12 +612,14 @@ def prepare_spider(
 
     train_db_ids = {row["db_id"] for row in split_rows["train"]}
     validation_db_ids = {row["db_id"] for row in split_rows["validation"]}
+    # Leakage is checked at database/schema level, not merely by question text.
     database_overlap = sorted(train_db_ids & validation_db_ids)
     if database_overlap:
         raise RuntimeError(
             "Official split database leakage detected: " + ", ".join(database_overlap)
         )
 
+    # Gold SQL must be safely executable before it is allowed into SFT data.
     query_validations = validate_queries(
         split_rows,
         databases,

@@ -1,5 +1,13 @@
 """Safe, execution-aware validation for gold SQLite queries."""
 
+# CODE REVIEW MAP
+# validate_readonly_query() is the execution safety gate: it accepts only SQL
+# beginning with SELECT/WITH, opens SQLite read-only, denies write-capable SQLite
+# actions through an authorizer, and interrupts queries that exceed the timeout.
+# query_features() is separate: it assigns a transparent simple/moderate/complex
+# proxy from joins, subqueries, set operations, grouping, ordering, and aggregates.
+# This module checks safety/executability, not whether SQL answers the question.
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
@@ -83,6 +91,7 @@ def validate_readonly_query(
 
     started = time.monotonic()
     sql = query.strip()
+    # Cheap first gate; the SQLite authorizer below is the stronger second gate.
     if not READ_ONLY_PREFIX.match(sql):
         return QueryValidation(
             status="unsafe",
@@ -106,6 +115,8 @@ def validate_readonly_query(
     def progress() -> int:
         return 1 if time.monotonic() > deadline else 0
 
+    # Defense in depth: even a cleverly written query cannot perform a denied
+    # operation, and the progress callback prevents an unbounded execution.
     active_connection.set_authorizer(authorizer)
     active_connection.set_progress_handler(progress, 10_000)
     try:

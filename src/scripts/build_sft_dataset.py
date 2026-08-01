@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """Build a validated, feature-aware Spider chat-SFT training package."""
 
+# CODE REVIEW MAP
+# This script converts validated Spider rows into chat-supervised fine-tuning
+# records: system instruction + schema/question user prompt + SQL-only assistant
+# target. It produces the natural train_base distribution and an optional
+# feature-weighted curriculum that oversamples difficult SQL structures.
+# validate_split_isolation() ensures train and validation database IDs do not
+# overlap; manifests/checksums make the generated package reproducible.
+
 from __future__ import annotations
 
 import argparse

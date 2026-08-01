@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 """Train one pinned text-to-SQL model with explicit-mask QLoRA on one GPU."""
 
+# CODE REVIEW MAP
+# encode_conversation(): applies the chat template and masks prompt labels with
+# -100, so cross-entropy is learned only from the assistant's gold SQL tokens.
+# main(): loads the pinned base in 4-bit NF4, prepares k-bit training, attaches
+# PEFT LoRA adapters, builds TrainingArguments/Trainer, and calls trainer.train().
+# The quantized backbone participates in forward/backward computation but stays
+# frozen; only adapter parameters are updated and saved. Status, TensorBoard
+# metrics, hashes, and resumable checkpoints provide the experiment evidence.
+
 from __future__ import annotations
 
 import argparse
@@ -360,6 +369,9 @@ def main() -> int:
 
         update_status(status_path, phase="loading_quantized_model", cuda=cuda_memory())
         quantization = launch["quantization"]
+        # Q in QLoRA: store the frozen backbone in 4-bit NF4 while using BF16
+        # arithmetic for computation. This reduces VRAM without making 4-bit
+        # backbone weights trainable.
         quantization_config = BitsAndBytesConfig(
             load_in_4bit=bool(quantization["load_in_4bit"]),
             bnb_4bit_quant_type=str(quantization["bnb_4bit_quant_type"]),
@@ -396,6 +408,9 @@ def main() -> int:
             },
         )
         lora = launch["lora"]
+        # LoRA defines the small trainable low-rank matrices inserted into the
+        # configured target linear modules. r=capacity; alpha=scaling; dropout
+        # regularizes the adapter branch.
         lora_config = LoraConfig(
             r=int(lora["r"]),
             lora_alpha=int(lora["lora_alpha"]),
@@ -527,6 +542,8 @@ def main() -> int:
                     args.phase_label,
                 )
 
+        # Hugging Face Trainer owns batching, assistant-only cross-entropy,
+        # gradient accumulation, optimizer/scheduler steps, and checkpointing.
         trainer = Trainer(
             model=model,
             args=training_arguments,
@@ -554,6 +571,7 @@ def main() -> int:
             cuda=cuda_memory(),
         )
         phase_started = time.monotonic()
+        # This is the point where the configured QLoRA optimization actually runs.
         train_result = trainer.train(resume_from_checkpoint=str(checkpoint) if checkpoint else None)
         train_metrics = dict(train_result.metrics)
         # Full/finalist runs retain genuinely resumable optimizer state. Compact
