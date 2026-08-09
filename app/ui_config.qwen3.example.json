@@ -1,0 +1,12 @@
+{
+  "backend": "qwen3-4b+adapter",
+  "model_slug": "qwen3-4b-instruct-2507",
+  "adapter_dir": "release/final_adapter",
+  "demo_databases_dir": "demo_databases",
+  "models_config_path": "configs/text2sql_eval_models.json",
+  "max_new_tokens": 512,
+  "execute_timeout_seconds": 5.0,
+  "max_result_rows": 200,
+  "mschema_examples": 3,
+  "load_4bit": true
+}
