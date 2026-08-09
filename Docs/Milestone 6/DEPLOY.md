@@ -51,4 +51,4 @@ Loading Qwen3 on Spaces requires paid GPU hardware and uploading adapter weights
 ## Option C — Colab with Qwen2.5
 
 Use `app/scripts/Colab_UI_Qwen25.ipynb` when a T4 GPU is available.
-This path is intended for the 1.5B demo runtime, not the official 4B adapter.
+This path is for the 1.5B demo runtime, not the official 4B adapter.

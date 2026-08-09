@@ -30,16 +30,16 @@ Provide an end-to-end demo in which a user:
 | Backends: mock / Qwen2.5 / Qwen3+adapter | Complete |
 | Colab launch notebook (CORS-safe) | Complete |
 
-## 3. Deferred
+## 3. Out of scope / future work
 
 | Item | Rationale |
 |------|-----------|
-| FAISS retrieval | Required only when full schema no longer fits the context |
-| FastAPI `/ask` | Streamlit already exercises the full pipeline |
+| FAISS retrieval | Needed when the full schema no longer fits the context |
+| FastAPI `/ask` | Streamlit already runs the full pipeline |
 | Multi-retry self-correction | Stretch goal from Milestone 1 |
-| Multi-turn conversation memory | Out of required scope |
-| Always-on cloud hosting | Localhost / Colab is sufficient for the demo |
-| Retraining / Milestone 4 HPT | Model-training track |
+| Multi-turn conversation memory | Not required for this milestone |
+| Always-on cloud hosting | Localhost / Colab is enough for the demo |
+| Retraining / Milestone 4 HPT | Handled on the model-training track |
 
 ## 4. Architecture
 
@@ -82,14 +82,7 @@ See `Official_Model_GPU_Run.md`. Copy `app/ui_config.qwen3.example.json` to
 | 3 | `chinook` | How many albums are there? | About **347** |
 | 4 | `chinook` | Underspecified ask (e.g. show best artists) | Clarification, then SQL |
 
-## 7. Follow-up checklist
+## 7. Remaining ops
 
-- [ ] Configure and smoke-test Qwen3 + adapter on a GPU host  
-- [ ] Rehearse the demonstration script once  
-- [ ] Optional: temporary public tunnel from the GPU host (`DEPLOY.md`)  
-
-## 8. Summary
-
-The Milestone 6 application UI is implemented on the Milestone 3 core.
-Remaining work is operational: official-model configuration, rehearsal, and
-optional public access via a GPU-hosted tunnel.
+- Configure and smoke-test Qwen3 + adapter on a GPU host  
+- Optional: temporary public tunnel from the GPU host (`DEPLOY.md`)

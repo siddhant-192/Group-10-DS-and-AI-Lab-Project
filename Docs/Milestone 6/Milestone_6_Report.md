@@ -19,11 +19,11 @@
 
 ## Executive Summary
 
-Milestone 6 delivers an interactive Streamlit application on top of the Milestone 3–5 text-to-SQL core. A user selects a SQLite database, asks a natural-language question, optionally answers one clarifying question when the request is underspecified, and receives validated SQL, a result table, a short answer, and a rule-based chart.
+Milestone 6 adds an interactive Streamlit application on top of the Milestone 3–5 text-to-SQL core. A user selects a SQLite database, asks a natural-language question, optionally answers one clarifying question when the request is underspecified, and receives validated SQL, a result table, a short answer, and a rule-based chart.
 
 The **release model** remains **Qwen3-4B-Instruct + QLoRA** with an M-Schema prompt and readonly execution. A **secondary runtime**, **Qwen2.5-Coder-1.5B-Instruct**, supports demonstration on resource-constrained GPUs (for example Google Colab T4). Both runtimes share the same UI and orchestration code; only configuration differs.
 
-This milestone does **not** retrain models or retune hyperparameters. It focuses on product integration: orchestration (`ask`), clarification, visualization, safety reuse, and runnable demo paths (local, Colab, and optional GPU-hosted tunnel).
+This milestone does **not** retrain models or retune hyperparameters. Work is on wiring: `ask` orchestration, clarification, charts, shared safety checks, and runnable demos (local, Colab, optional GPU tunnel).
 
 ---
 
@@ -31,16 +31,16 @@ This milestone does **not** retrain models or retune hyperparameters. It focuses
 
 ### 1.1 Project context
 
-Prior milestones selected and evaluated a Qwen3-4B QLoRA system on Spider with M-Schema prompting and immutable readonly SQLite execution. Milestone 6 connects that core to an end-user interface suitable for demonstration and limited interactive use.
+Prior milestones selected and evaluated a Qwen3-4B QLoRA system on Spider with M-Schema prompting and readonly SQLite execution. Milestone 6 puts that stack behind an interactive demo UI.
 
 ### 1.2 Objectives
 
 1. Expose question → SQL → safe result as an interactive UI.  
 2. Support multiple model backends without forking the pipeline.  
-3. Add bounded clarification for underspecified questions.  
+3. Add one-shot clarification for underspecified questions.  
 4. Add rule-based charts and a short answer.  
 5. Document how to run the demo on Colab (Qwen2.5) and on a GPU host (Qwen3 + adapter).  
-6. State explicitly what is deferred (FAISS, FastAPI, permanent hosting, multi-retry correction).
+6. Record out-of-scope items (FAISS, FastAPI, permanent hosting, multi-retry correction).
 
 ### 1.3 Relationship to earlier milestones
 
@@ -152,18 +152,18 @@ Spider remains the scientific evaluation corpus (Milestones 3–5). Chinook and 
 |-------|-------------|
 | A | Localhost or Colab interactive session (primary) |
 | B | Temporary reverse tunnel from a GPU host (optional) |
-| C | Always-on hosting | Deferred; free CPU hosts cannot load Qwen3-4B |
+| C | Always-on hosting | Out of scope; free CPU hosts cannot load Qwen3-4B |
 
 ---
 
-## 5. Deferred work
+## 5. Out of scope / future work
 
 | Item | Reason |
 |------|--------|
 | FAISS schema retrieval | Needed when full schema no longer fits context |
-| FastAPI `/ask` service | Streamlit already exercises the pipeline |
+| FastAPI `/ask` service | Streamlit already runs the pipeline |
 | Multi-retry self-correction | Stretch goal |
-| Full multi-turn chat | Out of required scope |
+| Full multi-turn chat | Not required for this milestone |
 | Permanent production hosting | Not required for the interactive demo |
 
 ---
@@ -179,7 +179,7 @@ Spider remains the scientific evaluation corpus (Milestones 3–5). Chinook and 
 
 ## 7. Conclusion
 
-Milestone 6 provides a complete interactive path from natural language to safe SQL results, charts, and bounded clarification, while preserving the Milestone 3–5 science model as a configuration-selectable backend. The recommended demonstration path is Colab with Qwen2.5 for constrained GPUs, and a GPU host (or Colab Pro) with the QLoRA adapter for the official Qwen3 system.
+Milestone 6 connects the Milestone 3–5 text-to-SQL core to an interactive UI with safe SQL execution, charts, and one-shot clarification. Qwen3-4B + QLoRA remains the release model (GPU host or Colab Pro). Qwen2.5-Coder-1.5B is the constrained-GPU demo path on Colab T4.
 
 ---
 
@@ -197,6 +197,4 @@ Export this Markdown file to PDF using one of:
 
 - Pandoc: `pandoc Milestone_6_Report.md -o Milestone_6_Report.pdf`  
 - Google Docs / Word: paste or import, then File → Download → PDF  
-- VS Code / Cursor Markdown PDF extension  
-
-Match prior milestone submissions: title page metadata, team list, executive summary first, then numbered sections.
+- VS Code Markdown PDF extension

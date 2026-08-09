@@ -112,9 +112,10 @@ See [`demo_databases/README.md`](../demo_databases/README.md).
 | Safety | `src.validation.validate_readonly_query` |
 | Model IDs | `configs/text2sql_eval_models.json` |
 
-## Deferred
+## Out of scope / future work
 
 - FastAPI service layer  
 - FAISS schema retrieval (large schemas)  
 - Multi-retry execution self-correction  
 - Always-on production hosting  
+
