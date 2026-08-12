@@ -4,7 +4,7 @@
 
 - **Course:** Data Science and AI Lab  
 - **Milestone:** 6 — Deployment and Interactive Demo  
-- **Submission date:** _[set before submit]_  
+- **Submission date:** 13.08.2026
 
 **Team members**
 
