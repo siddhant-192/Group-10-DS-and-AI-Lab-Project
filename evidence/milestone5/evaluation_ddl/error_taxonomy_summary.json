@@ -1,0 +1,281 @@
+{
+  "total_examples": 500,
+  "error_taxonomy_counts": {
+    "hallucinated_column": 66,
+    "semantic_mismatch": 299,
+    "syntax_error": 38,
+    "correct": 84,
+    "hallucinated_table": 3,
+    "other_execution_error": 10
+  },
+  "error_taxonomy_pct": {
+    "hallucinated_column": 13.2,
+    "semantic_mismatch": 59.8,
+    "syntax_error": 7.6,
+    "correct": 16.8,
+    "hallucinated_table": 0.6,
+    "other_execution_error": 2.0
+  },
+  "top_hallucinated_columns": [
+    [
+      "T1.age",
+      6
+    ],
+    [
+      "T1.name",
+      3
+    ],
+    [
+      "T2.A1",
+      3
+    ],
+    [
+      "T2.T",
+      2
+    ],
+    [
+      "T",
+      2
+    ],
+    [
+      "A1",
+      2
+    ],
+    [
+      "T1.Views",
+      2
+    ],
+    [
+      "YEAR",
+      1
+    ],
+    [
+      "Segment",
+      1
+    ],
+    [
+      "segment",
+      1
+    ],
+    [
+      "T2.Consumption",
+      1
+    ],
+    [
+      "T2.link_to_member",
+      1
+    ],
+    [
+      "T2.link_to_event",
+      1
+    ],
+    [
+      "T2.age",
+      1
+    ],
+    [
+      "T1.T",
+      1
+    ],
+    [
+      "gender_name",
+      1
+    ],
+    [
+      "race_name",
+      1
+    ],
+    [
+      "T3.colour",
+      1
+    ],
+    [
+      "T1.publisher_name",
+      1
+    ],
+    [
+      "T1.symptoms",
+      1
+    ]
+  ],
+  "top_hallucinated_tables": [
+    [
+      "expense_budget",
+      1
+    ],
+    [
+      "accidents",
+      1
+    ],
+    [
+      "crime",
+      1
+    ]
+  ],
+  "feature_conditioned_accuracy": {
+    "has_join": {
+      "n_with_feature": 407,
+      "accuracy_with_feature": 0.15724815724815724
+    },
+    "multiple_joins": {
+      "n_with_feature": 102,
+      "accuracy_with_feature": 0.10784313725490197
+    },
+    "has_group_by": {
+      "n_with_feature": 55,
+      "accuracy_with_feature": 0.09090909090909091
+    },
+    "has_subquery": {
+      "n_with_feature": 63,
+      "accuracy_with_feature": 0.06349206349206349
+    },
+    "join_and_subquery": {
+      "n_with_feature": 46,
+      "accuracy_with_feature": 0.043478260869565216
+    },
+    "long_sql": {
+      "n_with_feature": 189,
+      "accuracy_with_feature": 0.06349206349206349
+    }
+  },
+  "accuracy_by_join_count": {
+    "1": 0.1737704918032787,
+    "0": 0.21505376344086022,
+    "2": 0.09302325581395349,
+    "3": 0.21428571428571427,
+    "4": 0.0,
+    "5": 0.0
+  },
+  "representative_examples": {
+    "syntax_error": [
+      {
+        "id": 9,
+        "db_id": "debit_card_specializing",
+        "question": "How many more \"discount\" gas stations does the Czech Republic have compared to Slovakia?",
+        "gold_sql": "SELECT SUM(IIF(Country = 'CZE', 1, 0)) - SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations WHERE Segment = 'Discount'",
+        "predicted_sql": "SELECT count(*) FROM gasstations WHERE country  =  \"Czech Republic\" - count(*) FROM gasstations WHERE country  =  \"Slovakia\"",
+        "error": "near \"FROM\": syntax error"
+      },
+      {
+        "id": 11,
+        "db_id": "debit_card_specializing",
+        "question": "How many percent of LAM customer consumed more than 46.73?",
+        "gold_sql": "SELECT CAST(SUM(IIF(T2.Consumption > 46.73, 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM'",
+        "predicted_sql": "SELECT count(*) FROM yearmonth WHERE consumption  >  46.73 AND customerid IN (SELECT customerid FROM customers WHERE segment  =  'LAM') / count(*) FROM customers WHERE segment  =  'LAM'",
+        "error": "near \"FROM\": syntax error"
+      },
+      {
+        "id": 0,
+        "db_id": "debit_card_specializing",
+        "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+        "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers\tdebit_card_specializing",
+        "predicted_sql": "SELECT count(*) FROM customers WHERE currency  =  'EUR' / count(*) FROM customers WHERE currency  =  'CZK'",
+        "error": "near \"FROM\": syntax error"
+      }
+    ],
+    "hallucinated_column": [
+      {
+        "id": 4,
+        "db_id": "debit_card_specializing",
+        "question": "Which year recorded the most consumption of gas paid in CZK?",
+        "gold_sql": "SELECT SUBSTR(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' GROUP BY SUBSTR(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "predicted_sql": "SELECT YEAR FROM yearmonth WHERE Currency  =  'CZK' GROUP BY YEAR ORDER BY sum(Consumption) DESC LIMIT 1",
+        "error": "no such column: YEAR"
+      },
+      {
+        "id": 1,
+        "db_id": "debit_card_specializing",
+        "question": "In 2012, who had the least consumption in LAM?",
+        "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+        "predicted_sql": "SELECT CustomerID FROM yearmonth WHERE Date LIKE \"2012%\" AND Segment  =  \"LAM\" ORDER BY Consumption ASC LIMIT 1",
+        "error": "no such column: Segment"
+      },
+      {
+        "id": 2,
+        "db_id": "debit_card_specializing",
+        "question": "What was the average monthly consumption of customers in SME for the year 2013?",
+        "gold_sql": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+        "predicted_sql": "SELECT avg(consumption) FROM yearmonth WHERE segment  =  'SME' AND date LIKE '2013%'",
+        "error": "no such column: segment"
+      }
+    ],
+    "hallucinated_table": [
+      {
+        "id": 65,
+        "db_id": "student_club",
+        "question": "Identify the type of expenses and their total value approved for 'October Meeting' event.",
+        "gold_sql": "SELECT T1.type, SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T1.event_name = 'October Meeting'",
+        "predicted_sql": "SELECT T1.expense_type ,  sum(T2.cost) FROM expense AS T1 JOIN expense_budget AS T2 ON T1.expense_id  =  T2.expense_id WHERE T2.link_to_event  =  (SELECT event_id FROM event WHERE event_name  =  'October Meeting') AND T1.approved  =  'Yes' GROUP BY T1.expense_type",
+        "error": "no such table: expense_budget"
+      },
+      {
+        "id": 243,
+        "db_id": "formula_1",
+        "question": "How many accidents did the driver who had the highest number accidents in the Canadian Grand Prix have?",
+        "gold_sql": "SELECT COUNT(T1.driverId) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN status AS T3 on T1.statusId = T3.statusId WHERE T3.statusId = 3 AND T2.name = 'Canadian Grand Prix' GROUP BY T1.driverId ORDER BY COUNT(T1.driverId) DESC LIMIT 1",
+        "predicted_sql": "SELECT count(*) FROM accidents AS T1 JOIN drivers AS T2 ON T1.driverid  =  T2.driverid JOIN races AS T3 ON T1.raceid  =  T3.raceid WHERE T3.name  =  \"Canadian Grand Prix\"",
+        "error": "no such table: accidents"
+      },
+      {
+        "id": 489,
+        "db_id": "financial",
+        "question": "What is the average number of crimes committed in 1995 in regions where the number exceeds 4000 and the region has accounts that are opened starting from the year 1997?",
+        "gold_sql": "SELECT AVG(T1.A15) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE STRFTIME('%Y', T2.date) >= '1997' AND T1.A15 > 4000",
+        "predicted_sql": "SELECT avg(T1.number) FROM crime AS T1 JOIN account AS T2 ON T1.region  =  T2.district_id WHERE T1.year  =  1995 AND T1.number  >  4000 AND T2.date LIKE \"1997%\"",
+        "error": "no such table: crime"
+      }
+    ],
+    "semantic_mismatch": [
+      {
+        "id": 13,
+        "db_id": "debit_card_specializing",
+        "question": "What is the highest monthly consumption in the year 2012?",
+        "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE SUBSTR(Date, 1, 4) = '2012' GROUP BY SUBSTR(Date, 5, 2) ORDER BY SUM(Consumption) DESC LIMIT 1",
+        "predicted_sql": "SELECT max(consumption) FROM yearmonth WHERE date LIKE \"2012-%\";",
+        "error": null
+      },
+      {
+        "id": 5,
+        "db_id": "debit_card_specializing",
+        "question": "What was the gas consumption peak month for SME customers in 2013?",
+        "gold_sql": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "predicted_sql": "SELECT T1.Date FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Segment  =  'SME' AND T1.Date LIKE '2013%' ORDER BY T1.Consumption DESC LIMIT 1",
+        "error": null
+      },
+      {
+        "id": 14,
+        "db_id": "debit_card_specializing",
+        "question": "Please list the product description of the products consumed in September, 2013.",
+        "gold_sql": "SELECT T3.Description FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Date = '201309'",
+        "predicted_sql": "SELECT T1.description FROM products AS T1 JOIN transactions_1k AS T2 ON T1.productid  =  T2.productid WHERE T2.date LIKE \"2013-09-%\"",
+        "error": null
+      }
+    ],
+    "other_execution_error": [
+      {
+        "id": 199,
+        "db_id": "formula_1",
+        "question": "What is the best lap time recorded? List the driver and race with such recorded lap time.",
+        "gold_sql": "SELECT T2.milliseconds, T1.forename, T1.surname, T3.name FROM drivers AS T1 INNER JOIN lapTimes AS T2 ON T1.driverId = T2.driverId INNER JOIN races AS T3 ON T2.raceId = T3.raceId ORDER BY T2.milliseconds ASC LIMIT 1",
+        "predicted_sql": "SELECT T1.driverid ,  T1.raceid ,  T1.lap ,  T1.milliseconds FROM laptimes AS T1 JOIN results AS T2 ON T1.driverid  =  T2.driverid ORDER BY T1.milliseconds ASC LIMIT 1",
+        "error": "interrupted"
+      },
+      {
+        "id": 175,
+        "db_id": "european_football_2",
+        "question": "Which top 4 leagues had the most games in the 2015-2016 season?",
+        "gold_sql": "SELECT t1.name FROM League AS t1 INNER JOIN Match AS t2 ON t1.id = t2.league_id WHERE t2.season = '2015/2016' GROUP BY t1.name ORDER BY COUNT(t2.id) DESC LIMIT 4",
+        "predicted_sql": "SELECT T1.name FROM League AS T1 JOIN Match AS T2 ON T1.id  =  T2.league_id WHERE T2.season  =  2015 ORDER BY count(*) DESC LIMIT 4;",
+        "error": "misuse of aggregate: count()"
+      },
+      {
+        "id": 138,
+        "db_id": "european_football_2",
+        "question": "List the top 10 players' names whose heights are above 180 in descending order of average heading accuracy.",
+        "gold_sql": "SELECT t1.player_name FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.height > 180 GROUP BY t1.id ORDER BY CAST(SUM(t2.heading_accuracy) AS REAL) / COUNT(t2.`player_fifa_api_id`) DESC LIMIT 10",
+        "predicted_sql": "SELECT T1.player_name FROM Player AS T1 JOIN Player_Attributes AS T2 ON T1.id  =  T2.player_api_id WHERE T2.heading_accuracy  >  180 ORDER BY avg(T2.heading_accuracy) DESC LIMIT 10;",
+        "error": "misuse of aggregate: avg()"
+      }
+    ]
+  }
+}

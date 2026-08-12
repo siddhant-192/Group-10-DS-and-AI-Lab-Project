@@ -1,0 +1,240 @@
+{
+  "total_examples": 500,
+  "error_taxonomy_counts": {
+    "other_execution_error": 29,
+    "correct": 154,
+    "hallucinated_column": 57,
+    "semantic_mismatch": 214,
+    "syntax_error": 46
+  },
+  "error_taxonomy_pct": {
+    "other_execution_error": 5.8,
+    "correct": 30.8,
+    "hallucinated_column": 11.4,
+    "semantic_mismatch": 42.8,
+    "syntax_error": 9.2
+  },
+  "top_hallucinated_columns": [
+    [
+      "T1.publisher_name",
+      2
+    ],
+    [
+      "gender",
+      2
+    ],
+    [
+      "T2.T",
+      2
+    ],
+    [
+      "T2.name",
+      2
+    ],
+    [
+      "Currency",
+      1
+    ],
+    [
+      "date",
+      1
+    ],
+    [
+      "Segment",
+      1
+    ],
+    [
+      "T1.atom_id2",
+      1
+    ],
+    [
+      "T1.label",
+      1
+    ],
+    [
+      "publisher_id",
+      1
+    ],
+    [
+      "T2.attribute_name",
+      1
+    ],
+    [
+      "T2.publisher_name",
+      1
+    ],
+    [
+      "T2.race",
+      1
+    ],
+    [
+      "publisher_name",
+      1
+    ],
+    [
+      "T1.crossing",
+      1
+    ],
+    [
+      "finishing",
+      1
+    ],
+    [
+      "preferred_foot",
+      1
+    ],
+    [
+      "T2.ball_control",
+      1
+    ],
+    [
+      "T2.A11",
+      1
+    ],
+    [
+      "A3",
+      1
+    ]
+  ],
+  "top_hallucinated_tables": [],
+  "feature_conditioned_accuracy": {
+    "has_join": {
+      "n_with_feature": 407,
+      "accuracy_with_feature": 0.28992628992628994
+    },
+    "multiple_joins": {
+      "n_with_feature": 102,
+      "accuracy_with_feature": 0.21568627450980393
+    },
+    "has_group_by": {
+      "n_with_feature": 55,
+      "accuracy_with_feature": 0.2727272727272727
+    },
+    "has_subquery": {
+      "n_with_feature": 63,
+      "accuracy_with_feature": 0.2222222222222222
+    },
+    "join_and_subquery": {
+      "n_with_feature": 46,
+      "accuracy_with_feature": 0.1956521739130435
+    },
+    "long_sql": {
+      "n_with_feature": 189,
+      "accuracy_with_feature": 0.15343915343915343
+    }
+  },
+  "accuracy_by_join_count": {
+    "0": 0.3870967741935484,
+    "1": 0.31475409836065577,
+    "2": 0.19767441860465115,
+    "3": 0.35714285714285715,
+    "4": 0.0,
+    "5": 0.0
+  },
+  "representative_examples": {
+    "syntax_error": [
+      {
+        "id": 10,
+        "db_id": "debit_card_specializing",
+        "question": "Is it true that more SMEs pay in Czech koruna than in euros? If so, how many more?",
+        "gold_sql": "SELECT SUM(Currency = 'CZK') - SUM(Currency = 'EUR') FROM customers WHERE Segment = 'SME'",
+        "predicted_sql": "SELECT sum(T1.Consumption) - sum(T2.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Segment  =  \"SME\" AND T2.Currency  =  \"CZK\" - SELECT sum(T1.Consumption) - sum(T2.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Segment  =  \"SME\" AND T2.Currency  =  \"EUR\"",
+        "error": "near \"SELECT\": syntax error"
+      },
+      {
+        "id": 9,
+        "db_id": "debit_card_specializing",
+        "question": "How many more \"discount\" gas stations does the Czech Republic have compared to Slovakia?",
+        "gold_sql": "SELECT SUM(IIF(Country = 'CZE', 1, 0)) - SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations WHERE Segment = 'Discount'",
+        "predicted_sql": "SELECT count(*) FROM gasstations WHERE country  =  'CZE' AND segment  =  'Value for money' - count(*) FROM gasstations WHERE country  =  'SVK' AND segment  =  'Value for money'",
+        "error": "near \"FROM\": syntax error"
+      },
+      {
+        "id": 3,
+        "db_id": "debit_card_specializing",
+        "question": "What was the difference in gas consumption between CZK-paying customers and EUR-paying customers in 2012?",
+        "gold_sql": "SELECT SUM(IIF(T1.Currency = 'CZK', T2.Consumption, 0)) - SUM(IIF(T1.Currency = 'EUR', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2012'",
+        "predicted_sql": "SELECT sum(T1.Consumption) - sum(T2.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'CZK' AND T1.Date BETWEEN 201201 AND 201212 MINUS SELECT sum(T1.Consumption) - sum(T2.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'EUR' AND T1.Date BETWEEN 201201 AND 201212",
+        "error": "near \"MINUS\": syntax error"
+      }
+    ],
+    "hallucinated_column": [
+      {
+        "id": 4,
+        "db_id": "debit_card_specializing",
+        "question": "Which year recorded the most consumption of gas paid in CZK?",
+        "gold_sql": "SELECT SUBSTR(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' GROUP BY SUBSTR(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "predicted_sql": "SELECT substr(Date ,  1 ,  4) FROM yearmonth WHERE Currency  =  'CZK' GROUP BY substr(Date ,  1 ,  4) ORDER BY sum(Consumption) DESC LIMIT 1",
+        "error": "no such column: Currency"
+      },
+      {
+        "id": 24,
+        "db_id": "debit_card_specializing",
+        "question": "What is the percentage of the customers who used EUR in 2012/8/25?",
+        "gold_sql": "SELECT CAST(SUM(IIF(T2.Currency = 'EUR', 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-25'",
+        "predicted_sql": "SELECT count(*) FROM customers WHERE currency  =  'EUR' AND date  =  '2012-08-25'",
+        "error": "no such column: date"
+      },
+      {
+        "id": 5,
+        "db_id": "debit_card_specializing",
+        "question": "What was the gas consumption peak month for SME customers in 2013?",
+        "gold_sql": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "predicted_sql": "SELECT Date FROM yearmonth WHERE Segment  =  \"SME\" AND Date LIKE \"2013%\" ORDER BY Consumption DESC LIMIT 1",
+        "error": "no such column: Segment"
+      }
+    ],
+    "semantic_mismatch": [
+      {
+        "id": 17,
+        "db_id": "debit_card_specializing",
+        "question": "Please list the product descriptions of the transactions taken place in the gas stations in the Czech Republic.",
+        "gold_sql": "SELECT DISTINCT T3.Description FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Country = 'CZE'",
+        "predicted_sql": "SELECT T1.description FROM products AS T1 JOIN transactions_1k AS T2 ON T1.productid  =  T2.productid JOIN gasstations AS T3 ON T2.gasstationid  =  T3.gasstationid WHERE T3.country  =  'CZE'",
+        "error": null
+      },
+      {
+        "id": 28,
+        "db_id": "debit_card_specializing",
+        "question": "Who is the top spending customer and how much is the average price per single item purchased by this customer? What currency was being used?",
+        "gold_sql": "SELECT T2.CustomerID, SUM(T2.Price / T2.Amount), T1.Currency FROM customers AS T1 INNER JOIN transactions_1k AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.CustomerID = ( SELECT CustomerID FROM yearmonth ORDER BY Consumption DESC LIMIT 1 ) GROUP BY T2.CustomerID, T1.Currency",
+        "predicted_sql": "SELECT T1.CustomerID ,  T1.Currency ,  sum(T2.Price) / sum(T2.Amount) FROM customers AS T1 JOIN transactions_1k AS T2 ON T1.CustomerID  =  T2.CustomerID GROUP BY T1.CustomerID ORDER BY sum(T2.Price) / sum(T2.Amount) DESC LIMIT 1",
+        "error": null
+      },
+      {
+        "id": 13,
+        "db_id": "debit_card_specializing",
+        "question": "What is the highest monthly consumption in the year 2012?",
+        "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE SUBSTR(Date, 1, 4) = '2012' GROUP BY SUBSTR(Date, 5, 2) ORDER BY SUM(Consumption) DESC LIMIT 1",
+        "predicted_sql": "SELECT max(consumption) FROM yearmonth WHERE date LIKE \"2012%\"",
+        "error": null
+      }
+    ],
+    "other_execution_error": [
+      {
+        "id": 26,
+        "db_id": "debit_card_specializing",
+        "question": "What is the percentage of \"premium\" against the overall segment in Country = \"SVK\"?",
+        "gold_sql": "SELECT CAST(SUM(IIF(Country = 'SVK' AND Segment = 'Premium', 1, 0)) AS FLOAT) * 100 / SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations\tdebit_card_specializing",
+        "predicted_sql": "SELECT count(*) * 100 / sum(count(*)) FROM gasstations WHERE country  =  \"SVK\" AND segment  =  \"Premium\"",
+        "error": "misuse of aggregate function count()"
+      },
+      {
+        "id": 400,
+        "db_id": "toxicology",
+        "question": "On average how many carcinogenic molecules are single bonded?",
+        "gold_sql": "SELECT AVG(single_bond_count) FROM (SELECT T3.molecule_id, COUNT(T1.bond_type) AS single_bond_count FROM bond AS T1  INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN molecule AS T3 ON T3.molecule_id = T2.molecule_id WHERE T1.bond_type = '-' AND T3.label = '+' GROUP BY T3.molecule_id) AS subquery",
+        "predicted_sql": "SELECT avg(count(*) ) FROM atom AS T1 JOIN connected AS T2 ON T1.atom_id  =  T2.atom_id JOIN bond AS T3 ON T2.bond_id  =  T3.bond_id WHERE T3.bond_type  =  '-' AND T1.molecule_id IN (SELECT molecule_id FROM molecule WHERE label  =  '+')",
+        "error": "misuse of aggregate function count()"
+      },
+      {
+        "id": 425,
+        "db_id": "toxicology",
+        "question": "What is the average number of bonds the atoms with the element iodine have?",
+        "gold_sql": "SELECT CAST(COUNT(T2.bond_id) AS REAL) / COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 'i'",
+        "predicted_sql": "SELECT avg(count(*) ) FROM atom AS T1 JOIN connected AS T2 ON T1.atom_id  =  T2.atom_id WHERE T1.element  =  'i'",
+        "error": "misuse of aggregate function count()"
+      }
+    ]
+  }
+}

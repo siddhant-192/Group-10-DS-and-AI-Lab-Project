@@ -1,0 +1,31 @@
+{
+  "milestone4_frozen_evidence": {
+    "by_complexity": {
+      "unknown": {
+        "examples": 500,
+        "macsql": 182,
+        "macsql_pct": 36.4,
+        "strict": 154,
+        "strict_pct": 30.8
+      }
+    },
+    "column_permutation_or_distinct_promotions": {
+      "count": 31,
+      "pct": 6.2
+    },
+    "examples": 500,
+    "macsql_execution": {
+      "count": 182,
+      "pct": 36.4
+    },
+    "prediction_statuses": {
+      "error": 132,
+      "ok": 368
+    },
+    "source": "/content/drive/MyDrive/Group-10-DS-and-AI-Lab-Project/evidence/milestone5/evaluation_mschema_evidence/milestone4_frozen/predictions.jsonl",
+    "strict_execution": {
+      "count": 154,
+      "pct": 30.8
+    }
+  }
+}

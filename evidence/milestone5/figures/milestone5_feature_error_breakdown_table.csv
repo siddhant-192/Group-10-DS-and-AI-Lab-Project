@@ -1,0 +1,11 @@
+Feature,Group,n,correct,hallucinated_column,other_execution_error,semantic_mismatch,syntax_error,Predicted mechanism
+Any JOIN,Without,93,30.1,4.3,3.2,53.8,8.6,
+Any JOIN,With,407,24.8,13.8,1.7,55.0,4.7,hallucinated_column
+Multiple JOINs,Without,398,26.4,11.8,2.0,53.5,6.3,
+Multiple JOINs,With,102,23.5,12.7,2.0,59.8,2.0,hallucinated_column
+GROUP BY,Without,445,27.0,11.2,1.8,53.9,6.1,
+GROUP BY,With,55,16.4,18.2,3.6,61.8,0.0,other_execution_error
+Subqueries,Without,437,27.7,11.7,1.6,53.8,5.3,
+Subqueries,With,63,12.7,14.3,4.8,61.9,6.3,semantic_mismatch
+Long SQL (>31 tok),Without,311,32.8,9.3,2.3,51.4,4.2,
+Long SQL (>31 tok),With,189,14.3,16.4,1.6,60.3,7.4,syntax_error

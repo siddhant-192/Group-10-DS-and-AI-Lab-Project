@@ -1,0 +1,9 @@
+{
+  "total_examples": 500,
+  "gold_status_counts": {
+    "ok": 500,
+    "error": 0
+  },
+  "gold_errors_sample": [],
+  "note": "All 500 examples are still present in bird_eval.jsonl (nothing excluded). Each row also carries metadata.gold_execution_status_at_prep so you can filter or report on this at analysis time without having biased which examples are in the eval set."
+}
