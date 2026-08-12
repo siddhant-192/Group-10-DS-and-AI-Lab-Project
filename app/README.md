@@ -3,8 +3,8 @@
 Streamlit front end for the Group-10 text-to-SQL pipeline (Milestone 3 core:
 M-Schema prompting, readonly validation, SQLite execution).
 
-**Primary model (evaluation / release):** Qwen3-4B + QLoRA adapter  
-**Secondary runtime (resource-constrained GPU):** Qwen2.5-Coder-1.5B-Instruct  
+**Primary model:** Qwen3-4B + QLoRA adapter  
+**Secondary runtime:** Qwen2.5-Coder-1.5B-Instruct (constrained GPU)  
 
 ## Architecture
 

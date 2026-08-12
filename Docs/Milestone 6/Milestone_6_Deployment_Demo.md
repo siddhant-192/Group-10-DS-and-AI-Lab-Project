@@ -70,8 +70,8 @@ Follow `app/scripts/Colab_UI_Qwen25.ipynb` and `app/scripts/COLAB_UI_RUNBOOK.md`
 
 ### Official model (Qwen3-4B + adapter)
 
-See `Official_Model_GPU_Run.md`. Copy `app/ui_config.qwen3.example.json` to
-`app/ui_config.json`, set `adapter_dir`, then start Streamlit on a suitable GPU host.
+See `Official_Model_GPU_Run.md` and `app/scripts/colab_qwen3/Colab_UI_Qwen3.ipynb`.  
+Copy `app/ui_config.qwen3.example.json` → `app/ui_config.json`, set `adapter_dir`, then start Streamlit.
 
 ## 6. Suggested demonstration script
 
@@ -82,7 +82,7 @@ See `Official_Model_GPU_Run.md`. Copy `app/ui_config.qwen3.example.json` to
 | 3 | `chinook` | How many albums are there? | About **347** |
 | 4 | `chinook` | Underspecified ask (e.g. show best artists) | Clarification, then SQL |
 
-## 7. Remaining ops
+## 7. Remaining work
 
-- Configure and smoke-test Qwen3 + adapter on a GPU host  
-- Optional: temporary public tunnel from the GPU host (`DEPLOY.md`)
+- Smoke-test Qwen3 + adapter on a GPU host  
+- Optional public tunnel (`DEPLOY.md`)

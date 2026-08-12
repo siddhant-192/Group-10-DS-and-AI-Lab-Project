@@ -23,7 +23,7 @@ Milestone 6 adds an interactive Streamlit application on top of the Milestone 3â
 
 The **release model** remains **Qwen3-4B-Instruct + QLoRA** with an M-Schema prompt and readonly execution. A **secondary runtime**, **Qwen2.5-Coder-1.5B-Instruct**, supports demonstration on resource-constrained GPUs (for example Google Colab T4). Both runtimes share the same UI and orchestration code; only configuration differs.
 
-This milestone does **not** retrain models or retune hyperparameters. Work is on wiring: `ask` orchestration, clarification, charts, shared safety checks, and runnable demos (local, Colab, optional GPU tunnel).
+This milestone does **not** retrain models or retune hyperparameters. Scope is the interactive UI: `ask` orchestration, clarification, charts, shared validation, and demo run paths (local, Colab, optional GPU tunnel).
 
 ---
 

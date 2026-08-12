@@ -1,39 +1,31 @@
-# Colab — Qwen3-4B + QLoRA adapter (official UI)
+# Colab — Qwen3-4B + QLoRA
 
-Use this folder on **Colab Pro** (or any GPU with ~8–12+ GB VRAM).
+GPU: Colab Pro recommended (~8–12+ GB VRAM for 4-bit Qwen3-4B + adapter).
 
-| File | Purpose |
-|------|---------|
-| `Colab_UI_Qwen3.ipynb` | Run cells in order: clone repo → upload adapter → config → Streamlit |
+| File | Role |
+|------|------|
+| `Colab_UI_Qwen3.ipynb` | Clone repo, set adapter path, start Streamlit |
 
-## What you must upload
+## Adapter
 
-The **adapter folder** from the team release (QLoRA weights), for example:
+Provide a directory that contains PEFT artifacts (`adapter_config.json`,
+`adapter_model.safetensors`). A zip such as
+`final_checkpoint_375_adapter_upload-….zip` unpacks to
+`final_checkpoint_375_adapter_upload/`; use that directory as `adapter_dir`.
 
-- `adapter_config.json`
-- `adapter_model.safetensors` (or `.bin` shards)
+The base weights (`Qwen/Qwen3-4B-Instruct-2507`) are downloaded from Hugging Face
+at runtime. They are not part of the adapter archive.
 
-Typical path after upload: `/content/final_adapter`
+Cell 2 can mount Google Drive, locate the zip or folder, and set `ADAPTER_DIR`.
 
-The **base model** (`Qwen/Qwen3-4B-Instruct-2507`) is **not** uploaded.  
-Hugging Face downloads it when Streamlit starts (`load_4bit: true`).
+## Runtime wiring
 
-## How the adapter is wired (in code)
+`app/ui_config.json` must set `backend` to `qwen3-4b+adapter` and `adapter_dir`
+to that directory. `app/backend/models.py` loads the base model, then applies
+the adapter with PEFT.
 
-1. Notebook writes `app/ui_config.json` with:
-   - `"backend": "qwen3-4b+adapter"`
-   - `"adapter_dir": "/content/final_adapter"` (your path)
-2. `app/backend/models.py` loads the base CausalLM, then:
-   `PeftModel.from_pretrained(base, adapter_dir)`
-3. If `adapter_dir` is missing or wrong, startup fails with a clear error  
-   (Qwen3 backend **requires** an adapter).
+Use this notebook for Qwen3. `Colab_UI_Qwen25.ipynb` installs the Qwen2.5 config.
 
-## Do not use the Qwen2.5 notebook for this
+## Branch
 
-`Colab_UI_Qwen25.ipynb` Cell 3 always copies the Qwen2.5 config.  
-Use **this** notebook for Qwen3.
-
-## Repo branch
-
-Cell 0 defaults to GitHub `main`. The full UI must already be on `main`  
-(or change `BRANCH` to the branch that contains `app/backend/`).
+Cell 0 defaults to `milestone-6-ui`. Switch to `main` after the UI is merged.
