@@ -48,31 +48,19 @@ Optional temporary public URL:
 cloudflared tunnel --url http://127.0.0.1:8501
 ```
 
-## Path B — Google Colab (Pro recommended for Qwen3)
+## Path B — Google Colab Pro (Qwen3 notebook)
 
-Same UI notebook pattern as Qwen2.5; different config and adapter upload.
+Use the dedicated notebook (do **not** use the Qwen2.5 notebook Cell 3):
 
-1. Runtime → GPU (prefer Pro / L4 or a roomy T4).
-2. Upload or clone the GitHub repository (root must contain `app/`).
-3. Upload the **adapter folder** (or mount Drive and set `adapter_dir` to that path).
-4. In a cell, set the Qwen3 config (do **not** copy the Qwen2.5 example):
+`app/scripts/colab_qwen3/Colab_UI_Qwen3.ipynb`
 
-```python
-import shutil
-from pathlib import Path
-ROOT = Path("/content/...")  # or Path(os.environ["PROJECT_ROOT"]) after Cell 0
-shutil.copy2(ROOT / "app/ui_config.qwen3.example.json", ROOT / "app/ui_config.json")
-# Then edit ui_config.json so adapter_dir points to your uploaded adapter.
-```
+Comments in that notebook explain how the adapter is integrated:
 
-5. Install deps, download demo DBs, start Streamlit with the same CORS-safe
-   flags used in `Colab_UI_Qwen25.ipynb` (or adapt that notebook’s Cell 3 to
-   skip overwriting config with the Qwen2.5 example).
-6. Open the Colab proxy URL for port 8501.
+1. Upload the QLoRA folder (e.g. `/content/final_adapter`).
+2. Cell 3 writes `ui_config.json` with `backend: qwen3-4b+adapter` and `adapter_dir`.
+3. `app/backend/models.py` loads HF base Qwen3-4B, then `PeftModel.from_pretrained(..., adapter_dir)`.
 
-**Important:** the stock `Colab_UI_Qwen25.ipynb` Cell 3 copies
-`ui_config.qwen25.example.json`. For Qwen3, replace that step with the Qwen3
-example and a valid `adapter_dir`, or the session will still load Qwen2.5.
+Folder README: `app/scripts/colab_qwen3/README.md`.
 
 ## Comparison — Qwen2.5 UI vs Qwen3 UI
 

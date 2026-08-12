@@ -1,0 +1,608 @@
+{
+  "total_hallucinated_column_errors": 60,
+  "repair_attempted": 6,
+  "repaired_and_executes": 4,
+  "repaired_and_matches_gold": 0,
+  "details": [
+    {
+      "id": 4,
+      "db_id": "debit_card_specializing",
+      "original_sql": "SELECT T1.year FROM yearmonth AS T1 JOIN customers AS T2 ON T1.customerid  =  T2.customerid WHERE T2.currency  =  'CZK' GROUP BY T1.year ORDER BY sum(T1.consumption) DESC LIMIT 1",
+      "error": "no such column: T1.year",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 1,
+      "db_id": "debit_card_specializing",
+      "original_sql": "SELECT customerid FROM yearmonth WHERE date LIKE \"2012%\" AND segment  =  \"LAM\" ORDER BY consumption LIMIT 1",
+      "error": "no such column: segment",
+      "repair_reason": "ambiguous or no owner found (owners=['customers', 'gasstations'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 5,
+      "db_id": "debit_card_specializing",
+      "original_sql": "SELECT Date FROM yearmonth WHERE Segment  =  \"SME\" AND Consumption  =  (SELECT max(Consumption) FROM yearmonth WHERE Segment  =  \"SME\") AND Date LIKE \"2013%\"",
+      "error": "no such column: Segment",
+      "repair_reason": "ambiguous or no owner found (owners=['customers', 'gasstations'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 24,
+      "db_id": "debit_card_specializing",
+      "original_sql": "SELECT count(*) FROM customers WHERE currency  =  'EUR' AND date  =  '2012-08-25'",
+      "error": "no such column: date",
+      "repair_reason": "ambiguous or no owner found (owners=['transactions_1k', 'yearmonth'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 7,
+      "db_id": "debit_card_specializing",
+      "original_sql": "SELECT segment FROM customers WHERE currency  =  'EUR' GROUP BY segment ORDER BY sum(consumption) DESC LIMIT 1",
+      "error": "no such column: consumption",
+      "repair_reason": "ambiguous or no owner found (owners=['yearmonth'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 6,
+      "db_id": "debit_card_specializing",
+      "original_sql": "SELECT avg(T1.Consumption) - avg(T2.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'CZK' AND T1.Date LIKE '2013%' AND T2.Segment  =  'SME' EXCEPT SELECT avg(T1.Consumption) - avg(T2.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'CZK' AND T1.Date LIKE '2013%' AND T2.Segment  =  'LAM' EXCEPT SELECT avg(T1.Consumption) - avg(T2.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'CZK' AND T1.Date LIKE '2013%' AND T2.Segment  =  'KAM'",
+      "error": "no such column: T2.Consumption",
+      "repair_reason": "rewrote T2.Consumption -> T1.Consumption",
+      "repaired_sql": "SELECT avg(T1.Consumption) - avg(T1.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'CZK' AND T1.Date LIKE '2013%' AND T2.Segment  =  'SME' EXCEPT SELECT avg(T1.Consumption) - avg(T1.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'CZK' AND T1.Date LIKE '2013%' AND T2.Segment  =  'LAM' EXCEPT SELECT avg(T1.Consumption) - avg(T1.Consumption) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID  =  T2.CustomerID WHERE T2.Currency  =  'CZK' AND T1.Date LIKE '2013%' AND T2.Segment  =  'KAM'",
+      "repaired_executes": true,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 400,
+      "db_id": "toxicology",
+      "original_sql": "SELECT avg(T1.count) FROM (SELECT T2.molecule_id ,  count(*) FROM atom AS T1 JOIN bond AS T2 ON T1.molecule_id  =  T2.molecule_id WHERE T2.bond_type  =  \"-\" GROUP BY T2.molecule_id) AS T1 JOIN molecule AS T2 ON T1.molecule_id  =  T2.molecule_id WHERE T2.label  =  \"+\"",
+      "error": "no such column: T1.count",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 399,
+      "db_id": "toxicology",
+      "original_sql": "SELECT avg(T1.count) FROM (SELECT count(*) FROM atom AS T1 JOIN bond AS T2 ON T1.molecule_id  =  T2.molecule_id WHERE T2.bond_type  =  \"-\" AND T1.element  =  \"o\") AS T1 JOIN molecule AS T2 ON T1.molecule_id  =  T2.molecule_id WHERE T2.label  =  \"-\"",
+      "error": "no such column: T1.count",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 425,
+      "db_id": "toxicology",
+      "original_sql": "SELECT avg(T1.bond_count) FROM (SELECT T2.atom_id ,  count(*) FROM atom AS T1 JOIN connected AS T2 ON T1.atom_id  =  T2.atom_id GROUP BY T2.atom_id) AS T1 JOIN atom AS T2 ON T1.atom_id  =  T2.atom_id WHERE T2.element  =  'i'",
+      "error": "no such column: T1.bond_count",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 288,
+      "db_id": "superhero",
+      "original_sql": "SELECT publisher_name FROM superhero WHERE superhero_name  =  \"Hawkman\" OR superhero_name  =  \"Karate Kid\" OR superhero_name  =  \"Speedy\"",
+      "error": "no such column: publisher_name",
+      "repair_reason": "ambiguous or no owner found (owners=['publisher'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 251,
+      "db_id": "superhero",
+      "original_sql": "SELECT T1.superhero_name FROM superhero AS T1 JOIN hero_power AS T2 ON T1.id  =  T2.hero_id JOIN superpower AS T3 ON T2.power_id  =  T3.id WHERE T3.power_name  =  'Super Strength' AND T1.publisher_name  =  'Marvel Comics'",
+      "error": "no such column: T1.publisher_name",
+      "repair_reason": "ambiguous or no owner found (owners=['publisher'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 159,
+      "db_id": "european_football_2",
+      "original_sql": "SELECT T1.date FROM Match AS T1 JOIN Player_Attributes AS T2 ON T1.home_team_api_id  =  T2.player_api_id WHERE T2.player_name  =  \"Kevin Constant\" AND T2.crossing  =  (SELECT max(crossing) FROM Player_Attributes WHERE player_name  =  \"Kevin Constant\")",
+      "error": "no such column: T2.player_name",
+      "repair_reason": "ambiguous or no owner found (owners=['Player'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 129,
+      "db_id": "european_football_2",
+      "original_sql": "SELECT T1.name FROM Team AS T1 JOIN Match AS T2 ON T1.id  =  T2.away_team_api_id WHERE T2.season  =  2010 AND T2.home_team_goal  <  T2.away_team_goal AND T2.league_id  =  (SELECT id FROM League WHERE country_id  =  (SELECT id FROM Country WHERE name  =  \"Scotland\") AND name  =  \"Premier League\")",
+      "error": "no such column: T1.name",
+      "repair_reason": "ambiguous or no owner found (owners=['League', 'Country'], candidate_aliases=['League', 'Country'])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 136,
+      "db_id": "european_football_2",
+      "original_sql": "SELECT count(*) ,  count(*) * 100 / (SELECT count(*) FROM Player WHERE birthday BETWEEN '1987-01-01' AND '1992-12-31') FROM Player WHERE birthday BETWEEN '1987-01-01' AND '1992-12-31' AND preferred_foot  =  'left';",
+      "error": "no such column: preferred_foot",
+      "repair_reason": "ambiguous or no owner found (owners=['Player_Attributes'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 149,
+      "db_id": "european_football_2",
+      "original_sql": "SELECT count(*) FROM Player WHERE birthday LIKE \"1986-%\" AND attacking_work_rate  =  \"high\" AND defensive_work_rate  =  \"high\";",
+      "error": "no such column: attacking_work_rate",
+      "repair_reason": "ambiguous or no owner found (owners=['Player_Attributes'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 494,
+      "db_id": "financial",
+      "original_sql": "SELECT count(*) * 100 / (SELECT count(*) FROM client WHERE gender  =  'M') FROM client WHERE gender  =  'M' AND frequency  =  'POPLATEK TYDNE'",
+      "error": "no such column: frequency",
+      "repair_reason": "ambiguous or no owner found (owners=['account'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 472,
+      "db_id": "financial",
+      "original_sql": "SELECT T1.account_id FROM account AS T1 JOIN client AS T2 ON T1.district_id  =  T2.district_id GROUP BY T1.account_id ORDER BY avg(T2.salary) DESC LIMIT 1",
+      "error": "no such column: T2.salary",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 470,
+      "db_id": "financial",
+      "original_sql": "SELECT count(*) FROM client WHERE gender  =  'M' AND district_id IN (SELECT district_id FROM district WHERE A3  =  'North Bohemia') AND avg_salary  >  8000",
+      "error": "no such column: avg_salary",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 492,
+      "db_id": "financial",
+      "original_sql": "SELECT avg(T1.amount) - avg(T2.amount) FROM loan AS T1 JOIN loan AS T2 ON T1.account_id  =  T2.account_id JOIN client AS T3 ON T3.client_id  =  T2.client_id WHERE T3.gender  =  'M' AND T1.date BETWEEN '1996-01-01' AND '1997-12-31' AND T2.date BETWEEN '1996-01-01' AND '1997-12-31'",
+      "error": "no such column: T2.client_id",
+      "repair_reason": "ambiguous or no owner found (owners=['client', 'disp'], candidate_aliases=['T3'])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 105,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT avg(date('now') - birthday) FROM patient WHERE sex  =  'M' AND T-CHO  >  200",
+      "error": "no such column: T",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 83,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.id ,  T1.age FROM patient AS T1 JOIN laboratory AS T2 ON T1.id  =  T2.id WHERE T2.RA  =  '+'",
+      "error": "no such column: T1.age",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 109,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.id ,  T1.diagnosis ,  T1.age FROM patient AS T1 JOIN laboratory AS T2 ON T1.id  =  T2.id WHERE T2.RBC  <  3.4",
+      "error": "no such column: T1.age",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 122,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT count(*) FROM Patient WHERE RNP  =  \"0\" AND Admission  =  \"+\"",
+      "error": "no such column: RNP",
+      "repair_reason": "ambiguous or no owner found (owners=['Laboratory'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 85,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT count(*) FROM patient WHERE sex  =  'F' AND first_date LIKE '1997%' AND admission  =  '+'",
+      "error": "no such column: first_date",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 118,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT count(*) FROM patient AS T1 JOIN laboratory AS T2 ON T1.id  =  T2.id WHERE T2.IGA  <  100 AND T1.first_date  >  '1990-01-01'",
+      "error": "no such column: T1.first_date",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 104,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.sex ,  sum(T2.T-BIL) FROM Patient AS T1 JOIN Laboratory AS T2 ON T1.id  =  T2.id WHERE T2.T-BIL  >  1.2 OR T2.T-BIL  <  0.2 GROUP BY T1.sex",
+      "error": "no such column: T2.T",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 111,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.id ,  T1.age FROM patient AS T1 JOIN laboratory AS T2 ON T1.id  =  T2.id WHERE T2.HCT  >  45 GROUP BY T1.id HAVING count(*)  >=  2",
+      "error": "no such column: T1.age",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 110,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT id ,  sex FROM patient WHERE diagnosis  =  'SLE' AND hgb  >  120 ORDER BY birthday DESC LIMIT 1",
+      "error": "no such column: hgb",
+      "repair_reason": "ambiguous or no owner found (owners=['Laboratory'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 91,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.age ,  T2.Diagnosis FROM Patient AS T1 JOIN Examination AS T2 ON T1.id  =  T2.id ORDER BY T2.HGB DESC LIMIT 1",
+      "error": "no such column: T1.age",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 106,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT count(*) FROM patient AS T1 JOIN laboratory AS T2 ON T1.id  =  T2.id WHERE T2.TG  >  180 AND T1.age  >  50",
+      "error": "no such column: T1.age",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 88,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.Date ,  T2.age FROM Laboratory AS T1 JOIN Patient AS T2 ON T1.ID  =  T2.ID WHERE T2.Diagnosis  =  \"SJS\" ORDER BY T1.Date DESC LIMIT 1",
+      "error": "no such column: T2.age",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 102,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.Diagnosis FROM Patient AS T1 JOIN Laboratory AS T2 ON T1.ID  =  T2.ID WHERE T2.ALT  >  40 ORDER BY T1.Birthday ASC",
+      "error": "no such column: T2.ALT",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 125,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT count(*) FROM Patient WHERE SEX  =  'M' AND CENTROMEA  =  '0' AND SSB  =  '0'",
+      "error": "no such column: CENTROMEA",
+      "repair_reason": "ambiguous or no owner found (owners=['Laboratory'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 108,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.id ,  T1.sex ,  2018 - strftime('%Y' ,  T1.birthday) FROM patient AS T1 JOIN laboratory AS T2 ON T1.id  =  T2.id WHERE T2.glU  >  130 AND T2.T-CHO  <  200",
+      "error": "no such column: T2.T",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 96,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.id FROM patient AS T1 JOIN laboratory AS T2 ON T1.id  =  T2.id WHERE T2.date LIKE \"1991-10-%\" AND T2.T-BIL  <=  1.2",
+      "error": "no such column: T2.T",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 93,
+      "db_id": "thrombosis_prediction",
+      "original_sql": "SELECT T1.T-CHO - T2.T-CHO FROM Laboratory AS T1 JOIN Laboratory AS T2 ON T1.ID  =  T2.ID WHERE T1.Date  =  \"1981-11-01\" AND T2.Date  =  \"1981-12-01\" AND T1.ID IN (SELECT ID FROM Patient WHERE Birthday  =  \"1959-02-18\")",
+      "error": "no such column: T1.T",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 45,
+      "db_id": "student_club",
+      "original_sql": "SELECT date_received FROM income WHERE first_name = \"Connor\" AND last_name = \"Hilton\" AND source = \"Dues\"",
+      "error": "no such column: first_name",
+      "repair_reason": "ambiguous or no owner found (owners=['member'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 56,
+      "db_id": "student_club",
+      "original_sql": "SELECT T1.first_name ,  T1.last_name FROM member AS T1 JOIN budget AS T2 ON T1.member_id  =  T2.link_to_member WHERE T2.event_status  =  \"Open\" AND T2.category  =  \"Speaker Gifts\" AND T2.event_name  =  \"Yearly Kickoff\"",
+      "error": "no such column: T2.event_name",
+      "repair_reason": "ambiguous or no owner found (owners=['event'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 71,
+      "db_id": "student_club",
+      "original_sql": "SELECT T2.last_name ,  T3.department ,  T3.college FROM major AS T1 JOIN member AS T2 ON T1.major_id  =  T2.link_to_major JOIN zip_code AS T3 ON T2.zip  =  T3.zip_code WHERE T1.major_name  =  \"Environmental Engineering\"",
+      "error": "no such column: T3.department",
+      "repair_reason": "rewrote T3.department -> T1.department",
+      "repaired_sql": "SELECT T2.last_name ,  T1.department ,  T3.college FROM major AS T1 JOIN member AS T2 ON T1.major_id  =  T2.link_to_major JOIN zip_code AS T3 ON T2.zip  =  T3.zip_code WHERE T1.major_name  =  \"Environmental Engineering\"",
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 58,
+      "db_id": "student_club",
+      "original_sql": "SELECT sum(T1.cost) ,  sum(T1.cost) * 100 / (SELECT sum(cost) FROM expense) FROM expense AS T1 JOIN event AS T2 ON T1.link_to_event  =  T2.event_id WHERE T2.event_name  =  \"Yearly Kickoff\"",
+      "error": "no such column: T1.link_to_event",
+      "repair_reason": "ambiguous or no owner found (owners=['attendance', 'budget'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 329,
+      "db_id": "codebase_community",
+      "original_sql": "SELECT T1.viewcount - T2.viewcount FROM posts AS T1 JOIN users AS T2 ON T1.owneruserid  =  T2.id WHERE T2.DisplayName  =  \"Mornington\" EXCEPT SELECT T1.viewcount - T2.viewcount FROM posts AS T1 JOIN users AS T2 ON T1.owneruserid  =  T2.id WHERE T2.DisplayName  =  \"Amos\"",
+      "error": "no such column: T2.viewcount",
+      "repair_reason": "rewrote T2.viewcount -> T1.viewcount",
+      "repaired_sql": "SELECT T1.viewcount - T1.viewcount FROM posts AS T1 JOIN users AS T2 ON T1.owneruserid  =  T2.id WHERE T2.DisplayName  =  \"Mornington\" EXCEPT SELECT T1.viewcount - T1.viewcount FROM posts AS T1 JOIN users AS T2 ON T1.owneruserid  =  T2.id WHERE T2.DisplayName  =  \"Amos\"",
+      "repaired_executes": true,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 337,
+      "db_id": "codebase_community",
+      "original_sql": "SELECT T1.Views ,  T2.DisplayName FROM posts AS T1 JOIN users AS T2 ON T1.OwnerUserId  =  T2.Id WHERE T1.Title  =  'Computer Game Datasets' ORDER BY T1.LastActivityDate DESC LIMIT 1",
+      "error": "no such column: T1.Views",
+      "repair_reason": "rewrote T1.Views -> T2.Views",
+      "repaired_sql": "SELECT T2.Views ,  T2.DisplayName FROM posts AS T1 JOIN users AS T2 ON T1.OwnerUserId  =  T2.Id WHERE T1.Title  =  'Computer Game Datasets' ORDER BY T1.LastActivityDate DESC LIMIT 1",
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 335,
+      "db_id": "codebase_community",
+      "original_sql": "SELECT id ,  ownerdisplayname FROM posts WHERE creationdate LIKE \"2010%\" ORDER BY score DESC LIMIT 1",
+      "error": "no such column: creationdate",
+      "repair_reason": "ambiguous or no owner found (owners=['comments', 'postHistory', 'postLinks', 'users', 'votes'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 319,
+      "db_id": "codebase_community",
+      "original_sql": "SELECT T1.Title ,  T1.Comment FROM posts AS T1 JOIN tags AS T2 ON T1.Id  =  T2.ExcerptPostId WHERE T2.TagName  =  'humor'",
+      "error": "no such column: T1.Comment",
+      "repair_reason": "ambiguous or no owner found (owners=['postHistory'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 336,
+      "db_id": "codebase_community",
+      "original_sql": "SELECT count(*) * 100 / (SELECT count(*) FROM posts) FROM posts WHERE owneruserid IN (SELECT id FROM users WHERE reputation  >  1000) AND creationdate LIKE \"2011%\"",
+      "error": "no such column: creationdate",
+      "repair_reason": "ambiguous or no owner found (owners=['comments', 'postHistory', 'postLinks', 'users', 'votes'], candidate_aliases=['users'])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 203,
+      "db_id": "formula_1",
+      "original_sql": "SELECT max(age) ,  forename ,  surname FROM drivers WHERE nationality  =  \"Japanese\"",
+      "error": "no such column: age",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 197,
+      "db_id": "formula_1",
+      "original_sql": "SELECT name FROM races WHERE YEAR  =  (SELECT min(YEAR) FROM races) AND MONTH  =  (SELECT min(MONTH) FROM races)",
+      "error": "no such column: MONTH",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 215,
+      "db_id": "formula_1",
+      "original_sql": "SELECT T1.rank FROM driverstandings AS T1 JOIN drivers AS T2 ON T1.driverid  =  T2.driverid JOIN races AS T3 ON T1.raceid  =  T3.raceid WHERE T2.forename  =  \"Lewis\" AND T2.surname  =  \"Hamilton\" AND T3.name  =  \"Chinese Grand Prix\" AND T3.year  =  2008",
+      "error": "no such column: T1.rank",
+      "repair_reason": "ambiguous or no owner found (owners=['results'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 208,
+      "db_id": "formula_1",
+      "original_sql": "SELECT count(*) ,  count(*) * 100 / (SELECT count(*) FROM races WHERE name LIKE \"%European%\") FROM races WHERE name LIKE \"%European%\" AND country = \"Germany\"",
+      "error": "no such column: country",
+      "repair_reason": "ambiguous or no owner found (owners=['circuits'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 223,
+      "db_id": "formula_1",
+      "original_sql": "SELECT count(*) ,  count(*) * 100 / (SELECT count(*) FROM races WHERE YEAR BETWEEN 2007 AND 2009) FROM races AS T1 JOIN drivers AS T2 ON T1.circuitid  =  T3.circuitid JOIN seasons AS T4 ON T1.year  =  T4.year WHERE T2.nationality  =  \"Japanese\" AND T1.year BETWEEN 2007 AND 2009",
+      "error": "no such column: T3.circuitid",
+      "repair_reason": "ambiguous or no owner found (owners=['circuits', 'races'], candidate_aliases=['T1', 'races'])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 242,
+      "db_id": "formula_1",
+      "original_sql": "SELECT T1.forename ,  T1.surname ,  T1.nationality ,  T2.name FROM drivers AS T1 JOIN races AS T2 ON T1.driverid = results.driverid JOIN results AS T3 ON T2.raceid = T3.raceid ORDER BY T3.date LIMIT 1",
+      "error": "no such column: results.driverid",
+      "repair_reason": "ambiguous or no owner found (owners=['drivers', 'driverStandings', 'lapTimes', 'pitStops', 'qualifying', 'results'], candidate_aliases=['T1', 'T3'])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 439,
+      "db_id": "california_schools",
+      "original_sql": "SELECT CDSCode FROM schools GROUP BY CDSCode HAVING sum(enroll12)  >  500",
+      "error": "no such column: enroll12",
+      "repair_reason": "ambiguous or no owner found (owners=['satscores'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 454,
+      "db_id": "california_schools",
+      "original_sql": "SELECT T1.school FROM schools AS T1 JOIN satscores AS T2 ON T1.cds  =  T2.cds WHERE T1.virtual  =  'P' ORDER BY T2.avgscrread DESC LIMIT 5",
+      "error": "no such column: T1.cds",
+      "repair_reason": "rewrote T1.cds -> T2.cds",
+      "repaired_sql": "SELECT T1.school FROM schools AS T1 JOIN satscores AS T2 ON T2.cds  =  T2.cds WHERE T1.virtual  =  'P' ORDER BY T2.avgscrread DESC LIMIT 5",
+      "repaired_executes": true,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 445,
+      "db_id": "california_schools",
+      "original_sql": "SELECT T1.school ,  T1.street ,  T1.city ,  T1.zip FROM schools AS T1 JOIN frpm AS T2 ON T1.cdscode  =  T2.cdscode WHERE T1.county  =  \"Monterey\" AND T2.percent_eligible_free_ages_5_17  >  0.8 AND T2.percent_eligible_free_ages_5_17  >  0.8 AND T1.statusType  =  \"Active\"",
+      "error": "no such column: T2.percent_eligible_free_ages_5_17",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 446,
+      "db_id": "california_schools",
+      "original_sql": "SELECT T1.School ,  T1.AvgScrWrite ,  T1.GSoffered FROM schools AS T1 JOIN satscores AS T2 ON T1.CDSCode  =  T2.cds WHERE T1.OpenDate  >  \"1991\" OR T1.ClosedDate  <  \"2000\"",
+      "error": "no such column: T1.AvgScrWrite",
+      "repair_reason": "rewrote T1.AvgScrWrite -> T2.AvgScrWrite",
+      "repaired_sql": "SELECT T1.School ,  T2.AvgScrWrite ,  T1.GSoffered FROM schools AS T1 JOIN satscores AS T2 ON T1.CDSCode  =  T2.cds WHERE T1.OpenDate  >  \"1991\" OR T1.ClosedDate  <  \"2000\"",
+      "repaired_executes": true,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 467,
+      "db_id": "california_schools",
+      "original_sql": "SELECT T1.admemail1 ,  T1.admemail2 ,  T1.admemail3 FROM schools AS T1 JOIN frpm AS T2 ON T1.cdscode  =  T2.cdscode WHERE T1.county  =  \"San Bernardino\" AND T1.city  =  \"San Bernardino City Unified\" AND T1.opendate BETWEEN \"2009-01-01\" AND \"2010-12-31\" AND T2.schooltype  =  \"Public Intermediate/Middle Schools\" AND T2.schooltype  =  \"Unified Schools\"",
+      "error": "no such column: T2.schooltype",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 361,
+      "db_id": "card_games",
+      "original_sql": "SELECT count(*) FROM cards WHERE borderColor  =  \"white\" INTERSECT SELECT count(*) FROM cards WHERE status  =  \"Banned\"",
+      "error": "no such column: status",
+      "repair_reason": "ambiguous or no owner found (owners=['legalities'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 346,
+      "db_id": "card_games",
+      "original_sql": "SELECT T1.name FROM cards AS T1 JOIN cards AS T2 ON T1.id  =  T2.cardKingdomFoilId WHERE T1.isFoil  =  1 AND T2.isFoil  =  1 AND T1.power  >  10 AND T2.power  >  10",
+      "error": "no such column: T1.isFoil",
+      "repair_reason": "ambiguous or no owner found (owners=[], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 371,
+      "db_id": "card_games",
+      "original_sql": "SELECT count(*) FROM cards WHERE format  =  \"commander\" AND status  =  \"Legal\" AND hasContentWarning  =  0",
+      "error": "no such column: format",
+      "repair_reason": "ambiguous or no owner found (owners=['legalities'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    },
+    {
+      "id": 389,
+      "db_id": "card_games",
+      "original_sql": "SELECT T1.text FROM rulings AS T1 JOIN cards AS T2 ON T1.uuid  =  T2.uuid JOIN sets AS T3 ON T2.setCode  =  T3.code WHERE T3.name  =  \"Coldsnap\" AND T1.language  =  \"Italian\"",
+      "error": "no such column: T1.language",
+      "repair_reason": "ambiguous or no owner found (owners=['foreign_data', 'set_translations'], candidate_aliases=[])",
+      "repaired_sql": null,
+      "repaired_executes": false,
+      "repaired_matches_gold": false
+    }
+  ]
+}
