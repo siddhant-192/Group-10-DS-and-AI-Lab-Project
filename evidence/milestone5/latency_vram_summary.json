@@ -1,0 +1,21 @@
+{
+  "run_label": "M-Schema (primary)",
+  "n_predictions": 500,
+  "n_with_latency": 500,
+  "latency_ms": {
+    "mean": 2517.50026,
+    "median": 2205.832,
+    "min": 982.443,
+    "max": 7878.258,
+    "stdev": 1339.5497375677292
+  },
+  "cuda_peak": {
+    "allocated_gib": 7.624,
+    "max_allocated_gib": 13.084,
+    "max_reserved_gib": 21.738,
+    "reserved_gib": 16.99
+  },
+  "final_batch_size": 8,
+  "load_seconds": 11.971,
+  "evaluation_seconds": 1245.763
+}

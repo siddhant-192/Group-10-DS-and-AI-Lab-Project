@@ -1,0 +1,23 @@
+{
+  "dataset": "BIRD Mini-Dev",
+  "release": "Original Mini-Dev",
+  "format": "SQLite",
+  "source_questions": "/content/drive/MyDrive/bird_minidev/extracted/minidev/MINIDEV/mini_dev_sqlite.json",
+  "source_gold_sql": "/content/drive/MyDrive/bird_minidev/extracted/minidev/MINIDEV/mini_dev_sqlite_gold.sql",
+  "source_database_dir": "/content/drive/MyDrive/bird_minidev/extracted/minidev/MINIDEV/dev_databases",
+  "source_questions_sha256": "def4b2b43a9b06955193418f24c9be170eb6d83763ab702311790e0cdda8c791",
+  "source_gold_sql_sha256": "9089b50f2cfea1a7223f5f5019f0677bd9c6ddd61065dd00b6f0238549394976",
+  "total_examples": 500,
+  "prepared_examples": 500,
+  "excluded_examples": 0,
+  "databases": 11,
+  "preparation_validation": {
+    "question_gold_count_match": true,
+    "database_ids_checked": true,
+    "database_files_checked": true,
+    "schemas_read": true,
+    "gold_sql_execution": "not performed during preparation"
+  },
+  "evidence_preserved": true,
+  "evidence_used_by_current_prompt": false
+}

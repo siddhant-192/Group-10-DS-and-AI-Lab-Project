@@ -1,0 +1,55 @@
+{
+  "adapter_dir": "/content/drive/MyDrive/final_checkpoint_375_adapter",
+  "adapter_label": "milestone4_frozen",
+  "attention": "sdpa",
+  "base_slug": "qwen3-4b-instruct-2507",
+  "candidate_oracle_match_count": 129,
+  "candidate_oracle_match_pct": 25.8,
+  "candidate_selection": "greedy",
+  "canonical_exact_match_count": 4,
+  "canonical_exact_match_pct": 0.8,
+  "complexity_breakdown": {
+    "unknown": {
+      "examples": 500,
+      "execution_accuracy_pct": 25.8,
+      "normalized_exact_match_pct": 0.8,
+      "syntax_valid_pct": 94.6
+    }
+  },
+  "cuda_peak": {
+    "allocated_gib": 7.624,
+    "max_allocated_gib": 13.084,
+    "max_reserved_gib": 21.738,
+    "reserved_gib": 16.99
+  },
+  "dtype": "torch.bfloat16",
+  "evaluation_seconds": 1245.763,
+  "examples": 500,
+  "execution_match_count": 129,
+  "execution_match_pct": 25.8,
+  "final_batch_size": 8,
+  "format_compliant_count": 498,
+  "format_compliant_pct": 99.6,
+  "input_truncated_count": 0,
+  "input_truncated_pct": 0.0,
+  "load_seconds": 11.971,
+  "mean_generation_ms_per_example": 2517.5,
+  "normalized_exact_match_count": 4,
+  "normalized_exact_match_pct": 0.8,
+  "num_candidates": 1,
+  "prediction_execution_status": {
+    "error": 96,
+    "ok": 403,
+    "too_many_rows": 1
+  },
+  "raw_exact_match_count": 3,
+  "raw_exact_match_pct": 0.6,
+  "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "slug": "milestone4_frozen",
+  "syntax_valid_count": 473,
+  "syntax_valid_pct": 94.6,
+  "temperature": null,
+  "tier": "strong",
+  "top_p": null
+}

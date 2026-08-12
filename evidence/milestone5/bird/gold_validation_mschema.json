@@ -1,0 +1,14 @@
+{
+  "total_examples": 500,
+  "gold_status_counts": {
+    "ok": 500,
+    "error": 0
+  },
+  "gold_errors_sample": [],
+  "databases_using_mschema": 10,
+  "databases_using_ddl_fallback": [
+    "european_football_2"
+  ],
+  "rows_using_ddl_fallback": 51,
+  "note": "Schema format now matches checkpoint 375's actual training format (M-Schema, with the same DDL fallback for oversized schemas used during training). All 500 examples retained; nothing excluded."
+}

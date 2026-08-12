@@ -1,0 +1,56 @@
+[
+  {
+    "adapter_dir": "/content/drive/MyDrive/final_checkpoint_375_adapter",
+    "adapter_label": "milestone4_frozen",
+    "attention": "sdpa",
+    "base_slug": "qwen3-4b-instruct-2507",
+    "candidate_oracle_match_count": 154,
+    "candidate_oracle_match_pct": 30.8,
+    "candidate_selection": "greedy",
+    "canonical_exact_match_count": 14,
+    "canonical_exact_match_pct": 2.8,
+    "complexity_breakdown": {
+      "unknown": {
+        "examples": 500,
+        "execution_accuracy_pct": 30.8,
+        "normalized_exact_match_pct": 2.2,
+        "syntax_valid_pct": 90.8
+      }
+    },
+    "cuda_peak": {
+      "allocated_gib": 7.624,
+      "max_allocated_gib": 18.734,
+      "max_reserved_gib": 21.688,
+      "reserved_gib": 20.492
+    },
+    "dtype": "torch.bfloat16",
+    "evaluation_seconds": 1111.56,
+    "examples": 500,
+    "execution_match_count": 154,
+    "execution_match_pct": 30.8,
+    "final_batch_size": 16,
+    "format_compliant_count": 498,
+    "format_compliant_pct": 99.6,
+    "input_truncated_count": 0,
+    "input_truncated_pct": 0.0,
+    "load_seconds": 14.51,
+    "mean_generation_ms_per_example": 2264.404,
+    "normalized_exact_match_count": 11,
+    "normalized_exact_match_pct": 2.2,
+    "num_candidates": 1,
+    "prediction_execution_status": {
+      "error": 132,
+      "ok": 368
+    },
+    "raw_exact_match_count": 3,
+    "raw_exact_match_pct": 0.6,
+    "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "slug": "milestone4_frozen",
+    "syntax_valid_count": 454,
+    "syntax_valid_pct": 90.8,
+    "temperature": null,
+    "tier": "strong",
+    "top_p": null
+  }
+]

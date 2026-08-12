@@ -1,0 +1,25 @@
+{
+  "total_predictions": 500,
+  "parseable": 473,
+  "skipped_unparseable": 27,
+  "table_reference_precision": 1.0,
+  "table_references_total": 1029,
+  "table_references_real": 1029,
+  "column_reference_precision": 0.8283506886126973,
+  "column_references_total": 2977,
+  "column_references_real": 2466,
+  "fully_grounded_examples": 173,
+  "fully_grounded_pct_of_parseable": 0.3657505285412262,
+  "by_correctness": {
+    "correct": {
+      "n": 129,
+      "table_precision": 1.0,
+      "column_precision": 0.8215712383488681
+    },
+    "incorrect": {
+      "n": 344,
+      "table_precision": 1.0,
+      "column_precision": 0.8306379155435759
+    }
+  }
+}
