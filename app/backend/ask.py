@@ -64,8 +64,8 @@ def ask(
     call; optional ``clarification`` is folded into the question text first.
 
     If ``clarification_gate`` is True and the question looks underspecified,
-    refuse until the caller supplies clarification. Skipping with an empty
-    reply still refuses when the question names nothing in this database.
+    the UI asks once. Skip without extra text still requires a schema hit
+    (plain English or a close typo). That blocks empty "how many" guesses.
     """
 
     started = time.monotonic()
@@ -107,17 +107,20 @@ def ask(
             return _with_presentation(payload, question, chart_override)
 
     note = (clarification or "").strip()
+    # Skip without extra text: only generate if some word maps to this DB
+    # (albums, customers, or a close typo like alum→album). "How many" alone
+    # is not enough — that used to let the model pick a random table.
     if clarification_skipped and not note and not is_grounded(question, terms):
-        tables = ", ".join(table_hints(terms, limit=8)) or "(none found)"
+        entities = ", ".join(table_hints(terms, limit=8)) or "(none found)"
         return _error_payload(
             cfg,
             (
-                "Did not generate SQL: the question still does not name any table "
-                f"or column in database `{db_id}`.\n"
-                f"Question: {question!r}\n"
-                f"Tables in this database: {tables}\n"
-                "Add a short clarification that names what to count or list "
-                "(for example: how many albums?), then submit."
+                "Did not generate SQL: nothing in the question maps to this "
+                f"database (`{db_id}`), so the model would have to guess a table.\n"
+                f"You asked: {question!r}\n"
+                "Name the business thing in plain English "
+                f"(examples: {entities}). Table names are optional; "
+                "a close spelling is enough."
             ),
             started,
             model_metadata={
@@ -132,6 +135,14 @@ def ask(
     effective_question = compose_question(
         question, clarification, skipped=clarification_skipped
     )
+    if clarification_skipped and not note and is_grounded(question, terms):
+        effective_question = (
+            f"{effective_question}\n\n"
+            "(User did not add extra criteria. Keep the same business entity "
+            "they named. If this is a top-N / best / ranking ask with no measure, "
+            "use a sensible default for that entity such as count or the main "
+            "numeric attribute. Do not switch to a different table.)"
+        )
 
     try:
         schema_text = render_mschema(db_path, db_id, example_num=cfg.mschema_examples)
@@ -223,11 +234,11 @@ def _with_presentation(
 def _clarify_required_message(assessment: Any, db_id: str, terms: list[str]) -> str:
     reasons = "; ".join(assessment.reasons) if assessment.reasons else "underspecified"
     tables = ", ".join(table_hints(terms, limit=8))
-    extra = f" Tables in `{db_id}`: {tables}." if tables else ""
+    extra = f" You can ask about: {tables}." if tables else ""
     return (
         f"Clarification required before generating SQL ({reasons})."
         f"{extra} "
-        + (assessment.question_to_user or "Name what to count or list.")
+        + (assessment.question_to_user or "Say what to count or list in plain English.")
     )
 
 

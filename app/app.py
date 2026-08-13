@@ -270,7 +270,8 @@ if pending and pending.get("question") == question and pending.get("db_id") == d
         if st.button("Submit clarification", type="primary"):
             if not (clarify_text or "").strip():
                 st.error(
-                    "Clarification is empty. Type what to count or list, "
+                    "Clarification is empty. Add a short plain-English detail "
+                    "(what to count or list — table names are optional), "
                     "or use Continue without clarification."
                 )
             else:

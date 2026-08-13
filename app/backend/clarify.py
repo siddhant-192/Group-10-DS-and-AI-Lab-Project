@@ -8,6 +8,7 @@ Model-agnostic: no extra LLM call; works for mock / Qwen2.5 / Qwen3.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from difflib import SequenceMatcher
 from pathlib import Path
 import re
 import sqlite3
@@ -45,7 +46,9 @@ _STRIP_FORMAT = re.compile(
 )
 
 _HAS_LIMIT_OR_ORDER = re.compile(
-    r"\b(top\s+\d+|bottom\s+\d+|last\s+\d+|first\s+\d+|limit\s+\d+)\b",
+    r"\b("
+    r"top[\s-]?\d+|bottom[\s-]?\d+|last[\s-]?\d+|first[\s-]?\d+|limit[\s-]?\d+"
+    r")\b",
     re.IGNORECASE,
 )
 
@@ -158,22 +161,70 @@ def _variants(token: str) -> set[str]:
     return out
 
 
+# Close typos only (alum≈album). Cheap: a few dozen schema tokens, no embeddings.
+_FUZZY_MIN_LEN = 4
+_FUZZY_RATIO = 0.82
+
+
+def _schema_token_map(schema_terms: Sequence[str]) -> dict[str, list[str]]:
+    """Map a normalized token → schema identifiers that contain it."""
+
+    mapping: dict[str, list[str]] = {}
+    for term in schema_terms:
+        parts = _split_ident(term)
+        useful = [p for p in parts if p not in _STOP and len(p) >= 3]
+        if not useful:
+            useful = [p for p in parts if p not in _STOP and len(p) >= 2]
+        for part in useful:
+            for variant in _variants(part) | {part}:
+                mapping.setdefault(variant, [])
+                if term not in mapping[variant]:
+                    mapping[variant].append(term)
+    return mapping
+
+
+def _fuzzy_hits(q_tokens: set[str], token_map: dict[str, list[str]]) -> list[str]:
+    catalog = [tok for tok in token_map if len(tok) >= _FUZZY_MIN_LEN]
+    found: list[str] = []
+    seen: set[str] = set()
+    for word in q_tokens:
+        if word in _STOP or len(word) < _FUZZY_MIN_LEN:
+            continue
+        if word in token_map:
+            continue
+        best_tok = None
+        best_ratio = 0.0
+        for tok in catalog:
+            if abs(len(tok) - len(word)) > 2:
+                continue
+            ratio = SequenceMatcher(None, word, tok).ratio()
+            if ratio > best_ratio:
+                best_ratio = ratio
+                best_tok = tok
+        if best_tok is not None and best_ratio >= _FUZZY_RATIO:
+            for term in token_map[best_tok]:
+                key = term.lower()
+                if key not in seen:
+                    seen.add(key)
+                    found.append(term)
+    return found
+
+
 def matched_schema_terms(question: str, schema_terms: Sequence[str]) -> list[str]:
-    """Return schema identifiers whose tokens appear in the question."""
+    """Return schema identifiers named in the question (exact, plural, or close typo)."""
 
     q = (question or "").lower()
     q_tokens = set(re.findall(r"[a-z0-9]+", q))
+    token_map = _schema_token_map(schema_terms)
     hits: list[str] = []
     seen: set[str] = set()
     for term in schema_terms:
         parts = _split_ident(term)
-        # Prefer multi-token / table names over tiny column noise (id, name).
         useful = [p for p in parts if p not in _STOP and len(p) >= 3]
         if not useful:
             useful = [p for p in parts if p not in _STOP and len(p) >= 2]
         if not useful:
             continue
-        # Hit if any useful token variant appears as a whole word in the question.
         ok = False
         for part in useful:
             for variant in _variants(part):
@@ -187,6 +238,11 @@ def matched_schema_terms(question: str, schema_terms: Sequence[str]) -> list[str
             if key not in seen:
                 seen.add(key)
                 hits.append(term)
+    for term in _fuzzy_hits(q_tokens, token_map):
+        key = term.lower()
+        if key not in seen:
+            seen.add(key)
+            hits.append(term)
     return hits
 
 
@@ -255,6 +311,12 @@ def assess_clarification(
     if asks_list and has_schema_hit and len(tokens) >= 3:
         return ClarificationRequest(
             False, "", [], ["clear list question"], hits
+        )
+
+    # "top 5 albums" / "top5 albums": entity + N is enough; ranking measure can default.
+    if has_limit and has_schema_hit:
+        return ClarificationRequest(
+            False, "", [], ["top-n with entity"], hits
         )
 
     if reasons == ["question is very short"] and has_schema_hit and not vague:
@@ -332,6 +394,25 @@ def compose_question(question: str, clarification: str | None, skipped: bool = F
 
 
 def is_grounded(question: str, schema_terms: Sequence[str] | None) -> bool:
-    """True if the question mentions at least one identifier from this database."""
+    """True if the question uses a business word that maps to this database."""
 
     return bool(matched_schema_terms(question or "", list(schema_terms or [])))
+
+
+def looks_like_analytics_question(question: str) -> bool:
+    """True if the text looks like a data ask (plain English is enough)."""
+
+    q = (question or "").strip()
+    if not q:
+        return False
+    if _METRIC_WORDS.search(q) or _VAGUE.search(q):
+        return True
+    if re.match(r"(?i)^\s*(list|show|give|display)\b", q):
+        return True
+    if re.match(r"(?i)^\s*(what|which|who)\b", q) and (
+        _METRIC_WORDS.search(q) or _VAGUE.search(q)
+    ):
+        return True
+    if re.search(r"(?i)\b(compare|filter|group by)\b", q):
+        return True
+    return False
