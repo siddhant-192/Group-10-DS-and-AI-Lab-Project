@@ -237,6 +237,8 @@ def assess_clarification(
         reasons.append("asks for a count but does not name a table/entity from this database")
     if (asks_list or asks_what) and not has_schema_hit and not has_limit:
         reasons.append("list/what question without naming a table/entity from this database")
+    if terms and not has_schema_hit:
+        reasons.append("does not mention any table or column from the selected database")
     if not terms:
         reasons.append("no schema terms supplied — treating entity grounding as unknown")
 
@@ -271,18 +273,17 @@ def assess_clarification(
     if not needed:
         return ClarificationRequest(False, "", [], reasons, hits)
 
-    table_hints = _table_hints(terms, limit=6)
+    hint_tables = table_hints(terms, limit=6)
     suggestions = []
-    if table_hints:
+    if hint_tables:
         suggestions.append(
             "Name what to count/list, e.g. "
-            + ", ".join(f"how many {t}?" for t in table_hints[:3])
+            + ", ".join(f"how many {t}?" for t in hint_tables[:3])
         )
     suggestions.extend(
         [
             "Top 5 by a numeric measure (say which measure).",
             "Add a filter (name, country, year) if you have one.",
-            "Or skip to proceed with a literal guess (may pick the wrong table).",
         ]
     )
     question_to_user = (
@@ -296,7 +297,7 @@ def assess_clarification(
     )
 
 
-def _table_hints(schema_terms: Iterable[str], limit: int = 6) -> list[str]:
+def table_hints(schema_terms: Iterable[str], limit: int = 6) -> list[str]:
     """Prefer bare table names (no dots) for user-facing suggestions."""
 
     tables: list[str] = []
@@ -320,11 +321,7 @@ def compose_question(question: str, clarification: str | None, skipped: bool = F
     base = (question or "").strip()
     note = (clarification or "").strip()
     if skipped and not note:
-        return (
-            f"{base}\n\n"
-            "(User declined clarification. Use the most literal interpretation "
-            "of the question. Return SQL only inside a ```sql fence.)"
-        )
+        return base
     if note:
         return (
             f"{base}\n\n"
@@ -332,3 +329,9 @@ def compose_question(question: str, clarification: str | None, skipped: bool = F
             "Use this clarification. Return SQL only inside a ```sql fence."
         )
     return base
+
+
+def is_grounded(question: str, schema_terms: Sequence[str] | None) -> bool:
+    """True if the question mentions at least one identifier from this database."""
+
+    return bool(matched_schema_terms(question or "", list(schema_terms or [])))

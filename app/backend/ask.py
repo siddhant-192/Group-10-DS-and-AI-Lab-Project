@@ -9,7 +9,13 @@ from typing import Any
 
 from .config import PROJECT_ROOT, UIConfig, load_ui_config
 from .charts import select_chart, short_answer
-from .clarify import assess_clarification, compose_question, schema_terms_from_db
+from .clarify import (
+    assess_clarification,
+    compose_question,
+    is_grounded,
+    schema_terms_from_db,
+    table_hints,
+)
 from .models import ModelBackend, build_backend
 from .mschema import render_mschema
 from .registry import resolve_database
@@ -57,9 +63,9 @@ def ask(
     (template summary + rule-based chart spec). Generation is still one model
     call; optional ``clarification`` is folded into the question text first.
 
-    If ``clarification_gate`` is True and the question looks underspecified for
-    this database, refuse to generate until the caller supplies clarification
-    or sets ``clarification_skipped=True`` (prevents silent wrong-table guesses).
+    If ``clarification_gate`` is True and the question looks underspecified,
+    refuse until the caller supplies clarification. Skipping with an empty
+    reply still refuses when the question names nothing in this database.
     """
 
     started = time.monotonic()
@@ -73,21 +79,19 @@ def ask(
     except KeyError as exc:
         return _error_payload(cfg, str(exc), started)
 
+    try:
+        terms = schema_terms_from_db(db_path)
+    except Exception:
+        terms = []
+
     if clarification_gate and not clarification and not clarification_skipped:
-        try:
-            terms = schema_terms_from_db(db_path)
-        except Exception:
-            terms = []
         assessment = assess_clarification(question, schema_terms=terms)
         if assessment.needed:
             payload = {
                 "sql": None,
                 "columns": None,
                 "rows": None,
-                "error": (
-                    "clarification required before SQL: "
-                    + (assessment.question_to_user or "question is underspecified")
-                ),
+                "error": _clarify_required_message(assessment, db_id, terms),
                 "latency_ms": round((time.monotonic() - started) * 1000, 3),
                 "model_metadata": {
                     "backend": cfg.backend,
@@ -101,6 +105,29 @@ def ask(
                 "clarification_request": assessment.to_dict(),
             }
             return _with_presentation(payload, question, chart_override)
+
+    note = (clarification or "").strip()
+    if clarification_skipped and not note and not is_grounded(question, terms):
+        tables = ", ".join(table_hints(terms, limit=8)) or "(none found)"
+        return _error_payload(
+            cfg,
+            (
+                "Did not generate SQL: the question still does not name any table "
+                f"or column in database `{db_id}`.\n"
+                f"Question: {question!r}\n"
+                f"Tables in this database: {tables}\n"
+                "Add a short clarification that names what to count or list "
+                "(for example: how many albums?), then submit."
+            ),
+            started,
+            model_metadata={
+                "backend": cfg.backend,
+                "clarification_skipped": True,
+                "matched_schema_terms": [],
+            },
+            db_id=db_id,
+            db_path=str(db_path),
+        )
 
     effective_question = compose_question(
         question, clarification, skipped=clarification_skipped
@@ -130,7 +157,7 @@ def ask(
             "sql": None,
             "columns": None,
             "rows": None,
-            "error": "could not extract SQL from model output",
+            "error": _sql_extract_error(raw_text),
             "latency_ms": round((time.monotonic() - started) * 1000, 3),
             "model_metadata": model_meta,
             "raw_model_output": raw_text,
@@ -145,7 +172,7 @@ def ask(
             "sql": sql,
             "columns": None,
             "rows": None,
-            "error": f"safety/validation failed: {validation_error}",
+            "error": _humanize_sql_error(validation_error, sql, db_id),
             "latency_ms": round((time.monotonic() - started) * 1000, 3),
             "model_metadata": model_meta,
             "raw_model_output": raw_text,
@@ -160,7 +187,11 @@ def ask(
         timeout_seconds=cfg.execute_timeout_seconds,
         max_result_rows=cfg.max_result_rows,
     )
-    error = None if executed.status == "ok" else (executed.error or executed.status)
+    error = (
+        None
+        if executed.status == "ok"
+        else _humanize_sql_error(executed.error or executed.status, sql, db_id)
+    )
     payload = {
         "sql": sql,
         "columns": executed.columns,
@@ -189,11 +220,79 @@ def _with_presentation(
     return payload
 
 
+def _clarify_required_message(assessment: Any, db_id: str, terms: list[str]) -> str:
+    reasons = "; ".join(assessment.reasons) if assessment.reasons else "underspecified"
+    tables = ", ".join(table_hints(terms, limit=8))
+    extra = f" Tables in `{db_id}`: {tables}." if tables else ""
+    return (
+        f"Clarification required before generating SQL ({reasons})."
+        f"{extra} "
+        + (assessment.question_to_user or "Name what to count or list.")
+    )
+
+
+def _sql_extract_error(raw_text: str | None) -> str:
+    snippet = (raw_text or "").strip().replace("\r", "")
+    if len(snippet) > 400:
+        snippet = snippet[:400] + "…"
+    if not snippet:
+        return (
+            "No SQL in the model output: the response was empty. "
+            "The model must return a SELECT/WITH statement inside a ```sql fence."
+        )
+    return (
+        "No SQL could be extracted from the model output "
+        "(no SELECT/WITH statement found). "
+        f"Model text started with:\n{snippet}"
+    )
+
+
+def _humanize_sql_error(detail: str | None, sql: str | None, db_id: str | None) -> str:
+    raw = (detail or "").strip()
+    low = raw.lower()
+    shown_sql = (sql or "").strip()
+    sql_bit = f"\nSQL: {shown_sql}" if shown_sql else ""
+    db_bit = f" (database `{db_id}`)" if db_id else ""
+
+    if "gold query does not begin" in low or "does not begin with select" in low:
+        return (
+            "Rejected: SQL must start with SELECT or WITH "
+            f"(readonly queries only).{sql_bit}"
+        )
+    if "no such table" in low:
+        return (
+            f"SQLite error{db_bit}: {raw}. "
+            "The generated SQL names a table that is not in this database."
+            f"{sql_bit}"
+        )
+    if "no such column" in low:
+        return (
+            f"SQLite error{db_bit}: {raw}. "
+            "The generated SQL names a column that is not in this database."
+            f"{sql_bit}"
+        )
+    if "not authorized" in low or "authorization" in low or "denied" in low:
+        return (
+            "Rejected as non-readonly (writes/DDL such as ALTER, DELETE, UPDATE "
+            f"are blocked). Detail: {raw or 'authorizer denied the statement'}."
+            f"{sql_bit}"
+        )
+    if "interrupted" in low or "timeout" in low:
+        return f"Query timed out{db_bit}. Detail: {raw or 'interrupted'}.{sql_bit}"
+    if "syntax error" in low:
+        return f"SQLite syntax error{db_bit}: {raw}.{sql_bit}"
+    if raw:
+        return f"SQL did not run{db_bit}: {raw}.{sql_bit}"
+    return f"SQL did not run{db_bit}.{sql_bit}"
+
+
 def _error_payload(
     cfg: UIConfig,
     message: str,
     started: float,
     model_metadata: dict[str, Any] | None = None,
+    db_id: str | None = None,
+    db_path: str | None = None,
 ) -> dict[str, Any]:
     payload = {
         "sql": None,
@@ -203,7 +302,7 @@ def _error_payload(
         "latency_ms": round((time.monotonic() - started) * 1000, 3),
         "model_metadata": model_metadata or {"backend": cfg.backend},
         "raw_model_output": None,
-        "db_id": None,
-        "db_path": None,
+        "db_id": db_id,
+        "db_path": db_path,
     }
     return _with_presentation(payload, "", "auto")
