@@ -19,7 +19,7 @@ CLARIFY_VERSION = "schema-aware-v2"
 # Underspecified / vague cues (linguistic — no DB dependency).
 _VAGUE = re.compile(
     r"\b("
-    r"best|worst|top|bottom|recent|latest|oldest|main|important|interesting|"
+    r"highest|best|worst|top|bottom|recent|latest|oldest|main|important|interesting|"
     r"show\s+me|tell\s+me|give\s+me|what\s+about|how\s+about|"
     r"sales|revenue|performance|status|summary|overview|stats|analysis|"
     r"fast[- ]?moving|low\s+stock|popular|good|bad"
