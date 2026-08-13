@@ -11,6 +11,7 @@ from .config import PROJECT_ROOT, UIConfig, load_ui_config
 from .charts import select_chart, short_answer
 from .clarify import (
     assess_clarification,
+    clarification_is_usable,
     compose_question,
     is_grounded,
     schema_terms_from_db,
@@ -107,10 +108,40 @@ def ask(
             return _with_presentation(payload, question, chart_override)
 
     note = (clarification or "").strip()
-    # Skip without extra text: only generate if some word maps to this DB
-    # (albums, customers, or a close typo like alum→album). "How many" alone
-    # is not enough — that used to let the model pick a random table.
-    if clarification_skipped and not note and not is_grounded(question, terms):
+    usable_note = clarification_is_usable(note, terms)
+    grounded = is_grounded(question, terms) or (
+        usable_note and is_grounded(f"{question} {note}", terms)
+    )
+
+    # Random clarification text ("asdf", "xyz") must not reach the model —
+    # that is how "how many" used to become a guessed Customer query.
+    if note and not usable_note:
+        if not is_grounded(question, terms):
+            entities = ", ".join(table_hints(terms, limit=8)) or "(none found)"
+            return _error_payload(
+                cfg,
+                (
+                    "Did not generate SQL: the clarification does not name anything "
+                    f"in `{db_id}`, so the model would guess a table.\n"
+                    f"Question: {question!r}\n"
+                    f"Clarification: {note!r}\n"
+                    "Name the business thing in plain English "
+                    f"(examples: {entities})."
+                ),
+                started,
+                model_metadata={
+                    "backend": cfg.backend,
+                    "clarification": note,
+                    "clarification_ignored": True,
+                },
+                db_id=db_id,
+                db_path=str(db_path),
+            )
+        note = ""
+        clarification = None
+        clarification_skipped = True
+
+    if not grounded:
         entities = ", ".join(table_hints(terms, limit=8)) or "(none found)"
         return _error_payload(
             cfg,
@@ -125,7 +156,7 @@ def ask(
             started,
             model_metadata={
                 "backend": cfg.backend,
-                "clarification_skipped": True,
+                "clarification_skipped": clarification_skipped,
                 "matched_schema_terms": [],
             },
             db_id=db_id,
@@ -133,9 +164,9 @@ def ask(
         )
 
     effective_question = compose_question(
-        question, clarification, skipped=clarification_skipped
+        question, note or None, skipped=clarification_skipped or not usable_note
     )
-    if clarification_skipped and not note and is_grounded(question, terms):
+    if (clarification_skipped or not usable_note) and is_grounded(question, terms):
         effective_question = (
             f"{effective_question}\n\n"
             "(User did not add extra criteria. Keep the same business entity "

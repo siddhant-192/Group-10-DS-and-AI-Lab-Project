@@ -399,6 +399,17 @@ def is_grounded(question: str, schema_terms: Sequence[str] | None) -> bool:
     return bool(matched_schema_terms(question or "", list(schema_terms or [])))
 
 
+def clarification_is_usable(note: str, schema_terms: Sequence[str] | None) -> bool:
+    """True if the clarification names an entity or adds a real analytic constraint."""
+
+    text = (note or "").strip()
+    if not text:
+        return False
+    if is_grounded(text, schema_terms):
+        return True
+    return looks_like_analytics_question(text)
+
+
 def looks_like_analytics_question(question: str) -> bool:
     """True if the text looks like a data ask (plain English is enough)."""
 
