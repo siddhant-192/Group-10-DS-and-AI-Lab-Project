@@ -47,7 +47,19 @@ _STRIP_FORMAT = re.compile(
 
 _HAS_LIMIT_OR_ORDER = re.compile(
     r"\b("
-    r"top[\s-]?\d+|bottom[\s-]?\d+|last[\s-]?\d+|first[\s-]?\d+|limit[\s-]?\d+"
+    r"top[\s-]?\d+|bottom[\s-]?\d+|last[\s-]?\d+|first[\s-]?\d+|limit[\s-]?\d+|"
+    r"top\s+(?:one|two|three|four|five|six|seven|eight|nine|ten)|"
+    r"bottom\s+(?:one|two|three|four|five|six|seven|eight|nine|ten)"
+    r")\b",
+    re.IGNORECASE,
+)
+
+# Ranking *measure* (not just N). "top 3 albums" has N but no measure.
+_HAS_MEASURE = re.compile(
+    r"\b("
+    r"by\s+[a-z]+|"
+    r"count|sum|average|avg|total|sales|revenue|plays|streams|"
+    r"duration|length|price|year|rating|score"
     r")\b",
     re.IGNORECASE,
 )
@@ -276,16 +288,23 @@ def assess_clarification(
     vague = bool(_VAGUE.search(q))
     has_metric = bool(_METRIC_WORDS.search(q))
     has_limit = bool(_HAS_LIMIT_OR_ORDER.search(q))
+    has_measure = bool(_HAS_MEASURE.search(q) or has_metric)
     has_time = bool(_HAS_TIME.search(q))
     asks_count = bool(re.search(r"(?i)\b(count|how\s+many|number\s+of)\b", q))
     asks_list = bool(re.match(r"(?i)^\s*(list|show|give|display)\b", q))
     asks_what = bool(re.match(r"(?i)^\s*what\b", q))
+    is_ranking = bool(
+        re.search(r"\b(top|best|worst|popular)\d*\b", q, re.I)
+        or re.search(r"\btop[\s-]?\d+", q, re.I)
+    )
 
     if len(tokens) <= 5:
         reasons.append("question is very short")
-    if vague and not (has_metric and has_schema_hit):
+    if vague and not (has_metric and has_schema_hit) and not (is_ranking and has_schema_hit):
         reasons.append("vague wording without a clear metric + schema entity")
-    if re.search(r"\b(top|best|worst|popular)\b", q, re.I) and not has_limit:
+    if is_ranking and not has_measure:
+        reasons.append("ranking without saying what to rank by (e.g. by sales, by year)")
+    if is_ranking and not has_limit:
         reasons.append("ranking word without how many (e.g. top 5)")
     if re.search(r"\b(recent|latest|last)\b", q, re.I) and not has_time and not has_limit:
         reasons.append("time wording without a concrete period")
@@ -308,18 +327,23 @@ def assess_clarification(
             False, "", [], ["clear count question"], hits
         )
 
-    if asks_list and has_schema_hit and len(tokens) >= 3:
+    if asks_list and has_schema_hit and len(tokens) >= 3 and not is_ranking:
         return ClarificationRequest(
             False, "", [], ["clear list question"], hits
         )
 
-    # "top 5 albums" / "top5 albums": entity + N is enough; ranking measure can default.
-    if has_limit and has_schema_hit:
+    # Only skip clarify when ranking already names entity + measure.
+    if is_ranking and has_schema_hit and has_measure:
         return ClarificationRequest(
-            False, "", [], ["top-n with entity"], hits
+            False, "", [], ["ranking with entity and measure"], hits
         )
 
-    if reasons == ["question is very short"] and has_schema_hit and not vague:
+    if (
+        reasons == ["question is very short"]
+        and has_schema_hit
+        and not vague
+        and not is_ranking
+    ):
         return ClarificationRequest(
             False, "", [], ["short but entity-clear"], hits
         )
@@ -344,16 +368,24 @@ def assess_clarification(
         )
     suggestions.extend(
         [
-            "Top 5 by a numeric measure (say which measure).",
+            "If this is a top-N list: say what to rank by (sales, year, count).",
             "Add a filter (name, country, year) if you have one.",
         ]
     )
-    question_to_user = (
-        "Your question looks underspecified for this database. "
-        "Please say what to count/measure (which business thing), "
-        "filters, or how many rows — one short reply. "
-        "You do not need exact SQL table names; plain English is fine."
-    )
+    if is_ranking and has_schema_hit and not has_measure:
+        question_to_user = (
+            "You named what to list, but not what “top” means. "
+            "Reply with the ranking measure in plain English "
+            "(for example: by number of tracks, by sales, by year). "
+            "You can continue without that and a default measure will be used."
+        )
+    else:
+        question_to_user = (
+            "Your question looks underspecified for this database. "
+            "Please say what to count/measure (which business thing), "
+            "filters, or how many rows — one short reply. "
+            "You do not need exact SQL table names; plain English is fine."
+        )
     return ClarificationRequest(
         True, question_to_user, suggestions, reasons, hits
     )
