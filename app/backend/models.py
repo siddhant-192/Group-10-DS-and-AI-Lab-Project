@@ -128,8 +128,11 @@ class HuggingFaceBackend(ModelBackend):
         base = AutoModelForCausalLM.from_pretrained(self.repo_id, **model_kwargs)
         if self.adapter_dir is not None:
             from peft import PeftModel
-
-            self._model = PeftModel.from_pretrained(base, str(self.adapter_dir.resolve()))
+            self._model = PeftModel.from_pretrained(
+                base,
+                str(self.adapter_dir.resolve()),
+                device_map="auto" if torch.cuda.is_available() else None,
+            )
         else:
             self._model = base
         self._model.eval()
