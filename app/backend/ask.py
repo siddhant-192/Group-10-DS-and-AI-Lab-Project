@@ -1,4 +1,5 @@
-"""Orchestration: question + db_id → SQL + safe readonly results."""
+%%writefile /content/repo/app/backend/ask.py
+"""Orchestration: question + db_id → SQL + safe readonly results.."""
 
 from __future__ import annotations
 
@@ -14,7 +15,7 @@ from .models import ModelBackend, build_backend
 from .mschema import render_mschema
 from .registry import resolve_database
 from .sql_utils import execute_query, extract_sql
-
+from .explain_query import explain_sql
 
 def _ensure_src_on_path() -> None:
     root = str(PROJECT_ROOT)
@@ -96,13 +97,50 @@ def ask(
     except KeyError as exc:
         return _error_payload(cfg, str(exc), started)
 
-    if clarification_gate and not clarification and not clarification_skipped:
+    if clarification_gate and not clarification:
         try:
             terms = schema_terms_from_db(db_path)
         except Exception:
             terms = []
         assessment = assess_clarification(question, schema_terms=terms)
-        if assessment.needed:
+
+        # Hard block, NOT bypassed by clarification_skipped: a question with
+        # zero connection to this database's schema (e.g. "abc") should never
+        # reach the model. This is distinct from ordinary vagueness -- the
+        # "skip clarification" button is meant to accept the model's safest
+        # interpretation of an underspecified-but-related question, not to
+        # force an answer out of a question that names nothing in this
+        # database at all.
+        no_grounding_at_all = terms and not assessment.matched_schema_terms
+        if assessment.needed and no_grounding_at_all:
+            payload = {
+                "sql": None,
+                "columns": None,
+                "rows": None,
+                "error": (
+                    "This question does not reference anything in the "
+                    "selected database, so no query can be safely generated. "
+                    "Please rephrase it to relate to this database's tables "
+                    "or data."
+                ),
+                "latency_ms": round((time.monotonic() - started) * 1000, 3),
+                "model_metadata": {
+                    "backend": cfg.backend,
+                    "clarification_required": True,
+                    "blocked_reason": "no_schema_grounding",
+                    "clarification_reasons": assessment.reasons,
+                    "matched_schema_terms": assessment.matched_schema_terms,
+                },
+                "raw_model_output": None,
+                "db_id": db_id,
+                "db_path": str(db_path),
+                "clarification_request": assessment.to_dict(),
+            }
+            return _with_presentation(payload, question, chart_override)
+
+        # Ordinary vagueness (has some grounding, just underspecified) is
+        # still skippable as before.
+        if assessment.needed and not clarification_skipped:
             payload = {
                 "sql": None,
                 "columns": None,
@@ -166,6 +204,7 @@ def ask(
     if not ok:
         payload = {
             "sql": sql,
+            "sql_explanation": explain_sql(sql),
             "columns": None,
             "rows": None,
             "error": _friendly_validation_error(validation_error),            
@@ -186,6 +225,7 @@ def ask(
     error = None if executed.status == "ok" else (executed.error or executed.status)
     payload = {
         "sql": sql,
+        "sql_explanation": explain_sql(sql),
         "columns": executed.columns,
         "rows": executed.rows,
         "error": error,
