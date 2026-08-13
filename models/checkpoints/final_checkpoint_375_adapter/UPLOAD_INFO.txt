@@ -1,0 +1,27 @@
+Upload this entire folder, preserving the file names.
+
+Artifact
+--------
+Final full-data QLoRA adapter, checkpoint 375
+Base model: Qwen/Qwen3-4B-Instruct-2507
+Pinned base revision: cdbee75f17c01a7cc42f958dc650907174af0554
+Training rows: 5,996
+
+Required for PEFT loading
+-------------------------
+- adapter_model.safetensors
+- adapter_config.json
+
+The tokenizer/chat files are included to reproduce the project evaluation
+environment exactly.
+
+Integrity check
+---------------
+Run after upload/download:
+
+  shasum -a 256 adapter_model.safetensors
+
+Expected SHA-256:
+63a51ff491a163c1433dd4ac56d936d969337de67279f852ea1ef966ac335e5c
+
+Expected byte size: 132,187,888

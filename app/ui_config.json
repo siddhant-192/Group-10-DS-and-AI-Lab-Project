@@ -1,0 +1,12 @@
+{
+  "backend": "mock",
+  "model_slug": "qwen2.5-coder-1.5b-instruct",
+  "adapter_dir": null,
+  "demo_databases_dir": "demo_databases",
+  "models_config_path": "configs/text2sql_eval_models.json",
+  "max_new_tokens": 512,
+  "execute_timeout_seconds": 5.0,
+  "max_result_rows": 200,
+  "mschema_examples": 3,
+  "load_4bit": true
+}
