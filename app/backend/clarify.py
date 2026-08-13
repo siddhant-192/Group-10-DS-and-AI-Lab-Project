@@ -298,8 +298,9 @@ def assess_clarification(
         or re.search(r"\btop[\s-]?\d+", q, re.I)
     )
 
-    if len(tokens) <= 5:
-        reasons.append("question is very short")
+    too_short = len(tokens) < 4
+    if too_short:
+        reasons.append("fewer than 4 words - treating as underspecified")
     if vague and not (has_metric and has_schema_hit) and not (is_ranking and has_schema_hit):
         reasons.append("vague wording without a clear metric + schema entity")
     if is_ranking and not has_measure:
@@ -317,8 +318,11 @@ def assess_clarification(
     if not terms:
         reasons.append("no schema terms supplied — treating entity grounding as unknown")
 
-    # Clear skips only when the question names something from *this* DB.
-    if (
+    # Never skip on < 4 words. After the user skips/junk-clarifies,
+    # ask.py still generates using the named entity + a default measure.
+    if too_short:
+        pass
+    elif (
         re.match(r"(?i)^\s*how\s+many\b", q)
         and has_schema_hit
         and len(tokens) >= 4
@@ -326,26 +330,13 @@ def assess_clarification(
         return ClarificationRequest(
             False, "", [], ["clear count question"], hits
         )
-
-    if asks_list and has_schema_hit and len(tokens) >= 3 and not is_ranking:
+    elif asks_list and has_schema_hit and len(tokens) >= 4 and not is_ranking:
         return ClarificationRequest(
             False, "", [], ["clear list question"], hits
         )
-
-    # Only skip clarify when ranking already names entity + measure.
-    if is_ranking and has_schema_hit and has_measure:
+    elif is_ranking and has_schema_hit and has_measure:
         return ClarificationRequest(
             False, "", [], ["ranking with entity and measure"], hits
-        )
-
-    if (
-        reasons == ["question is very short"]
-        and has_schema_hit
-        and not vague
-        and not is_ranking
-    ):
-        return ClarificationRequest(
-            False, "", [], ["short but entity-clear"], hits
         )
 
     # If the only issue was "no schema terms", still clarify count/list/what.
@@ -374,10 +365,17 @@ def assess_clarification(
     )
     if is_ranking and has_schema_hit and not has_measure:
         question_to_user = (
-            "You named what to list, but not what “top” means. "
+            "You named what to list, but not what \"top\" means. "
             "Reply with the ranking measure in plain English "
             "(for example: by number of tracks, by sales, by year). "
             "You can continue without that and a default measure will be used."
+        )
+    elif too_short:
+        question_to_user = (
+            "That question is under 4 words, so it is too short to run as-is. "
+            "Add what to count/list, a filter, or how many rows. "
+            "You can continue without that and a default query will be used "
+            "if you already named a business thing (for example albums)."
         )
     else:
         question_to_user = (
