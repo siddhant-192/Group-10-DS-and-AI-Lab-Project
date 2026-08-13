@@ -1,7 +1,7 @@
 {
-  "backend": "mock",
-  "model_slug": "qwen2.5-coder-1.5b-instruct",
-  "adapter_dir": null,
+  "backend": "qwen3-4b+adapter",
+  "model_slug": "qwen3-4b-instruct-2507",
+  "adapter_dir": "/root/.cache/huggingface/hub/models--walz89--checkpoint-375-adapter/snapshots/64401ed6037afa27ca346161fcf338ac78efd9dc",
   "demo_databases_dir": "demo_databases",
   "models_config_path": "configs/text2sql_eval_models.json",
   "max_new_tokens": 512,

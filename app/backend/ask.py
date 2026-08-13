@@ -39,6 +39,29 @@ def get_backend(config: UIConfig) -> ModelBackend:
         _BACKEND_CACHE[key] = build_backend(config)
     return _BACKEND_CACHE[key]
 
+def _friendly_validation_error(validation_error: str | None) -> str:
+    """Convert low-level SQL validation errors into useful UI messages."""
+
+    message = (validation_error or "").strip()
+
+    if not message:
+        return "The generated SQL could not be safely validated."
+
+    if "no such column" in message.lower():
+        return (
+            "I couldn't safely interpret the question using the available "
+            "database schema. The generated query referenced a column that "
+            "does not exist."
+        )
+
+    if "no such table" in message.lower():
+        return (
+            "I couldn't safely interpret the question using the available "
+            "database schema. The generated query referenced a table that "
+            "does not exist."
+        )
+
+    return f"SQL validation failed: {message}"
 
 def ask(
     question: str,
@@ -145,7 +168,7 @@ def ask(
             "sql": sql,
             "columns": None,
             "rows": None,
-            "error": f"safety/validation failed: {validation_error}",
+            "error": _friendly_validation_error(validation_error),            
             "latency_ms": round((time.monotonic() - started) * 1000, 3),
             "model_metadata": model_meta,
             "raw_model_output": raw_text,
