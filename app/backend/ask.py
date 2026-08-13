@@ -1,4 +1,3 @@
-%%writefile /content/repo/app/backend/ask.py
 """Orchestration: question + db_id → SQL + safe readonly results.."""
 
 from __future__ import annotations
