@@ -268,11 +268,18 @@ if pending and pending.get("question") == question and pending.get("db_id") == d
     c1, c2 = st.columns(2)
     with c1:
         if st.button("Submit clarification", type="primary"):
-            _run_ask(
-                clarification=clarify_text or None,
-                clarification_skipped=not bool((clarify_text or "").strip()),
-            )
-            st.rerun()
+            if not (clarify_text or "").strip():
+                st.error(
+                    "Clarification is empty. Add a short plain-English detail "
+                    "(what to count or list — table names are optional), "
+                    "or use Continue without clarification."
+                )
+            else:
+                _run_ask(
+                    clarification=clarify_text.strip(),
+                    clarification_skipped=False,
+                )
+                st.rerun()
     with c2:
         if st.button("Continue without clarification"):
             _run_ask(clarification=None, clarification_skipped=True)
@@ -293,7 +300,6 @@ if result:
 
     if result.get("error"):
         st.error(result["error"])
-        # If the first ask failed without a clarification turn, offer one repair.
         used_clarify = bool(meta.get("clarification")) or bool(
             meta.get("clarification_skipped")
         )
@@ -307,23 +313,23 @@ if result:
             )
         ):
             st.warning(
-                "The previous query did not succeed. You can add a short clarification and run again."
+                "The previous query did not succeed. Add a short clarification and run again."
             )
             if st.button("Add clarification"):
+                err = str(result.get("error") or "unknown error")
                 _open_clarify(
                     assessment_dict={
                         "needed": True,
                         "question_to_user": (
-                            "The SQL did not pass safety validation. "
-                            "Add a short clarification (what to count, top N, filters), "
-                            "or continue with the original wording."
+                            f"The last attempt failed: {err}\n\n"
+                            "Add what to count, a top-N, or a filter, then submit."
                         ),
                         "suggestions": [
                             "Top 5 by a numeric measure (state which measure).",
                             "How many rows for a specific entity?",
                             "List all matching rows without ranking.",
                         ],
-                        "reasons": [f"after validation error: {result.get('error')}"],
+                        "reasons": [err],
                     },
                     source="after_error",
                 )
