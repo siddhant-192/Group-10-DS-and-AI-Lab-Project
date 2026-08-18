@@ -20,7 +20,7 @@ CLARIFY_VERSION = "schema-aware-v2"
 # Underspecified / vague cues (linguistic — no DB dependency).
 _VAGUE = re.compile(
     r"\b("
-    r"best|worst|top|bottom|recent|latest|oldest|main|important|interesting|"
+    r"highest|best|worst|top|bottom|recent|latest|oldest|main|important|interesting|"
     r"show\s+me|tell\s+me|give\s+me|what\s+about|how\s+about|"
     r"sales|revenue|performance|status|summary|overview|stats|analysis|"
     r"fast[- ]?moving|low\s+stock|popular|good|bad"
@@ -361,6 +361,7 @@ def assess_clarification(
         [
             "If this is a top-N list: say what to rank by (sales, year, count).",
             "Add a filter (name, country, year) if you have one.",
+            "Or skip to let the system use the safest schema-grounded interpretation.",
         ]
     )
     if is_ranking and has_schema_hit and not has_measure:
@@ -412,14 +413,27 @@ def compose_question(question: str, clarification: str | None, skipped: bool = F
 
     base = (question or "").strip()
     note = (clarification or "").strip()
+
     if skipped and not note:
-        return base
+        return (
+            f"{base}\n\n"
+            "(User declined clarification. Make the safest interpretation that "
+            "is fully grounded in the supplied database schema. Use only tables, "
+            "columns, relationships, and computable metrics that are explicitly "
+            "supported by the schema. Do not invent or assume columns, tables, "
+            "metrics, or relationships. If the question cannot be answered "
+            "without an unsupported assumption, do not fabricate a SQL query. "
+            "Return SQL only inside a ```sql fence.)"
+        )
     if note:
         return (
             f"{base}\n\n"
             f"Clarification from user: {note}\n\n"
-            "Use this clarification. Return SQL only inside a ```sql fence."
+            "Use this clarification. Ground the SQL strictly in the supplied "
+            "database schema. Do not invent tables, columns, metrics, or "
+            "relationships. Return SQL only inside a ```sql fence."
         )
+
     return base
 
 

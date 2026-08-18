@@ -338,6 +338,8 @@ if result:
     if result.get("sql"):
         st.subheader("SQL")
         st.code(result["sql"], language="sql")
+        if result.get("sql_explanation"):
+            st.caption(f"In plain English: {result['sql_explanation']}")
 
     if result.get("columns") is not None and result.get("rows") is not None:
         frame = pd.DataFrame(result["rows"], columns=result["columns"])
@@ -345,7 +347,7 @@ if result:
         st.dataframe(frame, use_container_width=True)
 
         st.subheader("Chart")
-        # Changing sidebar override re-runs the script — re-chart without new model call
+        # Changing sidebar override re-runs the script — re-chart without new model call..
         chart = select_chart(
             result.get("columns"),
             result.get("rows"),
