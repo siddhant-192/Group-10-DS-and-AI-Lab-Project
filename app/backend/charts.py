@@ -2,7 +2,7 @@
 
 Rules (deterministic, no LLM):
   - 1 row x 1 numeric col          → metric
-  - 1 categorical + 1 numeric, n≤25 → bar
+  - 1 categorical + 1 numeric, n≤25 → bar or pie if less than 8 rows
   - 1 temporal + 1 numeric          → line
   - 2 numeric columns               → scatter
   - otherwise                       → table only
@@ -15,7 +15,7 @@ from datetime import date, datetime
 from typing import Any
 
 
-CHART_TYPES = ("auto", "metric", "bar", "line", "scatter", "table")
+CHART_TYPES = ("auto", "metric", "bar", "pie", "line", "scatter", "table")
 
 
 @dataclass(frozen=True)
@@ -95,7 +95,7 @@ def select_chart(
 
     def _forced(chart_type: str, reason: str) -> ChartSpec:
         x = y = None
-        if chart_type in {"bar", "line"}:
+        if chart_type in {"bar", "line", "pie"}:
             x, y, status = _pick_xy_for_bar_or_line()
             if status == "no-numeric-y":
                 return ChartSpec(
@@ -131,6 +131,7 @@ def select_chart(
         k0, k1 = kinds[0], kinds[1]
         # categorical + numeric → bar
         if k0 == "categorical" and k1 == "numeric" and n_rows <= 25:
+            chart_type = "pie" if n_rows <= 8 else "bar"
             return ChartSpec(
                 "bar",
                 "categorical x + numeric y (<=25 rows)",
@@ -138,6 +139,7 @@ def select_chart(
                 y=columns[1],
             )
         if k1 == "categorical" and k0 == "numeric" and n_rows <= 25:
+            chart_type = "pie" if n_rows <= 8 else "bar"
             return ChartSpec(
                 "bar",
                 "numeric first, categorical second — swapped for bar",
