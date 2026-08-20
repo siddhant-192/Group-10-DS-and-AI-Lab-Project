@@ -141,20 +141,26 @@ def _render_chart(frame, chart: dict, *, sort_ascending: bool = False) -> None:
     def _xy_plot():
         plot = frame[[x_col, y_col]].copy()
         plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
-        plot = plot.dropna(subset=[y_col])
-        return plot.sort_values(y_col, ascending=sort_ascending)
+        plot = plot.dropna(subset=[y_col]).sort_values(
+            y_col, ascending=sort_ascending
+        )
+        return plot
 
     try:
         if chart_type == "metric" and y_col and y_col in frame.columns and len(frame):
             st.metric(y_col, frame[y_col].iloc[0])
             return
 
-        if chart_type == "bar" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
+        needs_xy = chart_type in {"bar", "pie", "line", "scatter"}
+        if needs_xy and not (x_col and y_col and x_col in frame.columns and y_col in frame.columns):
+            st.info("No chart for this result shape — table only.")
+            return
+
+        if chart_type == "bar":
             plot = _xy_plot()
             if plot.empty:
                 st.warning("Bar chart needs numeric Y values — nothing to plot.")
                 return
-            # Altair sort="-y" is required; st.bar_chart ignores dataframe order.
             spec = (
                 alt.Chart(plot)
                 .mark_bar()
@@ -167,7 +173,7 @@ def _render_chart(frame, chart: dict, *, sort_ascending: bool = False) -> None:
             st.altair_chart(spec, use_container_width=True)
             return
 
-        if chart_type == "pie" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
+        if chart_type == "pie":
             plot = _xy_plot()
             if plot.empty:
                 st.warning("Pie chart needs numeric values — nothing to plot.")
@@ -177,24 +183,31 @@ def _render_chart(frame, chart: dict, *, sort_ascending: bool = False) -> None:
                 .mark_arc()
                 .encode(
                     theta=alt.Theta(y_col, type="quantitative", sort=sort_key),
-                    color=alt.Color(x_col, type="nominal"),
+                    color=alt.Color(x_col, type="nominal", sort=sort_key),
                     tooltip=[x_col, y_col],
                 )
             )
             st.altair_chart(spec, use_container_width=True)
             return
 
-        if chart_type == "line" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
-            plot = frame[[x_col, y_col]].copy()
-            plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
-            plot = plot.dropna(subset=[y_col])
+        if chart_type == "line":
+            plot = _xy_plot()
             if plot.empty:
                 st.warning("Line chart needs numeric Y values — nothing to plot.")
                 return
-            st.line_chart(plot.set_index(x_col)[y_col], use_container_width=True)
+            spec = (
+                alt.Chart(plot)
+                .mark_line(point=True)
+                .encode(
+                    x=alt.X(x_col, type="nominal", sort=sort_key, title=x_col),
+                    y=alt.Y(y_col, type="quantitative", title=y_col),
+                    tooltip=[x_col, y_col],
+                )
+            )
+            st.altair_chart(spec, use_container_width=True)
             return
 
-        if chart_type == "scatter" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
+        if chart_type == "scatter":
             plot = frame[[x_col, y_col]].copy()
             plot[x_col] = pd.to_numeric(plot[x_col], errors="coerce")
             plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
@@ -204,7 +217,16 @@ def _render_chart(frame, chart: dict, *, sort_ascending: bool = False) -> None:
             if plot.empty:
                 st.warning("Scatter chart needs two numeric columns — nothing to plot.")
                 return
-            st.scatter_chart(plot, x=x_col, y=y_col, use_container_width=True)
+            spec = (
+                alt.Chart(plot)
+                .mark_circle(size=80)
+                .encode(
+                    x=alt.X(x_col, type="quantitative", title=x_col),
+                    y=alt.Y(y_col, type="quantitative", sort=sort_key, title=y_col),
+                    tooltip=[x_col, y_col],
+                )
+            )
+            st.altair_chart(spec, use_container_width=True)
             return
     except Exception as exc:
         st.warning(f"Could not render chart ({exc}). Showing table only.")
