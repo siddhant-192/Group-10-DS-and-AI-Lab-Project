@@ -2,10 +2,11 @@
 
 Rules (deterministic, no LLM):
   - 1 row x 1 numeric col          → metric
-  - 1 categorical + 1 numeric, n≤25 → bar or pie if less than 8 rows
+  - 1 categorical + 1 numeric, n≤25 → bar 
   - 1 temporal + 1 numeric          → line
   - 2 numeric columns               → scatter
   - otherwise                       → table only
+  - optional                        → pie
 """
 
 from __future__ import annotations
@@ -131,7 +132,6 @@ def select_chart(
         k0, k1 = kinds[0], kinds[1]
         # categorical + numeric → bar
         if k0 == "categorical" and k1 == "numeric" and n_rows <= 25:
-            chart_type = "pie" if n_rows <= 8 else "bar"
             return ChartSpec(
                 "bar",
                 "categorical x + numeric y (<=25 rows)",
@@ -139,7 +139,6 @@ def select_chart(
                 y=columns[1],
             )
         if k1 == "categorical" and k0 == "numeric" and n_rows <= 25:
-            chart_type = "pie" if n_rows <= 8 else "bar"
             return ChartSpec(
                 "bar",
                 "numeric first, categorical second — swapped for bar",
