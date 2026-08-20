@@ -402,10 +402,10 @@ result = st.session_state.get("last_result")
 
 if result:
     meta = result.get("model_metadata") or {}
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Latency (ms)", result.get("latency_ms"))
-    col2.metric("Backend", meta.get("backend", config.backend))
-    col3.metric("DB", result.get("db_id") or db_id)
+    # col1, col2, col3 = st.columns(3)
+    # col1.metric("Latency (ms)", result.get("latency_ms"))
+    # col2.metric("Backend", meta.get("backend", config.backend))
+    # col3.metric("DB", result.get("db_id") or db_id)
 
     if result.get("answer"):
         st.subheader("Answer")
