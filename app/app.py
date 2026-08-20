@@ -485,6 +485,7 @@ if result:
                 "db_path": result.get("db_path"),
                 "execute_ms": result.get("execute_ms"),
             }
+        )
     execute_ms = result.get("execute_ms")
     execute_bit = f" · execute {execute_ms} ms" if execute_ms is not None else ""
     st.caption(
