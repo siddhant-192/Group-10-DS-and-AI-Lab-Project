@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -90,27 +91,99 @@ def _backend_for(config: UIConfig):
     )
 
 
-def _render_chart(frame, chart: dict) -> None:
+# def _render_chart(frame, chart: dict) -> None:
+#     chart_type = (chart or {}).get("chart_type") or "table"
+#     reason = (chart or {}).get("reason") or ""
+#     x_col = chart.get("x")
+#     y_col = chart.get("y")
+
+#     st.caption(f"Chart: **{chart_type}** — {reason}")
+
+#     try:
+#         if chart_type == "metric" and y_col and y_col in frame.columns and len(frame):
+#             st.metric(y_col, frame[y_col].iloc[0])
+#             return
+#         if chart_type == "bar" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
+#             plot = frame[[x_col, y_col]].copy()
+#             plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
+#             plot = plot.dropna(subset=[y_col])
+#             if plot.empty:
+#                 st.warning("Bar chart needs numeric Y values — nothing to plot.")
+#                 return
+#             st.bar_chart(plot.set_index(x_col)[y_col], use_container_width=True)
+#             return
+#         if chart_type == "line" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
+#             plot = frame[[x_col, y_col]].copy()
+#             plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
+#             plot = plot.dropna(subset=[y_col])
+#             if plot.empty:
+#                 st.warning("Line chart needs numeric Y values — nothing to plot.")
+#                 return
+#             st.line_chart(plot.set_index(x_col)[y_col], use_container_width=True)
+#             return
+#         if chart_type == "scatter" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
+#             st.scatter_chart(frame, x=x_col, y=y_col, use_container_width=True)
+#             return
+#     except Exception as exc:
+#         st.warning(f"Could not render chart ({exc}). Showing table only.")
+#         return
+#     st.info("No chart for this result shape — table only.")
+
+def _render_chart(frame, chart: dict, *, sort_ascending: bool = False) -> None:
     chart_type = (chart or {}).get("chart_type") or "table"
     reason = (chart or {}).get("reason") or ""
     x_col = chart.get("x")
     y_col = chart.get("y")
+    sort_key = "y" if sort_ascending else "-y"
 
     st.caption(f"Chart: **{chart_type}** — {reason}")
+
+    def _xy_plot():
+        plot = frame[[x_col, y_col]].copy()
+        plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
+        plot = plot.dropna(subset=[y_col])
+        return plot.sort_values(y_col, ascending=sort_ascending)
 
     try:
         if chart_type == "metric" and y_col and y_col in frame.columns and len(frame):
             st.metric(y_col, frame[y_col].iloc[0])
             return
+
         if chart_type == "bar" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
-            plot = frame[[x_col, y_col]].copy()
-            plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
-            plot = plot.dropna(subset=[y_col])
+            plot = _xy_plot()
             if plot.empty:
                 st.warning("Bar chart needs numeric Y values — nothing to plot.")
                 return
-            st.bar_chart(plot.set_index(x_col)[y_col], use_container_width=True)
+            # Altair sort="-y" is required; st.bar_chart ignores dataframe order.
+            spec = (
+                alt.Chart(plot)
+                .mark_bar()
+                .encode(
+                    x=alt.X(x_col, type="nominal", sort=sort_key, title=x_col),
+                    y=alt.Y(y_col, type="quantitative", title=y_col),
+                    tooltip=[x_col, y_col],
+                )
+            )
+            st.altair_chart(spec, use_container_width=True)
             return
+
+        if chart_type == "pie" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
+            plot = _xy_plot()
+            if plot.empty:
+                st.warning("Pie chart needs numeric values — nothing to plot.")
+                return
+            spec = (
+                alt.Chart(plot)
+                .mark_arc()
+                .encode(
+                    theta=alt.Theta(y_col, type="quantitative", sort=sort_key),
+                    color=alt.Color(x_col, type="nominal"),
+                    tooltip=[x_col, y_col],
+                )
+            )
+            st.altair_chart(spec, use_container_width=True)
+            return
+
         if chart_type == "line" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
             plot = frame[[x_col, y_col]].copy()
             plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
@@ -120,8 +193,18 @@ def _render_chart(frame, chart: dict) -> None:
                 return
             st.line_chart(plot.set_index(x_col)[y_col], use_container_width=True)
             return
+
         if chart_type == "scatter" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
-            st.scatter_chart(frame, x=x_col, y=y_col, use_container_width=True)
+            plot = frame[[x_col, y_col]].copy()
+            plot[x_col] = pd.to_numeric(plot[x_col], errors="coerce")
+            plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
+            plot = plot.dropna(subset=[x_col, y_col]).sort_values(
+                y_col, ascending=sort_ascending
+            )
+            if plot.empty:
+                st.warning("Scatter chart needs two numeric columns — nothing to plot.")
+                return
+            st.scatter_chart(plot, x=x_col, y=y_col, use_container_width=True)
             return
     except Exception as exc:
         st.warning(f"Could not render chart ({exc}). Showing table only.")
@@ -152,6 +235,12 @@ with st.sidebar:
         options=list(CHART_TYPES),
         index=0,
         help="auto = rule-based from result shape.",
+    )
+    chart_sort = st.selectbox(
+        "Chart sort",
+        options=["descending", "ascending"],
+        index=0,
+        help="Sort bar / pie / scatter by the numeric value.",
     )
     if not is_mock:
         if st.button("Warm up model"):
@@ -353,7 +442,7 @@ if result:
             result.get("rows"),
             override=chart_override,
         ).to_dict()
-        _render_chart(frame, chart)
+        _render_chart(frame, chart, sort_ascending=(chart_sort == "ascending"))
     elif not result.get("error"):
         st.info("Query returned no rows.")
 
