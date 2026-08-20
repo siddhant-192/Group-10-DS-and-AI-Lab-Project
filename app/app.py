@@ -178,18 +178,20 @@ def _render_chart(frame, chart: dict, *, sort_ascending: bool = False) -> None:
             if plot.empty:
                 st.warning("Pie chart needs numeric values — nothing to plot.")
                 return
+            plot = plot.rename(columns={x_col: "label", y_col: "value"})
+            slice_order = plot["label"].astype(str).tolist()
             spec = (
                 alt.Chart(plot)
-                .mark_arc()
+                .mark_arc(outerRadius=120)
                 .encode(
-                    theta=alt.Theta(y_col, type="quantitative", sort=sort_key),
-                    color=alt.Color(x_col, type="nominal", sort=sort_key),
-                    tooltip=[x_col, y_col],
+                    theta=alt.Theta("value", type="quantitative"),
+                    color=alt.Color("label", type="nominal", sort=slice_order),
+                    tooltip=["label", "value"],
                 )
+                .properties(width=420, height=360)
             )
-            st.altair_chart(spec, use_container_width=True)
+            st.altair_chart(spec, use_container_width=False)
             return
-
         if chart_type == "line":
             plot = _xy_plot()
             if plot.empty:
