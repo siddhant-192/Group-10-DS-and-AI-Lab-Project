@@ -6,7 +6,7 @@
   "models_config_path": "configs/text2sql_eval_models.json",
   "max_new_tokens": 512,
   "execute_timeout_seconds": 5.0,
-  "max_result_rows": 200,
+  "max_result_rows": 500,
   "mschema_examples": 3,
   "load_4bit": true
 }
