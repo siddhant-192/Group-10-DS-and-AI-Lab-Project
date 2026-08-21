@@ -35,7 +35,7 @@ class UIConfig:
     models_config_path: Path = DEFAULT_MODELS_CONFIG
     max_new_tokens: int = 512
     execute_timeout_seconds: float = 5.0
-    max_result_rows: int = 200
+    max_result_rows: int = None
     mschema_examples: int = 3
     load_4bit: bool = True
 
