@@ -372,7 +372,7 @@ def assess_clarification(
     )
     if is_ranking and has_schema_hit and not has_measure:
         question_to_user = (
-            "You named what to list, but not what \"{ranking_word}\" means. "
+            f"You named what to list, but not what \"{ranking_word}\" means. "
             "Reply with the ranking measure in plain English "
             "(for example: by number of tracks, by sales, by year). "
             "You can continue without that and a default measure will be used."
