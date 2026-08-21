@@ -18,7 +18,7 @@ SELECT_START = re.compile(r"\bSELECT\b", re.IGNORECASE)
 WITH_CTE_START = re.compile(r"\bWITH\s+[A-Za-z_][\w]*\s+AS\s*\(", re.IGNORECASE)
 FENCED_SQL = re.compile(r"```(?:sql|sqlite)?\s*(.*?)```", re.IGNORECASE | re.DOTALL)
 
-DEFAULT_MAX_RESULT_ROWS = 200
+DEFAULT_MAX_RESULT_ROWS = None
 
 
 def _sqlite_actions(*names: str) -> frozenset[int]:
