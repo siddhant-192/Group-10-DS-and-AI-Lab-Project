@@ -96,7 +96,7 @@ def load_ui_config(config_path: Path | None = None) -> UIConfig:
         models_config_path=models_config,
         max_new_tokens=int(file_data.get("max_new_tokens", 512)),
         execute_timeout_seconds=float(file_data.get("execute_timeout_seconds", 5.0)),
-        max_result_rows=int(file_data.get("max_result_rows", 200)),
+        max_result_rows=int(file_data.get("max_result_rows", None)),
         mschema_examples=int(file_data.get("mschema_examples", 3)),
         load_4bit=bool(file_data.get("load_4bit", True)),
     )
