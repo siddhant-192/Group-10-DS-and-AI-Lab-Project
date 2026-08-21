@@ -293,10 +293,16 @@ def assess_clarification(
     asks_count = bool(re.search(r"(?i)\b(count|how\s+many|number\s+of)\b", q))
     asks_list = bool(re.match(r"(?i)^\s*(list|show|give|display)\b", q))
     asks_what = bool(re.match(r"(?i)^\s*what\b", q))
-    is_ranking = bool(
-        re.search(r"\b(top|best|worst|popular)\d*\b", q, re.I)
-        or re.search(r"\btop[\s-]?\d+", q, re.I)
+    is_ranking_match = re.search(
+        r"\b(top|best|worst|popular|highest|good|bad)\d*\b", q, re.I
+    ) or re.search(r"\btop[\s-]?\d+", q, re.I)
+    is_ranking = bool(is_ranking_match)
+    ranking_word = (
+        is_ranking_match.group(1).lower()
+        if is_ranking_match and is_ranking_match.lastindex
+        else "top"
     )
+
 
     too_short = len(tokens) < 4
     if too_short:
@@ -366,7 +372,7 @@ def assess_clarification(
     )
     if is_ranking and has_schema_hit and not has_measure:
         question_to_user = (
-            "You named what to list, but not what \"top\" means. "
+            "You named what to list, but not what \"{ranking_word}\" means. "
             "Reply with the ranking measure in plain English "
             "(for example: by number of tracks, by sales, by year). "
             "You can continue without that and a default measure will be used."
