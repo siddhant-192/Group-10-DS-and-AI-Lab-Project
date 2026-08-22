@@ -22,7 +22,7 @@ class ModelBackend(ABC):
     name: str
 
     @abstractmethod
-    def generate(self, schema: str, question: str) -> tuple[str, dict[str, Any]]:
+    def generate(self, schema: str, question: str, dialect: str = "sqlite") -> tuple[str, dict[str, Any]]:
         """Return (raw_model_text, metadata)."""
 
 
@@ -31,7 +31,7 @@ class MockBackend(ModelBackend):
 
     name = BACKEND_MOCK
 
-    def generate(self, schema: str, question: str) -> tuple[str, dict[str, Any]]:
+    def generate(self, schema: str, question: str, dialect: str = "sqlite") -> tuple[str, dict[str, Any]]:
         started = time.monotonic()
         tables = _table_names(schema)
         table = _pick_table(question, tables) or (tables[0] if tables else "sqlite_master")
@@ -138,13 +138,13 @@ class HuggingFaceBackend(ModelBackend):
         self._model.eval()
         self._device = next(self._model.parameters()).device
 
-    def generate(self, schema: str, question: str) -> tuple[str, dict[str, Any]]:
+    def generate(self, schema: str, question: str, dialect: str = "sqlite") -> tuple[str, dict[str, Any]]:
         import torch
 
         self._ensure_loaded()
         assert self._tokenizer is not None and self._model is not None
         started = time.monotonic()
-        messages = [{"role": "user", "content": mschema_prompt(schema, question)}]
+        messages = [{"role": "user", "content": mschema_prompt(schema, question, dialect=dialect)}]
         rendered = self._tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
