@@ -314,9 +314,32 @@ if run:
     else:
         _run_ask()
 
+# NOTE: guard is intentionally on db_id only, NOT question text. Requiring
+# an exact match on `pending["question"] == question` meant that editing
+# the question box while the clarification panel was open (e.g. fixing a
+# typo, or rephrasing) silently made this whole block disappear on the
+# next rerun -- the panel and its Submit button would vanish with no
+# error, which looked like "Submit clarification" was ignoring the edit
+# when really it just never re-rendered. `_run_ask()` already reads the
+# live `question` value at call time, so this only needed to stop
+# gating on stale text, not change how submission itself works.
 pending = st.session_state.get("clarify_pending")
-if pending and pending.get("question") == question and pending.get("db_id") == db_id:
-    info = pending["assessment"]
+if pending and pending.get("db_id") == db_id:
+    if question != pending.get("question"):
+        # Question was edited since clarification was triggered --
+        # recompute the displayed guidance so it reflects the current
+        # text instead of showing stale reasons/suggestions.
+        try:
+            db_path_live = resolve_database(config.demo_databases_dir, db_id)
+            live_terms = schema_terms_from_db(db_path_live)
+        except Exception:
+            live_terms = []
+        info = assess_clarification(question, schema_terms=live_terms).to_dict()
+        pending["assessment"] = info
+        pending["question"] = question
+    else:
+        info = pending["assessment"]
+
     source = pending.get("source") or "pre_ask"
     st.subheader(
         "Clarification needed"
@@ -392,7 +415,6 @@ if result:
                 and not used_clarify
                 and not (
                     pending
-                    and pending.get("question") == question
                     and pending.get("db_id") == db_id
                 )
             ):
