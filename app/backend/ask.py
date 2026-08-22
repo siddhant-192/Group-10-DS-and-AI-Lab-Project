@@ -23,6 +23,7 @@ from .mschema import render_mschema
 from .registry import resolve_database
 from .sql_utils import execute_query, extract_sql
 from .explain_query import explain_sql
+from .readonly_check import check_actually_readonly
 
 def _ensure_src_on_path() -> None:
     root = str(PROJECT_ROOT)
@@ -291,6 +292,22 @@ def ask(
             "error": _sql_extract_error(raw_text),
             "latency_ms": round((time.monotonic() - started) * 1000, 3),
             "model_metadata": model_meta,
+            "raw_model_output": raw_text,
+            "db_id": db_id,
+            "db_path": str(db_path),
+        }
+        return _with_presentation(payload, question, chart_override)
+
+    is_readonly, readonly_reason = check_actually_readonly(sql)
+    if not is_readonly:
+        payload = {
+            "sql": sql,
+            "sql_explanation": explain_sql(sql),
+            "columns": None,
+            "rows": None,
+            "error": readonly_reason,
+            "latency_ms": round((time.monotonic() - started) * 1000, 3),
+            "model_metadata": {**model_meta, "blocked_reason": "not_readonly_structural"},
             "raw_model_output": raw_text,
             "db_id": db_id,
             "db_path": str(db_path),
