@@ -38,7 +38,8 @@ class UIConfig:
     max_result_rows: int = None
     mschema_examples: int = 3
     load_4bit: bool = True
-
+    sql_dialect: str = "sqlite"
+    
     def to_dict(self) -> dict[str, Any]:
         return {
             "backend": self.backend,
@@ -51,6 +52,7 @@ class UIConfig:
             "max_result_rows": self.max_result_rows,
             "mschema_examples": self.mschema_examples,
             "load_4bit": self.load_4bit,
+            "sql_dialect": self.sql_dialect,
         }
 
 
@@ -87,6 +89,9 @@ def load_ui_config(config_path: Path | None = None) -> UIConfig:
     adapter_dir = _path_or_none(adapter_raw if adapter_raw is None else str(adapter_raw))
     if adapter_dir is not None and not adapter_dir.is_absolute():
         adapter_dir = PROJECT_ROOT / adapter_dir
+    sql_dialect = str(
+        os.environ.get("SQL_DIALECT", file_data.get("sql_dialect", "sqlite"))
+    ).strip().lower() or "sqlite"    
 
     return UIConfig(
         backend=str(backend).strip(),
@@ -99,6 +104,7 @@ def load_ui_config(config_path: Path | None = None) -> UIConfig:
         max_result_rows=int(file_data.get("max_result_rows", None)),
         mschema_examples=int(file_data.get("mschema_examples", 3)),
         load_4bit=bool(file_data.get("load_4bit", True)),
+        sql_dialect=sql_dialect,
     )
 
 
