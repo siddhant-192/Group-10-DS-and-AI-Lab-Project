@@ -452,7 +452,24 @@ if result:
             st.markdown(result["sql_explanation"])
             
     if result.get("columns") is not None and result.get("rows") is not None:
-        frame = pd.DataFrame(result["rows"], columns=result["columns"])
+        # frame = pd.DataFrame(result["rows"], columns=result["columns"])
+        # st.subheader("Result table")
+        # st.dataframe(frame, use_container_width=True)
+
+        # # added to avoid duplicate column list in the selct fileds( Example querythan gnerates duplicate column Title: 
+        # query: all the top albums ( by units sold) for each year and along with their units sold
+
+        # SQL genrated : SELECT T1.Title ,  T1.AlbumId ,  T1.Title ,  SUM(T2.Quantity) FROM ALBUM AS T1 JOIN INVOICELINE AS T2 ON T1.AlbumId  =  T2.TrackId GROUP BY T1.AlbumId ORDER BY SUM(T2.Quantity) DESC LIMIT 1
+
+        cols = list(result["columns"])
+        seen: dict[str, int] = {}
+        unique_cols: list[str] = []
+        for name in cols:
+            base = name or "column"
+            n = seen.get(base, 0)
+            seen[base] = n + 1
+            unique_cols.append(base if n == 0 else f"{base}_{n}")
+        frame = pd.DataFrame(result["rows"], columns=unique_cols)
         st.subheader("Result table")
         st.dataframe(frame, use_container_width=True)
 
