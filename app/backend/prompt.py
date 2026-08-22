@@ -35,7 +35,8 @@ def mschema_prompt(schema: str, question: str, dialect: str = "sqlite") -> str:
     return (
         f"You are now a {dialect} data analyst, and you are given a database schema as follows:\n\n"
         f"【Schema】\n{schema}\n\n"
-        f"【Question】\n{question}\n\n"
+        # f"【Question】\n{question}\n\n"
+        f"【Question】\n{question}\nWrite {dialect} SQL only. {dialect_rules}\n\n"
         "【Evidence】\n\n"
         "Please read and understand the database schema carefully, and generate an executable SQL "
         "query based on the user's question and evidence. "
