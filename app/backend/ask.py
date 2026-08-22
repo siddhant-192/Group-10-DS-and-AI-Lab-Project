@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import sys
 import time
 from pathlib import Path
@@ -27,6 +28,34 @@ def _ensure_src_on_path() -> None:
     root = str(PROJECT_ROOT)
     if root not in sys.path:
         sys.path.insert(0, root)
+
+
+_WRITE_INTENT_RE = re.compile(
+    r"\b(delete|remove|drop|update|modify|edit|change|insert|add|create|alter|truncate|set\s+\w+\s*=)\b",
+    re.IGNORECASE,
+)
+
+
+def _write_intent_notice(original_question: str) -> str | None:
+    """If the ORIGINAL question implies a write/delete/update operation,
+    return a user-facing notice explaining that the system is read-only
+    and substituted a read-only equivalent instead -- regardless of what
+    SQL was actually generated. This is a transparency layer, separate
+    from the hard safety enforcement in sql_utils.py (DENIED_ACTIONS) and
+    src/validation.py, which already blocks genuine write statements from
+    executing. This addresses the case where the model correctly avoids
+    generating a destructive query but the user is never told a
+    substitution happened."""
+    match = _WRITE_INTENT_RE.search(original_question or "")
+    if not match:
+        return None
+    verb = match.group(1).lower()
+    return (
+        f'Note: your question used the word "{verb}", which implies changing '
+        "the database. This system is read-only and never modifies, deletes, "
+        "or adds data. The result below shows only the matching data as a "
+        "read-only query — no changes were made."
+    )
 
 
 def _validate_sql(db_path: Path, sql: str, timeout_seconds: float) -> tuple[bool, str | None]:
@@ -320,6 +349,12 @@ def _with_presentation(
     rows = payload.get("rows")
     error = payload.get("error")
     payload["answer"] = short_answer(question, columns, rows, error)
+
+    notice = _write_intent_notice(question)
+    if notice:
+        payload["answer"] = f"{notice}\n\n{payload['answer']}"
+        payload["write_intent_detected"] = True
+
     payload["chart"] = select_chart(columns, rows, override=chart_override).to_dict()
     return payload
 
