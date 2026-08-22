@@ -37,26 +37,17 @@ _WRITE_INTENT_RE = re.compile(
 )
 
 
-def _write_intent_notice(original_question: str) -> str | None:
+def _write_intent_verb(original_question: str) -> str | None:
     """If the ORIGINAL question implies a write/delete/update operation,
-    return a user-facing notice explaining that the system is read-only
-    and substituted a read-only equivalent instead -- regardless of what
-    SQL was actually generated. This is a transparency layer, separate
-    from the hard safety enforcement in sql_utils.py (DENIED_ACTIONS) and
-    src/validation.py, which already blocks genuine write statements from
-    executing. This addresses the case where the model correctly avoids
-    generating a destructive query but the user is never told a
-    substitution happened."""
+    return the matched verb (lowercased), else None. Used to refuse the
+    request outright, before ever calling the model -- generating and
+    showing a substitute read-only query (e.g. for "delete X" showing an
+    unrelated SELECT with 0 rows) is confusing rather than helpful. This
+    mirrors the existing zero-grounding hard-block pattern: refuse early
+    with a clear reason, rather than generate something and explain the
+    substitution after the fact."""
     match = _WRITE_INTENT_RE.search(original_question or "")
-    if not match:
-        return None
-    verb = match.group(1).lower()
-    return (
-        f'Note: your question used the word "{verb}", which implies changing '
-        "the database. This system is read-only and never modifies, deletes, "
-        "or adds data. The result below shows only the matching data as a "
-        "read-only query — no changes were made."
-    )
+    return match.group(1).lower() if match else None
 
 
 def _validate_sql(db_path: Path, sql: str, timeout_seconds: float) -> tuple[bool, str | None]:
@@ -132,6 +123,33 @@ def ask(
         db_path = resolve_database(cfg.demo_databases_dir, db_id)
     except KeyError as exc:
         return _error_payload(cfg, str(exc), started)
+
+    write_verb = _write_intent_verb(question)
+    if write_verb:
+        payload = {
+            "sql": None,
+            "columns": None,
+            "rows": None,
+            "error": (
+                f'This question uses the word "{write_verb}", which implies '
+                "changing the database (deleting, updating, or adding data). "
+                "This system is strictly read-only and cannot perform this "
+                "operation. Please rephrase your question to ask for "
+                "information instead, e.g. \"which customers haven't "
+                "purchased anything\" instead of \"delete customers who "
+                "haven't purchased anything.\""
+            ),
+            "latency_ms": round((time.monotonic() - started) * 1000, 3),
+            "model_metadata": {
+                "backend": cfg.backend,
+                "blocked_reason": "write_intent_detected",
+                "write_intent_verb": write_verb,
+            },
+            "raw_model_output": None,
+            "db_id": db_id,
+            "db_path": str(db_path),
+        }
+        return _with_presentation(payload, question, chart_override)
 
     try:
         terms = schema_terms_from_db(db_path)
@@ -366,12 +384,6 @@ def _with_presentation(
     rows = payload.get("rows")
     error = payload.get("error")
     payload["answer"] = short_answer(question, columns, rows, error)
-
-    notice = _write_intent_notice(question)
-    if notice:
-        payload["answer"] = f"{notice}\n\n{payload['answer']}"
-        payload["write_intent_detected"] = True
-
     payload["chart"] = select_chart(columns, rows, override=chart_override).to_dict()
     return payload
 
