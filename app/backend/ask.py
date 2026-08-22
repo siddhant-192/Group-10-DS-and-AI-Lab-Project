@@ -290,7 +290,9 @@ def ask(
 
     try:
         model = backend or get_backend(cfg)
-        raw_text, model_meta = model.generate(schema_text, effective_question)
+        raw_text, model_meta = model.generate(
+                schema_text, effective_question, dialect=cfg.sql_dialect
+        )
     except Exception as exc:
         return _error_payload(cfg, f"model generate failed: {exc}", started, model_metadata={"backend": cfg.backend})
 
