@@ -14,6 +14,42 @@ from urllib.parse import quote
 
 READ_ONLY_PREFIX = re.compile(r"^\s*(?:SELECT|WITH)\b", re.IGNORECASE)
 # Prefer real SQL starts — do NOT match English "with the highest/most..."
+WRITE_INTENT = re.compile(
+    r"(?i)\b("
+    r"delete\b|"
+    r"insert\s+into\b|"
+    r"drop\s+(table|index|view|database)\b|"
+    r"alter\s+table\b|"
+    r"create\s+table\b|"
+    r"truncate\b|"
+    r"update\b.{0,80}\bset\b|"
+    r"remove\s+(a|the|this|that|all)?\s*(row|rows|record|records)\b"
+    r")"
+)
+
+WRITE_SQL_START = re.compile(
+    r"^\s*(?:DELETE|UPDATE|INSERT|DROP|ALTER|CREATE|TRUNCATE|REPLACE|VACUUM)\b",
+    re.IGNORECASE,
+)
+
+
+def write_intent_error(question: str, sql: str | None = None) -> str | None:
+    """Return a user-facing error if the ask (or SQL) is a write, else None."""
+
+    text = f"{question or ''} {sql or ''}".strip()
+    if not text:
+        return None
+    if WRITE_INTENT.search(question or "") or (
+        sql and WRITE_SQL_START.match(sql)
+    ):
+        shown = f"\nSQL: {sql.strip()}" if (sql or "").strip() else ""
+        return (
+            "This app is read-only. DELETE / UPDATE / INSERT / DROP / ALTER "
+            "are not allowed, so no query was run. Ask a SELECT question "
+            "instead (for example: how many rows, or list a filtered subset)."
+            f"{shown}"
+        )
+    return None
 SELECT_START = re.compile(r"\bSELECT\b", re.IGNORECASE)
 WITH_CTE_START = re.compile(r"\bWITH\s+[A-Za-z_][\w]*\s+AS\s*\(", re.IGNORECASE)
 FENCED_SQL = re.compile(r"```(?:sql|sqlite)?\s*(.*?)```", re.IGNORECASE | re.DOTALL)
@@ -93,9 +129,12 @@ def extract_sql(raw: str) -> str:
         text = text.split(";", 1)[0] + ";"
     text = text.strip()
     # Reject obvious non-SQL leftovers
-    if not READ_ONLY_PREFIX.match(text):
-        return ""
-    return text
+    # if not READ_ONLY_PREFIX.match(text):
+    #     return ""
+    # return text
+    if READ_ONLY_PREFIX.match(text) or WRITE_SQL_START.match(text):
+        return text
+    return ""
 
 
 def readonly_uri(path: Path) -> str:
