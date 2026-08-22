@@ -24,6 +24,7 @@ from .registry import resolve_database
 from .sql_utils import adapt_sql_for_dialect, execute_query, extract_sql
 from .explain_query import explain_sql
 from .readonly_check import check_actually_readonly
+from .schema_guard import schema_grounding_error
 
 def _ensure_src_on_path() -> None:
     root = str(PROJECT_ROOT)
@@ -333,6 +334,22 @@ def ask(
             "error": readonly_reason,
             "latency_ms": round((time.monotonic() - started) * 1000, 3),
             "model_metadata": {**model_meta, "blocked_reason": "not_readonly_structural"},
+            "raw_model_output": raw_text,
+            "db_id": db_id,
+            "db_path": str(db_path),
+        }
+        return _with_presentation(payload, question, chart_override)
+
+    grounding_error = schema_grounding_error(db_path, sql)
+    if grounding_error:
+        payload = {
+            "sql": sql,
+            "sql_explanation": explain_sql(sql),
+            "columns": None,
+            "rows": None,
+            "error": grounding_error,
+            "latency_ms": round((time.monotonic() - started) * 1000, 3),
+            "model_metadata": {**model_meta, "blocked_reason": "schema_grounding"},
             "raw_model_output": raw_text,
             "db_id": db_id,
             "db_path": str(db_path),
