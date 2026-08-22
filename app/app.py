@@ -91,44 +91,6 @@ def _backend_for(config: UIConfig):
     )
 
 
-# def _render_chart(frame, chart: dict) -> None:
-#     chart_type = (chart or {}).get("chart_type") or "table"
-#     reason = (chart or {}).get("reason") or ""
-#     x_col = chart.get("x")
-#     y_col = chart.get("y")
-
-#     st.caption(f"Chart: **{chart_type}** — {reason}")
-
-#     try:
-#         if chart_type == "metric" and y_col and y_col in frame.columns and len(frame):
-#             st.metric(y_col, frame[y_col].iloc[0])
-#             return
-#         if chart_type == "bar" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
-#             plot = frame[[x_col, y_col]].copy()
-#             plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
-#             plot = plot.dropna(subset=[y_col])
-#             if plot.empty:
-#                 st.warning("Bar chart needs numeric Y values — nothing to plot.")
-#                 return
-#             st.bar_chart(plot.set_index(x_col)[y_col], use_container_width=True)
-#             return
-#         if chart_type == "line" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
-#             plot = frame[[x_col, y_col]].copy()
-#             plot[y_col] = pd.to_numeric(plot[y_col], errors="coerce")
-#             plot = plot.dropna(subset=[y_col])
-#             if plot.empty:
-#                 st.warning("Line chart needs numeric Y values — nothing to plot.")
-#                 return
-#             st.line_chart(plot.set_index(x_col)[y_col], use_container_width=True)
-#             return
-#         if chart_type == "scatter" and x_col and y_col and x_col in frame.columns and y_col in frame.columns:
-#             st.scatter_chart(frame, x=x_col, y=y_col, use_container_width=True)
-#             return
-#     except Exception as exc:
-#         st.warning(f"Could not render chart ({exc}). Showing table only.")
-#         return
-#     st.info("No chart for this result shape — table only.")
-
 def _render_chart(frame, chart: dict, *, sort_ascending: bool = False) -> None:
     chart_type = (chart or {}).get("chart_type") or "table"
     reason = (chart or {}).get("reason") or ""
@@ -407,46 +369,58 @@ if result:
     # col2.metric("Backend", meta.get("backend", config.backend))
     # col3.metric("DB", result.get("db_id") or db_id)
 
-    if result.get("answer"):
-        st.subheader("Answer")
-        st.markdown(result["answer"])
+    HARD_BLOCK_REASONS = {"write_intent_detected", "no_schema_grounding"}
+    blocked_reason = meta.get("blocked_reason")
 
     if result.get("error"):
+        # Show the error once, as a prominent error box -- skip the separate
+        # "Answer: Could not answer: ..." text, which just duplicates it.
         st.error(result["error"])
-        used_clarify = bool(meta.get("clarification")) or bool(
-            meta.get("clarification_skipped")
-        )
-        if (
-            enable_clarification
-            and not used_clarify
-            and not (
-                pending
-                and pending.get("question") == question
-                and pending.get("db_id") == db_id
+
+        if blocked_reason in HARD_BLOCK_REASONS:
+            # Permanent refusals (write-intent, zero schema grounding) can
+            # never be fixed by adding a clarification -- offering that
+            # option here would be misleading, so it's intentionally
+            # skipped for these two reasons.
+            pass
+        else:
+            used_clarify = bool(meta.get("clarification")) or bool(
+                meta.get("clarification_skipped")
             )
-        ):
-            st.warning(
-                "The previous query did not succeed. Add a short clarification and run again."
-            )
-            if st.button("Add clarification"):
-                err = str(result.get("error") or "unknown error")
-                _open_clarify(
-                    assessment_dict={
-                        "needed": True,
-                        "question_to_user": (
-                            f"The last attempt failed: {err}\n\n"
-                            "Add what to count, a top-N, or a filter, then submit."
-                        ),
-                        "suggestions": [
-                            "Top 5 by a numeric measure (state which measure).",
-                            "How many rows for a specific entity?",
-                            "List all matching rows without ranking.",
-                        ],
-                        "reasons": [err],
-                    },
-                    source="after_error",
+            if (
+                enable_clarification
+                and not used_clarify
+                and not (
+                    pending
+                    and pending.get("question") == question
+                    and pending.get("db_id") == db_id
                 )
-                st.rerun()
+            ):
+                st.warning(
+                    "The previous query did not succeed. Add a short clarification and run again."
+                )
+                if st.button("Add clarification"):
+                    err = str(result.get("error") or "unknown error")
+                    _open_clarify(
+                        assessment_dict={
+                            "needed": True,
+                            "question_to_user": (
+                                f"The last attempt failed: {err}\n\n"
+                                "Add what to count, a top-N, or a filter, then submit."
+                            ),
+                            "suggestions": [
+                                "Top 5 by a numeric measure (state which measure).",
+                                "How many rows for a specific entity?",
+                                "List all matching rows without ranking.",
+                            ],
+                            "reasons": [err],
+                        },
+                        source="after_error",
+                    )
+                    st.rerun()
+    elif result.get("answer"):
+        st.subheader("Answer")
+        st.markdown(result["answer"])
 
     if result.get("sql"):
         st.subheader("SQL")
