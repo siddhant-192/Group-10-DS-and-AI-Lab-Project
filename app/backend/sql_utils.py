@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 import re
 import sqlite3
+import sqlglot
+from sqlglot import exp
 import time
 from typing import Any, Iterator
 from urllib.parse import quote
@@ -60,6 +62,62 @@ DENIED_ACTIONS = _sqlite_actions(
     "SQLITE_UPDATE",
 )
 
+_SQLITE_STRFTIME = {
+    exp.Year: "%Y",
+    exp.Month: "%m",
+    exp.Day: "%d",
+}
+
+_SQLITE_NOW = {"NOW", "GETDATE", "SYSDATE"}
+
+
+def _strftime_int(fmt: str, argument: exp.Expression) -> exp.Expression:
+    return exp.Cast(
+        this=exp.Anonymous(
+            this="strftime",
+            expressions=[exp.Literal.string(fmt), argument],
+        ),
+        to=exp.DataType.build("INT"),
+    )
+
+
+def adapt_sql_for_dialect(sql: str, dialect: str = "sqlite") -> str:
+    """Rewrite other-engine helpers into their SQLite equivalents.
+
+    Works on the parsed tree, so aliases, GROUP BY, CTEs and qualified
+    columns are handled without per-function string matching. Unparseable
+    input is returned untouched so the normal error path still applies.
+    """
+
+    if (dialect or "sqlite").strip().lower() != "sqlite":
+        return sql
+    if not (sql or "").strip():
+        return sql
+    try:
+        tree = sqlglot.parse_one(sql, read="sqlite")
+    except Exception:
+        return sql
+
+    def rewrite(node: exp.Expression) -> exp.Expression:
+        fmt = _SQLITE_STRFTIME.get(type(node))
+        if fmt is not None and node.this is not None:
+            return _strftime_int(fmt, node.this)
+        if isinstance(node, exp.Anonymous):
+            name = (node.name or "").upper()
+            if name in _SQLITE_NOW:
+                return exp.Anonymous(
+                    this="datetime", expressions=[exp.Literal.string("now")]
+                )
+            if name == "CURDATE":
+                return exp.Anonymous(
+                    this="date", expressions=[exp.Literal.string("now")]
+                )
+        return node
+
+    try:
+        return tree.transform(rewrite).sql(dialect="sqlite")
+    except Exception:
+        return sql
 
 @dataclass(frozen=True)
 class ExecuteResult:
