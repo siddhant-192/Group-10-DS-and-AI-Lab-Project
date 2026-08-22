@@ -459,6 +459,13 @@ def _humanize_sql_error(detail: str | None, sql: str | None, db_id: str | None) 
         return f"Query timed out{db_bit}. Detail: {raw or 'interrupted'}.{sql_bit}"
     if "syntax error" in low:
         return f"SQLite syntax error{db_bit}: {raw}.{sql_bit}"
+    if "no such function" in low:
+        return (
+            f"SQLite does not support this function{db_bit}: {raw}. "
+            "This app runs SQLite only. Use SQLite functions "
+            "(for dates: strftime, date, datetime — not YEAR/MONTH/NOW from other engines)."
+            f"{sql_bit}"
+    )
     if raw:
         return f"SQL did not run{db_bit}: {raw}.{sql_bit}"
     return f"SQL did not run{db_bit}.{sql_bit}"
