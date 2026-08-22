@@ -21,7 +21,7 @@ from .clarify import (
 from .models import ModelBackend, build_backend
 from .mschema import render_mschema
 from .registry import resolve_database
-from .sql_utils import execute_query, extract_sql
+from .sql_utils import adapt_sql_for_dialect, execute_query, extract_sql
 from .explain_query import explain_sql
 from .readonly_check import check_actually_readonly
 
@@ -303,7 +303,12 @@ def ask(
         "clarification_skipped": clarification_skipped,
     }
 
+    # sql = extract_sql(raw_text)
     sql = extract_sql(raw_text)
+    adapted_sql = adapt_sql_for_dialect(sql, cfg.sql_dialect)
+    if adapted_sql != sql:
+        model_meta = {**model_meta, "dialect_adapted": True, "original_sql": sql}
+        sql = adapted_sql
     if not sql:
         payload = {
             "sql": None,
