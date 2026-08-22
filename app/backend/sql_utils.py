@@ -92,7 +92,7 @@ def extract_sql(raw: str) -> str:
     if ";" in text:
         text = text.split(";", 1)[0] + ";"
     text = text.strip()
-    Reject obvious non-SQL leftovers
+    # Reject obvious non-SQL leftovers
     if not READ_ONLY_PREFIX.match(text):
         return ""
     return text
