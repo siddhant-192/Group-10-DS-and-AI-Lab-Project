@@ -448,8 +448,9 @@ if result:
         st.subheader("SQL")
         st.code(result["sql"], language="sql")
         if result.get("sql_explanation"):
-            st.caption(f"In plain English: {result['sql_explanation']}")
-
+            st.markdown("**In plain English**")
+            st.markdown(result["sql_explanation"])
+            
     if result.get("columns") is not None and result.get("rows") is not None:
         frame = pd.DataFrame(result["rows"], columns=result["columns"])
         st.subheader("Result table")
