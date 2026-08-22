@@ -383,7 +383,15 @@ def _with_presentation(
     columns = payload.get("columns")
     rows = payload.get("rows")
     error = payload.get("error")
-    payload["answer"] = short_answer(question, columns, rows, error)
+
+    # If a clarification was actually used, summarize against the clarified
+    # question, not the original bare one -- otherwise the Answer text
+    # looks like it answered the vague original question even when a more
+    # specific clarification actually drove the generated SQL.
+    clarification = (payload.get("model_metadata") or {}).get("clarification")
+    display_question = clarification if clarification else question
+
+    payload["answer"] = short_answer(display_question, columns, rows, error)
     payload["chart"] = select_chart(columns, rows, override=chart_override).to_dict()
     return payload
 
