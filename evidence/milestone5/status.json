@@ -1,5 +1,5 @@
 {
-  "adapter_dir": "/content/drive/MyDrive/final_checkpoint_375_adapter",
+  "adapter_dir": "/root/.cache/huggingface/hub/models--walz89--checkpoint-375-adapter/snapshots/64401ed6037afa27ca346161fcf338ac78efd9dc",
   "adapter_label": "milestone4_frozen",
   "attention": "sdpa",
   "batch_size": 16,
@@ -8,12 +8,12 @@
   "completed_models": 1,
   "cuda": {
     "allocated_gib": 0.008,
-    "max_allocated_gib": 18.734,
-    "max_reserved_gib": 21.688,
+    "max_allocated_gib": 18.566,
+    "max_reserved_gib": 21.646,
     "reserved_gib": 0.02
   },
   "current_model": null,
-  "data": "/content/drive/MyDrive/Group-10-DS-and-AI-Lab-Project/evidence/milestone5/bird/bird_eval_mschema_with_evidence.jsonl",
+  "data": "/content/repo/evidence/milestone5/bird/bird_eval_mschema.jsonl",
   "error": "ImportError: Found an incompatible version of torchao. Found version 0.10.0, but only versions above 0.16.0 are supported",
   "examples": 500,
   "gpu": "NVIDIA L4",
@@ -108,6 +108,6 @@
   "top_p": null,
   "torch": "2.11.0+cu128",
   "total_examples": 500,
-  "transformers": "5.13.1",
-  "updated_at_epoch": 1786478679.287252
+  "transformers": "5.15.0",
+  "updated_at_epoch": 1787561029.091714
 }

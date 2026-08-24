@@ -1,46 +1,46 @@
 [
   {
-    "adapter_dir": "/content/drive/MyDrive/final_checkpoint_375_adapter",
+    "adapter_dir": "/root/.cache/huggingface/hub/models--walz89--checkpoint-375-adapter/snapshots/64401ed6037afa27ca346161fcf338ac78efd9dc",
     "adapter_label": "milestone4_frozen",
     "attention": "sdpa",
     "base_slug": "qwen3-4b-instruct-2507",
-    "candidate_oracle_match_count": 129,
-    "candidate_oracle_match_pct": 25.8,
+    "candidate_oracle_match_count": 130,
+    "candidate_oracle_match_pct": 26.0,
     "candidate_selection": "greedy",
     "canonical_exact_match_count": 4,
     "canonical_exact_match_pct": 0.8,
     "complexity_breakdown": {
       "unknown": {
         "examples": 500,
-        "execution_accuracy_pct": 25.8,
+        "execution_accuracy_pct": 26.0,
         "normalized_exact_match_pct": 0.8,
         "syntax_valid_pct": 94.6
       }
     },
     "cuda_peak": {
-      "allocated_gib": 7.624,
-      "max_allocated_gib": 13.084,
-      "max_reserved_gib": 21.738,
-      "reserved_gib": 16.99
+      "allocated_gib": 7.623,
+      "max_allocated_gib": 18.566,
+      "max_reserved_gib": 21.646,
+      "reserved_gib": 20.252
     },
     "dtype": "torch.bfloat16",
-    "evaluation_seconds": 1245.763,
+    "evaluation_seconds": 1357.916,
     "examples": 500,
-    "execution_match_count": 129,
-    "execution_match_pct": 25.8,
-    "final_batch_size": 8,
+    "execution_match_count": 130,
+    "execution_match_pct": 26.0,
+    "final_batch_size": 16,
     "format_compliant_count": 498,
     "format_compliant_pct": 99.6,
     "input_truncated_count": 0,
     "input_truncated_pct": 0.0,
-    "load_seconds": 11.971,
-    "mean_generation_ms_per_example": 2517.5,
+    "load_seconds": 7.502,
+    "mean_generation_ms_per_example": 2643.263,
     "normalized_exact_match_count": 4,
     "normalized_exact_match_pct": 0.8,
     "num_candidates": 1,
     "prediction_execution_status": {
-      "error": 96,
-      "ok": 403,
+      "error": 93,
+      "ok": 406,
       "too_many_rows": 1
     },
     "raw_exact_match_count": 3,

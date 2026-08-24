@@ -1,2 +1,2 @@
 tier,slug,examples,execution_match_pct,syntax_valid_pct,normalized_exact_match_pct,canonical_exact_match_pct,format_compliant_pct,mean_generation_ms_per_example,max_allocated_gib
-strong,milestone4_frozen,500,16.8,92.4,0.8,0.8,99.8,4249.084,8.758
+strong,milestone4_frozen,500,16.8,92.6,0.8,0.8,99.8,1049.058,11.647

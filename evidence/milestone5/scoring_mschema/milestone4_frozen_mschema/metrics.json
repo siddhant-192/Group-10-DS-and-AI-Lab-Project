@@ -4,13 +4,13 @@
       "examples": 500,
       "macsql": 143,
       "macsql_pct": 28.6,
-      "strict": 129,
-      "strict_pct": 25.8
+      "strict": 130,
+      "strict_pct": 26.0
     }
   },
   "column_permutation_or_distinct_promotions": {
-    "count": 19,
-    "pct": 3.8
+    "count": 18,
+    "pct": 3.6
   },
   "examples": 500,
   "macsql_execution": {
@@ -18,13 +18,13 @@
     "pct": 28.6
   },
   "prediction_statuses": {
-    "error": 96,
-    "ok": 403,
+    "error": 93,
+    "ok": 406,
     "too_many_rows": 1
   },
-  "source": "/content/drive/MyDrive/Group-10-DS-and-AI-Lab-Project/evidence/milestone5/evaluation_mschema/milestone4_frozen/predictions.jsonl",
+  "source": "/content/repo/evidence/milestone5/evaluation_mschema/milestone4_frozen/predictions.jsonl",
   "strict_execution": {
-    "count": 129,
-    "pct": 25.8
+    "count": 130,
+    "pct": 26.0
   }
 }

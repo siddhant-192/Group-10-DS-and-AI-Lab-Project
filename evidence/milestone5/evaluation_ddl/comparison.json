@@ -1,6 +1,6 @@
 [
   {
-    "adapter_dir": "/content/drive/MyDrive/final_checkpoint_375_adapter",
+    "adapter_dir": "/root/.cache/huggingface/hub/models--walz89--checkpoint-375-adapter/snapshots/64401ed6037afa27ca346161fcf338ac78efd9dc",
     "adapter_label": "milestone4_frozen",
     "attention": "sdpa",
     "base_slug": "qwen3-4b-instruct-2507",
@@ -14,27 +14,27 @@
         "examples": 500,
         "execution_accuracy_pct": 16.8,
         "normalized_exact_match_pct": 0.8,
-        "syntax_valid_pct": 92.4
+        "syntax_valid_pct": 92.6
       }
     },
     "cuda_peak": {
-      "allocated_gib": 7.624,
-      "max_allocated_gib": 8.758,
-      "max_reserved_gib": 11.477,
-      "reserved_gib": 11.477
+      "allocated_gib": 7.623,
+      "max_allocated_gib": 11.647,
+      "max_reserved_gib": 21.334,
+      "reserved_gib": 21.334
     },
     "dtype": "torch.bfloat16",
-    "evaluation_seconds": 266.499,
+    "evaluation_seconds": 560.532,
     "examples": 500,
     "execution_match_count": 84,
     "execution_match_pct": 16.8,
-    "final_batch_size": 8,
+    "final_batch_size": 16,
     "format_compliant_count": 499,
     "format_compliant_pct": 99.8,
     "input_truncated_count": 0,
     "input_truncated_pct": 0.0,
-    "load_seconds": 17.006,
-    "mean_generation_ms_per_example": 4249.084,
+    "load_seconds": 7.531,
+    "mean_generation_ms_per_example": 1049.058,
     "normalized_exact_match_count": 4,
     "normalized_exact_match_pct": 0.8,
     "num_candidates": 1,
@@ -48,8 +48,8 @@
     "repo_id": "Qwen/Qwen3-4B-Instruct-2507",
     "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
     "slug": "milestone4_frozen",
-    "syntax_valid_count": 462,
-    "syntax_valid_pct": 92.4,
+    "syntax_valid_count": 463,
+    "syntax_valid_pct": 92.6,
     "temperature": null,
     "tier": "strong",
     "top_p": null

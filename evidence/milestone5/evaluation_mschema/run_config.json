@@ -1,8 +1,8 @@
 {
-  "adapter_dir": "/content/drive/MyDrive/final_checkpoint_375_adapter",
+  "adapter_dir": "/root/.cache/huggingface/hub/models--walz89--checkpoint-375-adapter/snapshots/64401ed6037afa27ca346161fcf338ac78efd9dc",
   "adapter_label": "milestone4_frozen",
   "candidate_selection": "greedy",
-  "data": "/content/drive/MyDrive/Group-10-DS-and-AI-Lab-Project/evidence/milestone5/bird/bird_eval_mschema.jsonl",
+  "data": "/content/repo/evidence/milestone5/bird/bird_eval_mschema.jsonl",
   "examples": 500,
   "gpu": "NVIDIA L4",
   "gpu_total_gib": 22.034,
@@ -92,5 +92,5 @@
   "temperature": null,
   "top_p": null,
   "torch": "2.11.0+cu128",
-  "transformers": "5.13.1"
+  "transformers": "5.15.0"
 }
