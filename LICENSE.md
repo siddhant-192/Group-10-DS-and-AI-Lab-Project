@@ -1,7 +1,3 @@
-================================================================================
-LICENSE
-================================================================================
-
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -119,8 +115,7 @@ LICENSE
 
    END OF TERMS AND CONDITIONS
 
-   Copyright 2026 Siddhant Hitesh Mantri, Anirudh Komanduri, Vishal S,
-   Smrutishikta Das, Walunila Aier, Sambhav Jha (Group 10 — DS and AI Lab
+   Copyright 2026 Siddhant Hitesh Mantri, Anirudh Komanduri, Vishal S, Walunila Aier, Sambhav Jha (Group 10 — DS and AI Lab
    Project, IIT Madras)
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -134,101 +129,3 @@ LICENSE
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
-
-================================================================================
-THIRD-PARTY NOTICES
-================================================================================
-
-The Apache 2.0 license above covers only the original source code authored
-by Group 10 (retrieval pipeline, SQL validation, evaluation scripts,
-Streamlit UI, etc.). It does NOT extend to the third-party models,
-datasets, and libraries listed below, each of which remains under its own
-license and terms of use. Users of this repository must independently
-comply with those terms when using, redistributing, or building on this
-project.
-
---- Base Model ---
-
-Qwen3-4B-Instruct-2507 (Alibaba Cloud / Qwen Team)
-  Used as the frozen base model for QLoRA fine-tuning.
-  Licensed under Apache License 2.0. See the model card on Hugging Face
-  for the current license terms: https://huggingface.co/Qwen
-  Verify the exact license file shipped with the specific checkpoint you
-  pull, as some Qwen variants use a separate Qwen Community License
-  rather than Apache 2.0.
-
-QLoRA adapter (checkpoint-375) — original fine-tuned weights produced by
-  Group 10, hosted at walz89/checkpoint-375-adapter on Hugging Face.
-  As a derivative of the Qwen3 base model, redistribution of these
-  weights is subject to the base model's license terms in addition to
-  this project's own Apache 2.0 license for the code that produces or
-  loads them.
-
---- Datasets ---
-
-Spider (Yale LILY Lab) — used for primary training and evaluation.
-  Released under CC BY-SA 4.0. Attribution required; derivative datasets
-  must be shared under the same license. https://yale-lily.github.io/spider
-
-BIRD / BIRD Mini-Dev — used for evaluation and gap analysis.
-  Refer to the BIRD benchmark's official license terms for redistribution
-  and derivative-use conditions. https://bird-bench.github.io
-
-KaggleDBQA — used for gap analysis.
-  Refer to the original KaggleDBQA release for license terms.
-
-No raw dataset files are redistributed in this repository beyond what
-each dataset's own license permits; scripts here only consume/process
-them.
-
---- Key Libraries and Frameworks ---
-
-PyTorch                                  — BSD-3-Clause
-Hugging Face Transformers / PEFT / Accelerate — Apache License 2.0
-bitsandbytes (QLoRA quantization)        — MIT License
-FAISS (Meta AI)                          — MIT License
-sqlglot                                  — MIT License
-Streamlit                                — Apache License 2.0
-
-Version numbers and any additional dependencies are listed in
-requirements.txt; each retains the license declared by its own project.
-
---- Summary Table ---
-
-Component                                | License                        | Notes
-------------------------------------------|--------------------------------|------------------
-Group 10 original source code             | Apache 2.0                     | See LICENSE section above
-Qwen3-4B-Instruct-2507 (base model)        | Apache 2.0 (verify checkpoint) | Third-party
-QLoRA adapter weights (checkpoint-375)     | Inherits base model terms      | Third-party derivative
-Spider dataset                             | CC BY-SA 4.0                   | Third-party, share-alike
-BIRD / BIRD Mini-Dev                       | Per BIRD benchmark terms       | Third-party
-KaggleDBQA                                 | Per original release terms     | Third-party
-FAISS, sqlglot, bitsandbytes               | MIT                            | Third-party
-Transformers, PEFT, Accelerate, Streamlit  | Apache 2.0                     | Third-party
-PyTorch                                    | BSD-3-Clause                   | Third-party
-
-If you believe any license above is stated incorrectly or has changed
-upstream, please open an issue so it can be corrected.
-
-
-================================================================================
-README SECTION TO ADD (paste this under a "## License" heading in README.md)
-================================================================================
-
-## License
-
-The original source code in this repository (retrieval pipeline, SQL
-validation, evaluation scripts, Streamlit UI, etc.) is licensed under the
-Apache License, Version 2.0 — see the LICENSE section of this file for
-the full text.
-
-This license covers code authored by Group 10 only. It does not cover:
-- the Qwen3-4B-Instruct-2507 base model or the fine-tuned QLoRA adapter
-  weights, which remain subject to their own upstream license, or
-- the Spider, BIRD, and KaggleDBQA datasets used for training/evaluation,
-  each of which is distributed under its own terms.
-
-See the THIRD-PARTY NOTICES section of this file for a full acknowledgment
-of third-party models, datasets, and libraries used in this project,
-along with their respective licenses.

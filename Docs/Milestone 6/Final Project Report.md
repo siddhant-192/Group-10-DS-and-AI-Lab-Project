@@ -496,20 +496,20 @@ There is no POST /predict and no GET /status in this branch.
 
 ## 6.E Licensing and dataset references
 
-On milestone-6-ui-2 there is **no root \`LICENSE\` file**. THIRD\_PARTY.md states that the team had not yet chosen a licence for original source code in that snapshot. Before inviting general reuse, add an explicit licence (MIT is the usual course default).
-
-| Component | Source | Role / licence note |
-| :---- | :---- | :---- |
-| \--- | \--- | \--- |
-| Spider 1.0 | Yale / xlangai/spider | Train/eval; CC BY-SA 4.0 for annotations; DB files not shipped |
-| BIRD Mini-Dev | BIRD project | Milestone 5 only |
-| Chinook | Public sample DB | Demo only |
-| Qwen3-4B-Instruct-2507 | Qwen/Qwen3-4B-Instruct-2507 | Base weights; see model card |
-| Project QLoRA adapter | Team checkpoint 375 | Distributed separately (\~132 MB); not in git |
+A `LICENSE.md` file has been added at the repository root on the `main` branch. Rather than the MIT default, the team selected the **Apache License, Version 2.0** for all original source code (retrieval pipeline, SQL validation, evaluation scripts, Streamlit UI), for consistency with the Apache 2.0 license under which the Qwen3-4B-Instruct-2507 base model is distributed. The same file also documents third-party attributions for all datasets, base weights, and libraries used in the project. 
 
  
 
-Do not commit Hugging Face tokens, Colab credentials, or .sqlite files (see SECURITY.md).
+| Component | Source | Role / license note |
+| ----- | ----- | ----- |
+| Original project source code | Team-authored | Apache License 2.0 (see `LICENSE.md`, root) |
+| Spider 1.0 | Yale / `xlangai/spider` | Train/eval; CC BY-SA 4.0 for annotations; DB files not shipped |
+| BIRD Mini-Dev | BIRD project | Milestone 5 only |
+| Chinook | Public sample DB | Demo only |
+| Qwen3-4B-Instruct-2507 | `Qwen/Qwen3-4B-Instruct-2507` | Base weights; Apache 2.0 per model card (verify exact license file for this checkpoint) |
+| Project QLoRA adapter | Team checkpoint 375 | Distributed separately (\~132 MB) via Hugging Face (`walz89/checkpoint-375-adapter`); inherits base model license terms |
+
+Do not commit Hugging Face tokens, Colab credentials, or `.sqlite` files (see `SECURITY.md`).
 
 ## 6.Future work and maintenance
 
