@@ -207,10 +207,12 @@ bash scripts/audit_public_package.sh
 ```
 
 ## Licensing
+This project's original source code (retrieval pipeline, SQL validation, evaluation scripts, Streamlit UI) is licensed under the Apache License, Version 2.0 — see LICENSE for the full text.
 
-This package preserves upstream attribution, but no license for the team's
-original code has been selected in this snapshot. The repository owner should
-choose and add a project license before treating the repository as generally
-reusable. Spider-derived material remains subject to Spider's CC BY-SA 4.0
-terms; model use remains subject to each Hugging Face model's license. See
-[`THIRD_PARTY.md`](THIRD_PARTY.md).
+This license covers Group 10's original code only. It does not cover third-party components:
+
+Spider-derived material remains subject to Spider's CC BY-SA 4.0 terms; database files are not shipped in this repository.
+Qwen3-4B-Instruct-2507 (base model) and the team's QLoRA adapter remain subject to their respective Hugging Face model licenses.
+Other datasets (BIRD Mini-Dev, Chinook) and libraries retain their own upstream licenses.
+
+See THIRD_PARTY.md for the full breakdown of third-party attributions and licenses.
